@@ -1,3 +1,18 @@
+# Cloud computing project readme
+
+To properly use the Amazon services you'll have to create two files according to (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where)
+
+where in `credentials` you should store the keys from Account Details button at labs.vocareum.com (go to aws educate sign-in, login with your student credentials go to your aws starter account)
+and in `config` you should just input
+```
+[default]
+region=us-east-1
+```
+
+after that everything should work. If it does not (because why write docs when youre tired), contact @lukasz-starosta.
+
+# Create React App readme
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
