@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import API, { graphqlOperation } from '@aws-amplify/api';
+import PubSub from '@aws-amplify/pubsub';
+import { createBlog } from './graphql/mutations';
+
+import config from './aws-exports';
+API.configure(config); // Configure Amplify
+PubSub.configure(config);
+
+async function createNewBlog() {
+    const blog = { name: 'Test blog' };
+    await API.graphql(graphqlOperation(createBlog, { input: blog }));
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <button onClick={createNewBlog}>Add Blog</button>
+        </div>
+    );
 }
 
 export default App;
