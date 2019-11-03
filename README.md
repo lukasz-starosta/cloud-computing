@@ -5,6 +5,7 @@ http://master.d3g9opgfj85f73.amplifyapp.com
 
 ## To do:
 
+- [ ] Setup assets (colors, components)
 - [ ] Landing page
 - [ ] Logging in
 - [ ] Profile view
