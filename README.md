@@ -1,16 +1,24 @@
 # Cloud computing project readme
-
+This is a Twitter-like app where users can share posts. We do not have a logo or a name yet.
 The app url is:
 http://master.d3g9opgfj85f73.amplifyapp.com
 
 ## To do:
 
--   [x] Setup assets (colors, components)
--   [ ] Landing page
--   [ ] Logging in
--   [ ] Profile view
--   [ ] Dashboard view
--   [ ] Adding posts
+-   [x] Setup assets - **Łukasz** (colors, components)
+-   [x] Navigation - **Łukasz**
+-   [ ] Basic layout - **Łukasz** - ***WAIT UNTIL THIS IS DONE***
+
+#### Views:
+-   [ ] Landing page - **Vulkan**
+-   [ ] Logging in and sign up - **Piotrek**
+-   [ ] Profile view - **Agnieszka**
+-   [ ] Dashboard view - **Łukasz**
+-   [ ] About view - about the app, what technologies are we using, what is it for in general - **Iga**
+
+#### Integration with the cloud (To be specified and assigned):
+-   [ ] Adding, editing, deleting posts
+-   [ ] Fetching posts
 -   [ ] Liking, commening (?) posts
 
 ## Style guide
