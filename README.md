@@ -5,13 +5,19 @@ http://master.d3g9opgfj85f73.amplifyapp.com
 
 ## To do:
 
-- [ ] Setup assets (colors, components)
-- [ ] Landing page
-- [ ] Logging in
-- [ ] Profile view
-- [ ] Dashboard view
-- [ ] Adding posts
-- [ ] Liking, commening (?) posts
+-   [x] Setup assets (colors, components)
+-   [ ] Landing page
+-   [ ] Logging in
+-   [ ] Profile view
+-   [ ] Dashboard view
+-   [ ] Adding posts
+-   [ ] Liking, commening (?) posts
+
+## Style guide
+
+We are using https://material-ui.com/, so please refer to their page if you want to add a new component. You can always modify the elements with `makeStyles` as presented in `main-layout.jsx` for example.
+
+Please conform to the style guide and always look for material-ui alternatives, instead of creating your own components by hand.
 
 ## Getting started
 
@@ -23,6 +29,7 @@ To properly use the Amazon services you'll have to create two files according to
 
 where in `credentials` you should store the keys from Account Details button at labs.vocareum.com (go to aws educate sign-in, login with your student credentials go to your aws starter account)
 and in `config` you should just input
+
 ```
 [default]
 region=us-east-1
