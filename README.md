@@ -10,11 +10,11 @@ http://master.d3g9opgfj85f73.amplifyapp.com
 -   [ ] Basic layout - **Łukasz** - ***WAIT UNTIL THIS IS DONE***
 
 #### Views:
--   [ ] Landing page - **Vulkan**
+-   [ ] Landing page - **Krzysiek**
 -   [ ] Logging in and sign up - **Piotrek**
--   [ ] Profile view - **Agnieszka**
--   [ ] Dashboard view - **Łukasz**
--   [ ] About view - about the app, what technologies are we using, what is it for in general - **Iga**
+-   [ ] Profile view - **Iga**
+-   [ ] Dashboard view - **Agnieszka**
+-   [ ] About view - about the app, what technologies are we using, what is it for in general - **Vulkan**
 
 #### Integration with the cloud (To be specified and assigned):
 -   [ ] Adding, editing, deleting posts
