@@ -6,6 +6,7 @@ function Dashboard() {
         <section>
             <h2>wuja oto twoja talbica</h2>
             <Button />
+            <h3> no hejka, przykład</h3>
         </section>
     );
 }
