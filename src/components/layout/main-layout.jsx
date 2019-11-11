@@ -8,7 +8,8 @@ const useStyles = makeStyles({
         backgroundColor: colors.AWS_lightGrey,
         height: 'calc(100vh + 100px)',
         marginTop: '-100px',
-        paddingTop: '120px'
+        paddingTop: '120px',
+        overflowY: 'scroll'
     }
 });
 
