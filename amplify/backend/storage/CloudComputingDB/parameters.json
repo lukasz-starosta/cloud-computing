@@ -1,5 +1,0 @@
-{
-    "tableName": "CloudComputingDB",
-    "partitionKeyName": "post_title",
-    "partitionKeyType": "S"
-}
