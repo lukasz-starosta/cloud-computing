@@ -9,6 +9,9 @@ import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
 import MainLayout from './components/layout/main-layout';
+import About from './pages/about';
+import Landing from './pages/landing';
+
 API.configure(config); // Configure Amplify
 PubSub.configure(config);
 
@@ -21,13 +24,19 @@ function App() {
             renders the first one that matches the current URL. */}
                     <Switch>
                         <Route exact path="/">
-                            <Dashboard />
+                            <Landing />
                         </Route>
-                        <Route path="/login">
-                            <Login />
+                        <Route path="/dashboard">
+                            <Dashboard />
                         </Route>
                         <Route path="/profile">
                             <Profile />
+                        </Route>
+                        <Route path="/about">
+                            <About />
+                        </Route>
+                        <Route path="/login">
+                            <Login />
                         </Route>
                     </Switch>
                 </MainLayout>
