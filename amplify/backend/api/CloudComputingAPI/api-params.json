@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/api",
+            "lambdaFunction": "CloudComputingFunction",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "CloudComputingAPI",
+    "apiName": "CloudComputingAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "CloudComputingFunction"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-cloud-computing-dev-212816-authRole",
+        "unAuthRoleName": "amplify-cloud-computing-dev-212816-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "CloudComputingFunction",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
