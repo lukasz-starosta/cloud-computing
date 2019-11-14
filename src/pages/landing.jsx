@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../logo.svg';
 import LandingLoginButton from '../components/landing-login-button';
 import LandingSignupButton from '../components/landing-signup-button';
-import Button from '../components/button';
+import FeaturesList from '../components/features-list';
 
 function Landing() {
     return (
@@ -11,7 +11,8 @@ function Landing() {
                 <h1>App Name</h1>
                 <img src ={logo} width ='30%' height ='30%'/> <br/>
                 <LandingLoginButton /> <br/>
-                <LandingSignupButton />
+                <LandingSignupButton /> <br/>
+                <FeaturesList />
             </div>
         </section>
     );
