@@ -1,7 +1,5 @@
 import React from "react";
 import { colors } from "../assets/colors";
-import ButtonComment from "./buttonComment";
-import ButtonLike from "./buttonLike";
 import Button from "./button";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -67,8 +65,8 @@ function Post() {
       <p>{text}</p>
       <div>
         <Toolbar style={outerButtonsStyle}>
-          <ButtonLike />
-          <ButtonComment />
+          <Button isLikeIcon={true} />
+          <Button isLikeIcon={false} />
         </Toolbar>
       </div>
     </div>

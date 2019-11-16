@@ -12,8 +12,7 @@ const useStyles = makeStyles({
     link: {
         color: 'inherit',
         textDecoration: 'none',
-        margin: '0 12px',
-        zIndex: '1000'
+        margin: '0 12px'
     }
 });
 
