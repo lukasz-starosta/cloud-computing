@@ -16,17 +16,15 @@ const useStyles = makeStyles(theme => ({
 export default function FloatingActionButtons(props) {
   const classes = useStyles();
   const isLikeIcon = props.isLikeIcon;
+  const color = props.color;
+  const icon = isLikeIcon ?
+    <FavoriteIcon onClick={() => alert("You liked the post")} /> : 
+    <AddCommentIcon onClick={() => alert("You commented on the post")} />;
 
-  return isLikeIcon ? (
+  return (
     <div>
-      <Fab color="secondary" aria-label="add" className={classes.fab}>
-        <FavoriteIcon onClick={() => alert("You liked the post")} />
-      </Fab>
-    </div>
-  ) : (
-    <div>
-      <Fab color="primary" aria-label="add" className={classes.fab}>
-        <AddCommentIcon onClick={() => alert("You commented on the post")} />
+      <Fab color={color} aria-label="add" className={classes.fab}>
+        {icon}
       </Fab>
     </div>
   );

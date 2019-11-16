@@ -2,6 +2,7 @@ import React from "react";
 import { colors } from "../assets/colors";
 import Button from "./button";
 import Toolbar from "@material-ui/core/Toolbar";
+import { color } from "@material-ui/system";
 
 const image1 = {
   src:
@@ -65,8 +66,8 @@ function Post() {
       <p>{text}</p>
       <div>
         <Toolbar style={outerButtonsStyle}>
-          <Button isLikeIcon={true} />
-          <Button isLikeIcon={false} />
+          <Button isLikeIcon={true} color="secondary" />
+          <Button isLikeIcon={false} color="primary" />
         </Toolbar>
       </div>
     </div>
