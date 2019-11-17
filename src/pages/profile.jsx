@@ -8,15 +8,17 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import PlaceIcon from '@material-ui/icons/Place';
+import SchoolIcon from '@material-ui/icons/School';
 import { borderRight } from '@material-ui/system';
 import red from '@material-ui/core/colors/red';
-        
+
 
 const useStyles = makeStyles({
     profileBg: {
-        border: "solid",
-        borderWidth: 10,
-        borderColor: "#4d1d2c",
+        // border: "solid",
+        //borderWidth: 10,
+        //borderColor: "#4d1d2c",
         backgroundColor: "#4d1d2c",
         backgroundImage: `url(${"http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg"})`,
         backgroundSize: "cover",
@@ -50,21 +52,29 @@ const useStyles = makeStyles({
 
 
 
+
 });
 
 function Profile() {
     const classes = useStyles();
 
     return <div className={classes.profile}>
-       
-        <ProfilePicture/>
-      
+
+        <ProfilePicture />
+
         <NameAndSurname
             name="Iga"
             surname="Wójcik"
         />
         <BirthDate
             date="34.13.208"
+        />
+
+        <BirthPlace
+            place="Łódź"
+        />
+        <Studies
+            school="wyzsza szkoła robienia hałasu"
         />
         <NewPost></NewPost>
 
@@ -94,10 +104,10 @@ function ProfilePicture() {
     const classes = useStyles();
 
     return <>
-    <Box className={classes.profileBg}>
+        <Box className={classes.profileBg}>
 
-    </Box>
-    <Avatar className={classes.bigAvatar} src="https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg" />
+        </Box>
+        <Avatar className={classes.bigAvatar} src="https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg" />
     </>
 }
 
@@ -109,16 +119,27 @@ function NameAndSurname(props) {
     return <h3>{name} {surname}</h3>;
 }
 
+function BirthPlace(props) {
+    const { place } = props;
+
+    return <p><PlaceIcon /> {place}</p>;
+}
+
 function BirthDate(props) {
     const { date } = props;
 
     return <p><CakeIcon /> {date}</p>;
 }
 
+function Studies(props) {
+    const { school } = props;
+
+    return <p><SchoolIcon /> {school}</p>;
+}
 
 function NewPost() {
     const classes = useStyles();
-    return <Box className={classes.addPost} borderTop={1}>
+    return <Box className={classes.addPost} borderTop={2} borderColor= "#4a4949">
         <Grid
             container
             spacing={5}
@@ -129,7 +150,7 @@ function NewPost() {
         >
 
             <Grid item xs={3}  >
-                <Typography variant="h5" component="h3" >
+                <Typography variant="h4" component="h3" color="textSecondary">
                     My posts
                         </Typography>
             </Grid>
