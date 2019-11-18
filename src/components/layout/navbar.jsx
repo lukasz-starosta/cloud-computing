@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     appBar: {
         backgroundColor: colors.AWS_blue,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     link: {
         color: 'inherit',
