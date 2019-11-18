@@ -19,11 +19,6 @@ import CreateIcon from "@material-ui/icons/Create";
 import { grey } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
-  /*root: {
-    flexGrow: 1,
-    maxWidth: 752
-    backgroundColor
-  },*/
   icon: {
     color: grey[200],
     backgroundColor: grey[900]
@@ -37,7 +32,7 @@ function FeaturesList() {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={8}>
       <Typography variant="h6" className={classes.title}>
         What you can do in our app:
       </Typography>
