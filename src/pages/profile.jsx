@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Profile() {
-    return <>wuja to ty</>;
+  return <>wuja to ty</>;
 }
 
 export default Profile;

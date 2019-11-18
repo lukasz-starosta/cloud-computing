@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Login() {
-    return <>wuja zaloguj mie</>;
+  return <>wuja zaloguj mie</>;
 }
 
 export default Login;
