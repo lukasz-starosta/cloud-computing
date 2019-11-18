@@ -3,12 +3,13 @@ import logo from "../logo.svg";
 import LandingLoginButton from "../components/landing-login-button";
 import LandingSignupButton from "../components/landing-signup-button";
 import FeaturesList from "../components/features-list";
+import Typography from "@material-ui/core/Typography";
 
 function Landing() {
   return (
     <section>
       <div align="center">
-        <h1>App Name</h1>
+        <Typography variant="h2">App name</Typography>
         <img src={logo} width="30%" height="30%" /> <br />
         <LandingLoginButton /> <br />
         <LandingSignupButton /> <br />
