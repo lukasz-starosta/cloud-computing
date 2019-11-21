@@ -1,20 +1,41 @@
 {
 	"api": {
-		"CloudComputing": {
-			"service": "AppSync",
+		"CloudComputingAPI": {
+			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
-			"output": {
-				"authConfig": {
-					"additionalAuthenticationProviders": [],
-					"defaultAuthentication": {
-						"authenticationType": "API_KEY",
-						"apiKeyConfig": {
-							"description": "Default key",
-							"apiKeyExpirationDays": "365"
-						}
-					}
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "CloudComputingFunction",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
 				}
-			}
+			]
+		}
+	},
+	"storage": {
+		"CloudComputingDatabase": {
+			"service": "DynamoDB",
+			"providerPlugin": "awscloudformation"
+		}
+	},
+	"function": {
+		"CloudComputingFunction": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "storage",
+					"resourceName": "CloudComputingDatabase",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
 		}
 	}
 }

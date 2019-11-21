@@ -1,0 +1,5 @@
+{
+    "tableName": "CloudComputingDatabase",
+    "partitionKeyName": "post_id",
+    "partitionKeyType": "N"
+}

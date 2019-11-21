@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Landing() {
-    return <>no i wuj i wylądował</>;
+  return <>Landing</>;
 }
 
 export default Landing;
