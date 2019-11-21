@@ -1,19 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import API from '@aws-amplify/api';
-import PubSub from '@aws-amplify/pubsub';
-
-import config from './aws-exports';
 import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
 import MainLayout from './components/layout/main-layout';
 import About from './pages/about';
 import Landing from './pages/landing';
-
-API.configure(config); // Configure Amplify
-PubSub.configure(config);
 
 function App() {
   return (
