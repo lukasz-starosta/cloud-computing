@@ -6,7 +6,7 @@ import { colors } from '../../assets/colors';
 const useStyles = makeStyles({
   container: {
     backgroundColor: colors.AWS_lightGrey,
-    height: 'calc(100vh + 48px)',
+    minHeight: 'calc(100vh + 48px)',
     marginTop: '48px',
     overflowY: 'auto'
   }
