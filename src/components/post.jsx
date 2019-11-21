@@ -2,7 +2,6 @@ import React from 'react';
 import { colors } from '../assets/colors';
 import Button from './button';
 import Toolbar from '@material-ui/core/Toolbar';
-import { color } from '@material-ui/system';
 
 const image1 = {
   src:
@@ -17,9 +16,6 @@ const image2 = {
   alt: 'male',
   width: '162px'
 };
-const text =
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-const name = 'Anonim';
 
 const date = '5 minutes ago';
 
@@ -47,18 +43,20 @@ const outerButtonsStyle = {
   float: 'right'
 };
 
-function Post() {
+function Post(props) {
+  const { username, content } = props;
+
   return (
     <div style={postStyle}>
       <div style={timeAndNameStyle}>
-        <h3>{name}</h3>
+        <h3>{username}</h3>
         <p>{date}</p>
       </div>
       <div style={imageStyle}>
         <img src={image1.src} alt={image1.alt} width={image1.width} />
         <img src={image2.src} alt={image2.alt} width={image2.width} hspace="30" />
       </div>
-      <p>{text}</p>
+      <p>{content}</p>
       <div>
         <Toolbar style={outerButtonsStyle}>
           <Button isLikeIcon={true} color="secondary" />
