@@ -16,33 +16,33 @@ API.configure(config); // Configure Amplify
 PubSub.configure(config);
 
 function App() {
-    return (
-        <Router>
-            <div>
-                <MainLayout>
-                    {/* A <Switch> looks through its children <Route>s and
+  return (
+    <Router>
+      <div>
+        <MainLayout>
+          {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-                    <Switch>
-                        <Route exact path="/">
-                            <Landing />
-                        </Route>
-                        <Route path="/dashboard">
-                            <Dashboard />
-                        </Route>
-                        <Route path="/profile">
-                            <Profile />
-                        </Route>
-                        <Route path="/about">
-                            <About />
-                        </Route>
-                        <Route path="/login">
-                            <Login />
-                        </Route>
-                    </Switch>
-                </MainLayout>
-            </div>
-        </Router>
-    );
+          <Switch>
+            <Route exact path="/">
+              <Landing />
+            </Route>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+          </Switch>
+        </MainLayout>
+      </div>
+    </Router>
+  );
 }
 
 export default App;

@@ -1,5 +1,5 @@
-import React from "react";
-import Post from "../components/post";
+import React from 'react';
+import Post from '../components/post';
 
 function MultiplePosts() {
   let posts = [];
