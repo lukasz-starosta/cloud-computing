@@ -52,7 +52,7 @@ function Post() {
     <div style={postStyle}>
       <div style={timeAndNameStyle}>
         <h3>{name}</h3>
-        <p>{date}</p>\
+        <p>{date}</p>
       </div>
       <div style={imageStyle}>
         <img src={image1.src} alt={image1.alt} width={image1.width} />
