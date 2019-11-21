@@ -7,9 +7,10 @@ import firebase from "firebase";
 const useStyles = makeStyles({
   container: {
     backgroundColor: colors.AWS_lightGrey,
-    minHeight: "calc(100vh + 48px)",
-    marginTop: "48px",
-    overflowY: "auto"
+    minHeight: 'calc(100vh + 64px)',
+    marginTop: '48px',
+    paddingTop: '16px',
+    overflowY: 'auto'
   }
 });
 
