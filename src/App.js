@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/login';
@@ -9,8 +9,12 @@ import About from './pages/about';
 import Landing from './pages/landing';
 
 import firebase from 'firebase/app';
+import 'firebase/firestore';
+import database from './api/database';
 
 function App() {
+  const [isReady, setIsReady] = useState(false);
+
   useEffect(() => {
     var firebaseConfig = {
       apiKey: 'AIzaSyDL5rG1rHKZLHM030r9lFgfgo-bt3x5WEE',
@@ -24,7 +28,13 @@ function App() {
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+    database.initialize(firebase.firestore());
+
+    setIsReady(true);
   }, []);
+
+  // TODO: Add a loader here when the app is initalizing
+  if (!isReady) return <></>;
 
   return (
     <Router>
