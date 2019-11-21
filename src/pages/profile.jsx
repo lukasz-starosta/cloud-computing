@@ -1,21 +1,21 @@
-import React from "react";
-import { Avatar, makeStyles } from "@material-ui/core";
-import CakeIcon from "@material-ui/icons/Cake";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import PlaceIcon from "@material-ui/icons/Place";
-import SchoolIcon from "@material-ui/icons/School";
+import React from 'react';
+import { Avatar, makeStyles } from '@material-ui/core';
+import CakeIcon from '@material-ui/icons/Cake';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import PlaceIcon from '@material-ui/icons/Place';
+import SchoolIcon from '@material-ui/icons/School';
 
 const useStyles = makeStyles({
   profileBg: {
-    backgroundColor: "#4d1d2c",
-    backgroundImage: `url(${"http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg"})`,
-    backgroundSize: "cover",
+    backgroundColor: '#4d1d2c',
+    backgroundImage: `url(${'http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg'})`,
+    backgroundSize: 'cover',
     height: 250
   },
   profile: {
@@ -28,9 +28,9 @@ const useStyles = makeStyles({
     margin: 10,
     marginLeft: 40,
     marginTop: -100,
-    border: "solid",
+    border: 'solid',
     borderWidth: 5,
-    borderColor: "#FFF"
+    borderColor: '#FFF'
   },
   post: {
     marginBottom: 30,
@@ -59,16 +59,8 @@ function Profile() {
       <Studies school="wyzsza szkoła robienia hałasu" />
       <NewPost></NewPost>
 
-      <Post
-        title="dzisiaj"
-        text="czuje sie dzisiaj swietnie :)"
-        date="11.20.19"
-      />
-      <Post
-        title="A dzisiaj"
-        text="czuje sie dzisiaj chujowo :("
-        date="10.20.19"
-      />
+      <Post title="dzisiaj" text="czuje sie dzisiaj swietnie :)" date="11.20.19" />
+      <Post title="A dzisiaj" text="czuje sie dzisiaj chujowo :(" date="10.20.19" />
     </div>
   );
 }
@@ -131,27 +123,14 @@ function NewPost() {
   const classes = useStyles();
   return (
     <Box className={classes.addPost} borderTop={2} borderColor="#4a4949">
-      <Grid
-        container
-        spacing={5}
-        direction="column"
-        alignItems="center"
-        justify="center"
-      >
+      <Grid container spacing={5} direction="column" alignItems="center" justify="center">
         <Grid item xs={3}>
           <Typography variant="h4" component="h3" color="textSecondary">
             My posts
           </Typography>
         </Grid>
 
-        <Grid
-          container
-          spacing={5}
-          direction="row"
-          alignItems="center"
-          justify="center"
-          justifyContent="center"
-        >
+        <Grid container spacing={5} direction="row" alignItems="center" justify="center">
           <Grid item xs={8}>
             <TextField
               id="outlined-basic"
@@ -161,7 +140,7 @@ function NewPost() {
               width="auto"
             />
           </Grid>
-          <Grid item xs={4} marginLeft="3">
+          <Grid item xs={4}>
             <Fab color="primary" variant="extended" aria-label="Add">
               <AddIcon className={classes.extendedIcon} />
               Post

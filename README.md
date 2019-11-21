@@ -2,27 +2,27 @@
 
 This is a Twitter-like app where users can share posts. We do not have a logo or a name yet.
 The app url is:
-http://master.d3g9opgfj85f73.amplifyapp.com
+https://cloud-computing-systems.web.app
 
 ## To do:
 
--   [x] Setup assets - **Łukasz** (colors, components)
--   [x] Navigation - **Łukasz**
--   [x] Basic layout - **Łukasz**
+- [x] Setup assets - **Łukasz** (colors, components)
+- [x] Navigation - **Łukasz**
+- [x] Basic layout - **Łukasz**
 
 #### Views:
 
--   [ ] Landing page - **Krzysiek**
--   [ ] Logging in and sign up - **Piotrek**
--   [ ] Profile view - **Iga**
--   [ ] Dashboard view - **Agnieszka**
--   [ ] About view - about the app, what technologies are we using, what is it for in general - **Vulkan**
+- [ ] Landing page - **Krzysiek**
+- [ ] Logging in and sign up - **Piotrek**
+- [x] Profile view - **Iga**
+- [x] Dashboard view - **Agnieszka**
+- [ ] About view - about the app, what technologies are we using, what is it for in general - **Vulkan**
 
 #### Integration with the cloud (To be specified and assigned):
 
--   [ ] Adding, editing, deleting posts
--   [ ] Fetching posts
--   [ ] Liking, commening (?) posts
+- [ ] Adding, editing, deleting posts
+- [ ] Fetching posts
+- [ ] Liking, commening (?) posts
 
 ## Style guide
 
@@ -34,19 +34,8 @@ Please conform to the style guide and always look for material-ui alternatives, 
 
 Install Yarn
 (yarnpkg.com/en/docs/install#windows-stable) along with Node.js
-In terminal run `npm install -g @aws-amplify/cli`
 
-To properly use the Amazon services you'll have to create two files according to (https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where)
-
-where in `credentials` you should store the keys from Account Details button at labs.vocareum.com (go to aws educate sign-in, login with your student credentials go to your aws starter account)
-and in `config` you should just input
-
-```
-[default]
-region=us-east-1
-```
-
-after that everything should work. If it does not (because why write docs when youre tired), contact @lukasz-starosta.
+to run locally: `yarn start`
 
 # Create React App readme
 

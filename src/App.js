@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/login';
@@ -8,7 +8,24 @@ import MainLayout from './components/layout/main-layout';
 import About from './pages/about';
 import Landing from './pages/landing';
 
+import firebase from 'firebase/app';
+
 function App() {
+  useEffect(() => {
+    var firebaseConfig = {
+      apiKey: 'AIzaSyDL5rG1rHKZLHM030r9lFgfgo-bt3x5WEE',
+      authDomain: 'cloud-computing-systems.firebaseapp.com',
+      databaseURL: 'https://cloud-computing-systems.firebaseio.com',
+      projectId: 'cloud-computing-systems',
+      storageBucket: 'cloud-computing-systems.appspot.com',
+      messagingSenderId: '321417080788',
+      appId: '1:321417080788:web:cd357a543a3fc896f37041'
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  }, []);
+
   return (
     <Router>
       <div>
