@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Login = () => {
+const Login = ({ history }) => {
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -38,6 +39,9 @@ const Login = () => {
       firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password)
+        .then(() => {
+          history.push("/dashboard");
+        })
         .catch(error => {
           console.log(error.message);
         });
@@ -48,6 +52,9 @@ const Login = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(data.email, data.password)
+      .then(() => {
+        history.push("/dashboard");
+      })
       .catch(error => {
         console.log(error.message);
       });
@@ -88,7 +95,7 @@ const Login = () => {
           size="large"
           onClick={handleLogIn}
         >
-          Log me in brotha
+          Log in
         </Button>
       </div>
       <div className={classes.form}>
@@ -137,11 +144,11 @@ const Login = () => {
           size="large"
           onClick={handleRegistration}
         >
-          Register me sista
+          Register
         </Button>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default withRouter(Login);
