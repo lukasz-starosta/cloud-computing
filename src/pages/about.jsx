@@ -1,7 +1,7 @@
 import React from 'react';
 
 function About() {
-    return <>o wuju</>;
+  return <>About</>;
 }
 
 export default About;
