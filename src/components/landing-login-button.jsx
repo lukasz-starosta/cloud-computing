@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// This is only an example of a component
 function LandingLoginButton() {
   const classes = useStyles();
   return (
