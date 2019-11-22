@@ -21,7 +21,7 @@ function Landing() {
           <div align="center">
             <Typography variant="h2">App name</Typography>
             <img src={logo} width="60%" height="60%" /> <br />
-            <LandingLoginButton /> <br />
+            <LandingLoginButton />
             <LandingSignupButton /> <br />
           </div>
         </Grid>
