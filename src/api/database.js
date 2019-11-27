@@ -32,7 +32,7 @@ const database = {
   },
 
   async getPosts() {
-    const parentPromise = await this.getAllFromCollection("users");
+    const parentPromise = await this.getAllFromCollection('users');
     const users = parentPromise.docs;
     const createPost = (username, postId, post) => ({
       username,
@@ -60,7 +60,7 @@ const database = {
   },
 
   async setUser(user) {
-    const users = this.collection("users");
+    const users = this.collection('users');
     const uid = user.uid;
     delete user.uid;
     users.doc(uid).set(user);
