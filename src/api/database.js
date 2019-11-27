@@ -32,7 +32,7 @@ const database = {
   },
 
   async getPosts() {
-    const parentPromise = await this.getAllFromCollection('users');
+    const parentPromise = await this.getAllFromCollection("users");
     const users = parentPromise.docs;
     const createPost = (username, postId, post) => ({
       username,
@@ -45,14 +45,25 @@ const database = {
     const posts = [];
 
     for (let i = 0; i < users.length; i++) {
-      const resultPromise = await this.getAllFromCollection(`users/${users[i].id}/posts`);
+      const resultPromise = await this.getAllFromCollection(
+        `users/${users[i].id}/posts`
+      );
 
       posts.push(
-        ...resultPromise.docs.map(doc => createPost(users[i].data().name, doc.id, doc.data()))
+        ...resultPromise.docs.map(doc =>
+          createPost(users[i].data().name, doc.id, doc.data())
+        )
       );
     }
 
     return posts;
+  },
+
+  async setUser(user) {
+    const users = this.collection("users");
+    const uid = user.uid;
+    delete user.uid;
+    users.doc(uid).set(user);
   }
 };
 

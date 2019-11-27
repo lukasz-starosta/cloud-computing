@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import firebase from "firebase";
+import { DatePicker } from "@material-ui/pickers";
+import database from "../api/database";
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -29,17 +31,31 @@ const Login = ({ history }) => {
   const [data, setData] = useState({
     email: "",
     password: "",
-    passwordConfirm: ""
+    passwordConfirm: "",
+    birthDate: new Date(),
+    name: "",
+    surname: ""
   });
 
   const classes = useStyles();
 
   const handleRegistration = () => {
+    const createUser = async user => {
+      await database.setUser({
+        uid: user.uid,
+        email: data.email,
+        name: data.name,
+        surname: data.surname,
+        birthDate: data.birthDate
+      });
+    };
+
     if (data.password === data.passwordConfirm) {
       firebase
         .auth()
         .createUserWithEmailAndPassword(data.email, data.password)
-        .then(() => {
+        .then(result => {
+          createUser(result.user);
           history.push("/dashboard");
         })
         .catch(error => {
@@ -68,6 +84,7 @@ const Login = ({ history }) => {
           className={classes.field}
           required
           variant="outlined"
+          type="email"
           label="Email"
           onChange={event => {
             event.persist();
@@ -137,6 +154,44 @@ const Login = ({ history }) => {
               return { ...rest, passwordConfirm: event.target.value };
             });
           }}
+        />
+        <TextField
+          className={classes.field}
+          required
+          variant="outlined"
+          label="Name"
+          onChange={event => {
+            event.persist();
+            setData(rest => {
+              return { ...rest, name: event.target.value };
+            });
+          }}
+        />
+        <TextField
+          className={classes.field}
+          required
+          variant="outlined"
+          label="Surname"
+          onChange={event => {
+            event.persist();
+            setData(rest => {
+              return { ...rest, surname: event.target.value };
+            });
+          }}
+        />
+        <DatePicker
+          required
+          className={classes.field}
+          variant="inline"
+          inputVariant="outlined"
+          label="Birth date"
+          value={data.birthDate}
+          onChange={date => {
+            setData(rest => {
+              return { ...rest, birthDate: date };
+            });
+          }}
+          format="MM/dd/yyyy"
         />
         <Button
           variant="contained"
