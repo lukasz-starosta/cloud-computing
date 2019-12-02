@@ -1,21 +1,21 @@
-import React from "react";
-import { Avatar, makeStyles } from "@material-ui/core";
-import CakeIcon from "@material-ui/icons/Cake";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import PlaceIcon from "@material-ui/icons/Place";
-import SchoolIcon from "@material-ui/icons/School";
+import React from 'react';
+import { Avatar, makeStyles } from '@material-ui/core';
+import CakeIcon from '@material-ui/icons/Cake';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import PlaceIcon from '@material-ui/icons/Place';
+import SchoolIcon from '@material-ui/icons/School';
 
 const useStyles = makeStyles({
   profileBg: {
-    backgroundColor: "#4d1d2c",
-    backgroundImage: `url(${"http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg"})`,
-    backgroundSize: "cover",
+    backgroundColor: '#4d1d2c',
+    backgroundImage: `url(${'http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg'})`,
+    backgroundSize: 'cover',
     height: 250
   },
   profile: {
@@ -28,9 +28,9 @@ const useStyles = makeStyles({
     margin: 10,
     marginLeft: 40,
     marginTop: -100,
-    border: "solid",
+    border: 'solid',
     borderWidth: 5,
-    borderColor: "#FFF"
+    borderColor: '#FFF'
   },
   post: {
     marginBottom: 30,
@@ -52,22 +52,22 @@ function Profile() {
     <div className={classes.profile}>
       <ProfilePicture />
 
-      <NameAndSurname name="Iga" surname="Wójcik" />
-      <BirthDate date="34.13.208" />
+      <NameAndSurname name='Iga' surname='Wójcik' />
+      <BirthDate date='34.13.208' />
 
-      <BirthPlace place="Łódź" />
-      <Studies school="wyzsza szkoła robienia hałasu" />
+      <BirthPlace place='Łódź' />
+      <Studies school='wyzsza szkoła robienia hałasu' />
       <NewPost></NewPost>
 
       <Post
-        title="dzisiaj"
-        text="czuje sie dzisiaj swietnie :)"
-        date="11.20.19"
+        title='dzisiaj'
+        text='czuje sie dzisiaj swietnie :)'
+        date='11.20.19'
       />
       <Post
-        title="A dzisiaj"
-        text="czuje sie dzisiaj chujowo :("
-        date="10.20.19"
+        title='A dzisiaj'
+        text='czuje sie dzisiaj chujowo :('
+        date='10.20.19'
       />
     </div>
   );
@@ -81,7 +81,7 @@ function ProfilePicture() {
       <Box className={classes.profileBg}></Box>
       <Avatar
         className={classes.bigAvatar}
-        src="https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg"
+        src='https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg'
       />
     </>
   );
@@ -130,16 +130,16 @@ function Studies(props) {
 function NewPost() {
   const classes = useStyles();
   return (
-    <Box className={classes.addPost} borderTop={2} borderColor="#4a4949">
+    <Box className={classes.addPost} borderTop={2} borderColor='#4a4949'>
       <Grid
         container
         spacing={5}
-        direction="column"
-        alignItems="center"
-        justify="center"
+        direction='column'
+        alignItems='center'
+        justify='center'
       >
         <Grid item xs={3}>
-          <Typography variant="h4" component="h3" color="textSecondary">
+          <Typography variant='h4' component='h3' color='textSecondary'>
             My posts
           </Typography>
         </Grid>
@@ -147,21 +147,21 @@ function NewPost() {
         <Grid
           container
           spacing={5}
-          direction="row"
-          alignItems="center"
-          justify="center"
+          direction='row'
+          alignItems='center'
+          justify='center'
         >
           <Grid item xs={8}>
             <TextField
-              id="outlined-basic"
+              id='outlined-basic'
               className={classes.textField}
-              label="New Post"
-              variant="outlined"
-              width="auto"
+              label='New Post'
+              variant='outlined'
+              width='auto'
             />
           </Grid>
           <Grid item xs={4}>
-            <Fab color="primary" variant="extended" aria-label="Add">
+            <Fab color='primary' variant='extended' aria-label='Add'>
               <AddIcon className={classes.extendedIcon} />
               Post
             </Fab>
@@ -180,18 +180,18 @@ function Post(props) {
     <div>
       <Grid>
         <Paper className={classes.post}>
-          <Box display="flex" p={1} bgcolor="background.paper">
+          <Box display='flex' p={1} bgcolor='background.paper'>
             <Box p={1} flexGrow={1}>
-              <Typography variant="h5" component="h3">
+              <Typography variant='h5' component='h3'>
                 {title}
               </Typography>
             </Box>
             <Box p={1}>
-              <Typography component="span">{date}</Typography>
+              <Typography component='span'>{date}</Typography>
             </Box>
           </Box>
 
-          <Typography component="p">{text}</Typography>
+          <Typography component='p'>{text}</Typography>
         </Paper>
       </Grid>
     </div>
