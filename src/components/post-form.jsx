@@ -39,11 +39,11 @@ const NewPost = ({ user, fetchPosts }) => {
   const classes = useStyles();
 
   const handleAddPost = () => {
-    const createPost = async (userUid, post) => {
+    const addPost = async (userUid, post) => {
       await database.setPost(userUid, post);
     };
 
-    createPost(user.uid, post).then(() => {
+    addPost(user.uid, post).then(() => {
       fetchPosts();
       setPost({ content: '' });
     });
