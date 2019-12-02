@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Post from '../components/post';
+import NewPost from '../components/post-form';
 import database from '../api/database';
 
 function Dashboard() {
@@ -17,11 +18,14 @@ function Dashboard() {
   if (posts.length === 0) return <></>;
 
   return (
-    <div>
-      {posts.map(post => (
-        <Post key={post.post.id} username={post.username} post={post.post} />
-      ))}
-    </div>
+    <>
+      <NewPost />
+      <div>
+        {posts.map(post => (
+          <Post key={post.post.id} username={post.username} post={post.post} />
+        ))}
+      </div>
+    </>
   );
 }
 

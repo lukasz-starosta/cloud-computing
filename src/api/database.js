@@ -64,6 +64,14 @@ const database = {
     const uid = user.uid;
     delete user.uid;
     users.doc(uid).set(user);
+  },
+
+  async setPost(userUid, post) {
+    const posts = this.collection('users')
+      .doc(userUid)
+      .collection('posts');
+
+    posts.add(post);
   }
 };
 
