@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import { colors } from '../assets/colors';
 import Fab from '@material-ui/core/Fab';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import database from '../api/database';
+import firebase from 'firebase';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -27,14 +29,28 @@ const useStyles = makeStyles(theme => ({
     alignSelf: 'flex-end'
   },
   extendedIcon: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
 }));
 
-const NewPost = () => {
+const NewPost = ({ user, fetchPosts }) => {
   const [post, setPost] = useState({ content: '' });
 
   const classes = useStyles();
+
+  const handleAddPost = () => {
+    const createPost = async (userUid, post) => {
+      await database.setPost(userUid, post);
+    };
+
+    createPost(user.uid, {
+      ...post,
+      created_at: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+      fetchPosts();
+      setPost({ content: '' });
+    });
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -47,12 +63,15 @@ const NewPost = () => {
           rowsMax='4'
           value={post.content}
           onChange={event => {
-            setPost(event.target.value);
+            event.persist();
+            setPost({
+              content: event.target.value
+            });
           }}
           variant='outlined'
         />
         <div className={classes.button}>
-          <Fab color='primary' variant='extended'>
+          <Fab color='primary' variant='extended' onClick={handleAddPost}>
             <PostAddIcon className={classes.extendedIcon} />
             Add Post
           </Fab>

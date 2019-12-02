@@ -16,6 +16,7 @@ import database from './api/database';
 
 function App() {
   const [isReady, setIsReady] = useState(false);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     var firebaseConfig = {
@@ -31,6 +32,10 @@ function App() {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     database.initialize(firebase.firestore());
+
+    firebase.auth().onAuthStateChanged(user => {
+      setUser(user);
+    });
 
     setIsReady(true);
   }, []);
@@ -49,9 +54,10 @@ function App() {
               <Route exact path='/'>
                 <Landing />
               </Route>
-              <Route path='/dashboard'>
-                <Dashboard />
-              </Route>
+              <Route
+                path='/dashboard'
+                render={props => <Dashboard {...props} user={user} />}
+              ></Route>
               <Route path='/profile'>
                 <Profile />
               </Route>
