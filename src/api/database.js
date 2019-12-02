@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 const database = {
   initialize(db) {
     this.db = db;
@@ -71,7 +73,10 @@ const database = {
       .doc(userUid)
       .collection('posts');
 
-    posts.add(post);
+    posts.add({
+      ...post,
+      created_at: firebase.firestore.FieldValue.serverTimestamp()
+    });
   }
 };
 

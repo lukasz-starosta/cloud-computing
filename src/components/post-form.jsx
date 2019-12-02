@@ -5,7 +5,7 @@ import { colors } from '../assets/colors';
 import Fab from '@material-ui/core/Fab';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import database from '../api/database';
-import firebase from 'firebase';
+
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -43,10 +43,7 @@ const NewPost = ({ user, fetchPosts }) => {
       await database.setPost(userUid, post);
     };
 
-    createPost(user.uid, {
-      ...post,
-      created_at: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
+    createPost(user.uid, post).then(() => {
       fetchPosts();
       setPost({ content: '' });
     });
