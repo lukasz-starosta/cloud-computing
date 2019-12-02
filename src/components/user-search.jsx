@@ -87,7 +87,7 @@ function UserSearch() {
     user
       .data()
       .name.toLowerCase()
-      .startsWith(value)
+      .startsWith(value.toLowerCase())
   );
 
   const classes = useStyles();
