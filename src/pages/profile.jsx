@@ -1,22 +1,24 @@
-import React from 'react';
-import { Avatar, makeStyles } from '@material-ui/core';
-import CakeIcon from '@material-ui/icons/Cake';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import PlaceIcon from '@material-ui/icons/Place';
-import SchoolIcon from '@material-ui/icons/School';
+import React from "react";
+import { Avatar, makeStyles } from "@material-ui/core";
+import CakeIcon from "@material-ui/icons/Cake";
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import PlaceIcon from "@material-ui/icons/Place";
+import SchoolIcon from "@material-ui/icons/School";
 
 const useStyles = makeStyles({
   profileBg: {
-    backgroundColor: '#4d1d2c',
-    backgroundImage: `url(${'http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg'})`,
-    backgroundSize: 'cover',
-    height: 250
+    backgroundColor: "#4d1d2c",
+    backgroundImage: `url(${"http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg"})`,
+    backgroundSize: "cover",
+    height: 250,
+    marginLeft: -32,
+    marginRight: -32
   },
   profile: {
     paddingBottom: 20,
@@ -28,12 +30,12 @@ const useStyles = makeStyles({
     margin: 10,
     marginLeft: 40,
     marginTop: -100,
-    border: 'solid',
+    border: "solid",
     borderWidth: 5,
-    borderColor: '#FFF'
+    borderColor: "#FFF"
   },
   post: {
-    marginBottom: 30,
+    marginBottom: 10,
     padding: 20
   },
   textField: {
@@ -41,6 +43,7 @@ const useStyles = makeStyles({
   },
 
   addPost: {
+    marginTop: 30,
     marginBottom: 30
   }
 });
@@ -53,14 +56,26 @@ function Profile() {
       <ProfilePicture />
 
       <NameAndSurname name="Iga" surname="Wójcik" />
-      <BirthDate date="34.13.208" />
 
-      <BirthPlace place="Łódź" />
-      <Studies school="wyzsza szkoła robienia hałasu" />
+      <Info
+        icon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
+        text=" 11.06.1999"
+      ></Info>
+
+      <Typography
+        variant="h4"
+        component="h3"
+        color="textSecondary"
+        align="center"
+        justify="center"
+      >
+        My posts
+      </Typography>
+
       <NewPost></NewPost>
 
-      <Post title="dzisiaj" text="czuje sie dzisiaj swietnie :)" date="11.20.19" />
-      <Post title="A dzisiaj" text="czuje sie dzisiaj chujowo :(" date="10.20.19" />
+      <Post title="A dzisiaj" text="czuje sie  swietnie :)" date="22.11.19" />
+      <Post title="Dzisiaj" text="czuje sie słabo :(" date="21.11.19" />
     </div>
   );
 }
@@ -89,63 +104,41 @@ function NameAndSurname(props) {
   );
 }
 
-function BirthPlace(props) {
-  const { place } = props;
-
+function Info(props) {
+  const { icon, text } = props;
   return (
-    <p>
-      <PlaceIcon /> {place}
-    </p>
-  );
-}
-
-function BirthDate(props) {
-  const { date } = props;
-
-  return (
-    <p>
-      <CakeIcon /> {date}
-    </p>
-  );
-}
-
-function Studies(props) {
-  const { school } = props;
-
-  return (
-    <p>
-      <SchoolIcon /> {school}
-    </p>
+    <div>
+      {icon}
+      {text}
+    </div>
   );
 }
 
 function NewPost() {
   const classes = useStyles();
   return (
-    <Box className={classes.addPost} borderTop={2} borderColor="#4a4949">
-      <Grid container spacing={5} direction="column" alignItems="center" justify="center">
-        <Grid item xs={3}>
-          <Typography variant="h4" component="h3" color="textSecondary">
-            My posts
-          </Typography>
+    <Box className={classes.addPost} borderColor="#4a4949">
+      <Grid
+        container
+        spacing={5}
+        direction="row"
+        alignItems="center"
+        justify="center"
+      >
+        <Grid item xs={8}>
+          <TextField
+            id="outlined-basic"
+            className={classes.textField}
+            label="New Post"
+            variant="outlined"
+            width="auto"
+          />
         </Grid>
-
-        <Grid container spacing={5} direction="row" alignItems="center" justify="center">
-          <Grid item xs={8}>
-            <TextField
-              id="outlined-basic"
-              className={classes.textField}
-              label="New Post"
-              variant="outlined"
-              width="auto"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Fab color="primary" variant="extended" aria-label="Add">
-              <AddIcon className={classes.extendedIcon} />
-              Post
-            </Fab>
-          </Grid>
+        <Grid item xs={4}>
+          <Fab color="primary" variant="extended" aria-label="Add">
+            <AddIcon className={classes.extendedIcon} />
+            Post
+          </Fab>
         </Grid>
       </Grid>
     </Box>
