@@ -1,21 +1,21 @@
-import React from "react";
-import { Avatar, makeStyles } from "@material-ui/core";
-import CakeIcon from "@material-ui/icons/Cake";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import PlaceIcon from "@material-ui/icons/Place";
-import SchoolIcon from "@material-ui/icons/School";
+import React from 'react';
+import { Avatar, makeStyles } from '@material-ui/core';
+import CakeIcon from '@material-ui/icons/Cake';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import PlaceIcon from '@material-ui/icons/Place';
+import SchoolIcon from '@material-ui/icons/School';
 
 const useStyles = makeStyles({
   profileBg: {
-    backgroundColor: "#4d1d2c",
-    backgroundImage: `url(${"http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg"})`,
-    backgroundSize: "cover",
+    backgroundColor: '#4d1d2c',
+    backgroundImage: `url(${'http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg'})`,
+    backgroundSize: 'cover',
     height: 250,
     marginLeft: -32,
     marginRight: -32
@@ -30,9 +30,9 @@ const useStyles = makeStyles({
     margin: 10,
     marginLeft: 40,
     marginTop: -100,
-    border: "solid",
+    border: 'solid',
     borderWidth: 5,
-    borderColor: "#FFF"
+    borderColor: '#FFF'
   },
   post: {
     marginBottom: 10,
@@ -58,7 +58,7 @@ function Profile() {
       <NameAndSurname name="Iga" surname="Wójcik" />
 
       <Info
-        icon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
+        icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />}
         text=" 11.06.1999"
       ></Info>
 
