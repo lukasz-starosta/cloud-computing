@@ -13,15 +13,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function LandingLoginButton() {
+function LinkButton(props) {
   const classes = useStyles();
   return (
-    <Link to="/login">
-      <Button variant="contained" color="primary" className={classes.button}>
-        Log in
+    <Link to={props.onClick}>
+      <Button
+        variant="contained"
+        color={props.color}
+        className={classes.button}
+      >
+        {props.text}
       </Button>
     </Link>
   );
 }
 
-export default LandingLoginButton;
+export default LinkButton;

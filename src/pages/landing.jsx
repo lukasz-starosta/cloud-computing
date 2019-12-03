@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from '../logo.svg';
-import LandingLoginButton from '../components/landing-login-button';
-import LandingSignupButton from '../components/landing-signup-button';
+import LinkButton from '../components/link-button';
 import FeaturesList from '../components/features-list';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,8 +19,8 @@ function Landing() {
               <img src={logo} width="60%" height="60%" />
             </Grid>
             <Grid item xs={12}>
-              <LandingLoginButton />
-              <LandingSignupButton />
+              <LinkButton color="primary" onClick="/login" text="Log in" />
+              <LinkButton color="default" onClick="/login" text="Sign up" />
             </Grid>
           </div>
         </Grid>
@@ -36,23 +35,5 @@ function Landing() {
     </section>
   );
 }
-
-/*<section>
-      <Grid container spacing={1}>
-        <Grid item xs={6}>
-          <div align="center">
-            <Typography variant="h2">App name</Typography>
-            <img src={logo} width="60%" height="60%" /> <br />
-            <LandingLoginButton />
-            <LandingSignupButton /> <br />
-          </div>
-        </Grid>
-        <Grid item xs={6}>
-          <div align="center">
-            <FeaturesList />
-          </div>
-        </Grid>
-      </Grid>
-    </section>*/
 
 export default Landing;
