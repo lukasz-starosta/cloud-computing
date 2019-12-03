@@ -1,6 +1,6 @@
 import React from 'react';
 import { colors } from '../assets/colors';
-import Button from './button';
+import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 
 const image1 = {
