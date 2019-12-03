@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Post from '../components/post';
-import database from '../api/database';
+import React, { useEffect, useState } from "react";
+import Post from "../components/post";
+import database from "../api/database";
 
 function Dashboard() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     async function fetch() {
+
       setPosts(await database.getPosts());
     }
 

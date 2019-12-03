@@ -8,8 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import PlaceIcon from '@material-ui/icons/Place';
-import SchoolIcon from '@material-ui/icons/School';
 
 const useStyles = makeStyles({
   profileBg: {
@@ -88,7 +86,7 @@ function ProfilePicture() {
       <Box className={classes.profileBg}></Box>
       <Avatar
         className={classes.bigAvatar}
-        src="https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg"
+        src='https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg'
       />
     </>
   );
@@ -153,18 +151,18 @@ function Post(props) {
     <div>
       <Grid>
         <Paper className={classes.post}>
-          <Box display="flex" p={1} bgcolor="background.paper">
+          <Box display='flex' p={1} bgcolor='background.paper'>
             <Box p={1} flexGrow={1}>
-              <Typography variant="h5" component="h3">
+              <Typography variant='h5' component='h3'>
                 {title}
               </Typography>
             </Box>
             <Box p={1}>
-              <Typography component="span">{date}</Typography>
+              <Typography component='span'>{date}</Typography>
             </Box>
           </Box>
 
-          <Typography component="p">{text}</Typography>
+          <Typography component='p'>{text}</Typography>
         </Paper>
       </Grid>
     </div>

@@ -1,0 +1,63 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
+import CreateIcon from "@material-ui/icons/Create";
+import { grey } from "@material-ui/core/colors";
+
+const useStyles = makeStyles(theme => ({
+  icon: {
+    color: grey[200],
+    backgroundColor: grey[900]
+  },
+  title: {
+    margin: theme.spacing(4, 0, 2)
+  }
+}));
+
+function FeaturesList() {
+  const classes = useStyles();
+
+  return (
+    <Grid item xs={12} md={8}>
+      <Typography variant="h6" className={classes.title}>
+        Features of our exquisite app:
+      </Typography>
+      <List>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar className={classes.icon}>
+              <AccountBoxIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText>Follow other users</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar className={classes.icon}>
+              <AddPhotoAlternateIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText>Add pictures</ListItemText>
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar className={classes.icon}>
+              <CreateIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText>Write posts</ListItemText>
+        </ListItem>
+      </List>
+    </Grid>
+  );
+}
+
+export default FeaturesList;
