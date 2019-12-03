@@ -37,6 +37,8 @@ function MainLayout(props) {
             setUser({ ...doc.data(), uid: user.uid });
           }
         });
+      } else {
+        setUser(null);
       }
 
       setLoading(false);
