@@ -8,8 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import PlaceIcon from '@material-ui/icons/Place';
-import SchoolIcon from '@material-ui/icons/School';
 
 const useStyles = makeStyles({
   profileBg: {

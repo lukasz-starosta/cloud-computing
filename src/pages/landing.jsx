@@ -3,7 +3,6 @@ import logo from '../logo.svg';
 import LinkButton from '../components/link-button';
 import FeaturesList from '../components/features-list';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 function Landing() {
@@ -16,11 +15,11 @@ function Landing() {
               <Typography variant="h2">App name</Typography>
             </Grid>
             <Grid item xs={12}>
-              <img src={logo} width="60%" height="60%" />
+              <img src={logo} alt="Application logo" width="60%" height="60%" />
             </Grid>
             <Grid item xs={12}>
-              <LinkButton color="primary" onClick="/login" text="Log in" />
-              <LinkButton color="default" onClick="/login" text="Sign up" />
+              <LinkButton color="primary" destination="/login" text="Log in" />
+              <LinkButton color="default" destination="/login" text="Sign up" />
             </Grid>
           </div>
         </Grid>

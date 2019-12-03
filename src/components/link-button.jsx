@@ -1,10 +1,12 @@
 import React from 'react';
-import login from '../pages/login';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
+  link: {
+    textDecoration: 'none'
+  },
   button: {
     margin: theme.spacing(1)
   },
@@ -16,9 +18,9 @@ const useStyles = makeStyles(theme => ({
 function LinkButton(props) {
   const classes = useStyles();
   return (
-    <Link to={props.onClick}>
+    <Link to={props.destination} className={classes.link}>
       <Button
-        variant="contained"
+        variant='contained'
         color={props.color}
         className={classes.button}
       >
