@@ -6,7 +6,6 @@ import Fab from '@material-ui/core/Fab';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import database from '../api/database';
 
-
 const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'flex',
@@ -57,7 +56,7 @@ const NewPost = ({ user, fetchPosts }) => {
           label="What's happening?"
           multiline
           rows='4'
-          rowsMax='4'
+          rowsMax='6'
           value={post.content}
           onChange={event => {
             event.persist();

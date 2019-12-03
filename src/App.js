@@ -16,7 +16,6 @@ import database from './api/database';
 
 function App() {
   const [isReady, setIsReady] = useState(false);
-  const [user, setUser] = useState();
 
   useEffect(() => {
     var firebaseConfig = {
@@ -33,10 +32,6 @@ function App() {
     firebase.initializeApp(firebaseConfig);
     database.initialize(firebase.firestore());
 
-    firebase.auth().onAuthStateChanged(user => {
-      setUser(user);
-    });
-
     setIsReady(true);
   }, []);
 
@@ -46,30 +41,32 @@ function App() {
   return (
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <div>
-          <MainLayout>
-            {/* A <Switch> looks through its children <Route>s and
+        <MainLayout>
+          {user => (
+            <div>
+              {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-            <Switch>
-              <Route exact path='/'>
-                <Landing />
-              </Route>
-              <Route
-                path='/dashboard'
-                render={props => <Dashboard {...props} user={user} />}
-              ></Route>
-              <Route path='/profile'>
-                <Profile />
-              </Route>
-              <Route path='/about'>
-                <About />
-              </Route>
-              <Route path='/login'>
-                <Login />
-              </Route>
-            </Switch>
-          </MainLayout>
-        </div>
+              <Switch>
+                <Route exact path='/'>
+                  <Landing />
+                </Route>
+                <Route
+                  path='/dashboard'
+                  render={props => <Dashboard {...props} user={user} />}
+                ></Route>
+                <Route path='/profile'>
+                  <Profile />
+                </Route>
+                <Route path='/about'>
+                  <About />
+                </Route>
+                <Route path='/login'>
+                  <Login />
+                </Route>
+              </Switch>
+            </div>
+          )}
+        </MainLayout>
       </MuiPickersUtilsProvider>
     </Router>
   );

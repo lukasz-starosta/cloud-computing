@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "./navbar";
-import { Container, makeStyles } from "@material-ui/core";
-import { colors } from "../../assets/colors";
-import firebase from "firebase";
+import React, { useState, useEffect } from 'react';
+import Navbar from './navbar';
+import { Container, makeStyles } from '@material-ui/core';
+import { colors } from '../../assets/colors';
+import firebase from 'firebase';
+import database from '../../api/database';
 
 const useStyles = makeStyles({
   container: {
@@ -20,10 +21,24 @@ function MainLayout(props) {
 
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState();
 
   useEffect(() => {
+    const getUser = async uid => {
+      return await database.getUser(uid);
+    };
+
     firebase.auth().onAuthStateChanged(user => {
       setIsLoggedIn(user ? true : false);
+
+      if (user) {
+        getUser(user.uid).then(doc => {
+          if (doc.exists) {
+            setUser({ ...doc.data(), uid: user.uid });
+          }
+        });
+      }
+
       setLoading(false);
     });
   }, []);
@@ -32,8 +47,8 @@ function MainLayout(props) {
     !loading && (
       <>
         <Navbar isLoggedIn={isLoggedIn} />
-        <Container className={classes.container} maxWidth="md">
-          {children}
+        <Container className={classes.container} maxWidth='md'>
+          {children(user)}
         </Container>
       </>
     )

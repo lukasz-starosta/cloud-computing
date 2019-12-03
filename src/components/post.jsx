@@ -54,13 +54,18 @@ function Post(props) {
       </div>
       <div style={imageStyle}>
         <img src={image1.src} alt={image1.alt} width={image1.width} />
-        <img src={image2.src} alt={image2.alt} width={image2.width} hspace="30" />
+        <img
+          src={image2.src}
+          alt={image2.alt}
+          width={image2.width}
+          hspace='30'
+        />
       </div>
       <p>{content}</p>
       <div>
         <Toolbar style={outerButtonsStyle}>
-          <Button isLikeIcon={true} color="secondary" />
-          <Button isLikeIcon={false} color="primary" />
+          <Button isLikeIcon={true} color='secondary' />
+          <Button isLikeIcon={false} color='primary' />
         </Toolbar>
       </div>
     </div>
