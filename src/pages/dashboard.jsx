@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Post from "../components/post";
 import database from "../api/database";
 
-function MultiplePosts() {
+function Dashboard() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     async function fetch() {
-      setPosts(await database.getAllFromSubcollection("users", "posts"));
+
+      setPosts(await database.getPosts());
     }
 
     fetch();
@@ -19,14 +20,10 @@ function MultiplePosts() {
   return (
     <div>
       {posts.map(post => (
-        <Post username="wuja" content={post.content} />
+        <Post key={post.post.id} username={post.username} post={post.post} />
       ))}
     </div>
   );
-}
-
-function Dashboard() {
-  return <MultiplePosts />;
 }
 
 export default Dashboard;

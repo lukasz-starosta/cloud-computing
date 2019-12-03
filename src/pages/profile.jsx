@@ -16,7 +16,9 @@ const useStyles = makeStyles({
     backgroundColor: '#4d1d2c',
     backgroundImage: `url(${'http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg'})`,
     backgroundSize: 'cover',
-    height: 250
+    height: 250,
+    marginLeft: -32,
+    marginRight: -32
   },
   profile: {
     paddingBottom: 20,
@@ -33,7 +35,7 @@ const useStyles = makeStyles({
     borderColor: '#FFF'
   },
   post: {
-    marginBottom: 30,
+    marginBottom: 10,
     padding: 20
   },
   textField: {
@@ -41,6 +43,7 @@ const useStyles = makeStyles({
   },
 
   addPost: {
+    marginTop: 30,
     marginBottom: 30
   }
 });
@@ -52,23 +55,27 @@ function Profile() {
     <div className={classes.profile}>
       <ProfilePicture />
 
-      <NameAndSurname name='Iga' surname='Wójcik' />
-      <BirthDate date='34.13.208' />
+      <NameAndSurname name="Iga" surname="Wójcik" />
 
-      <BirthPlace place='Łódź' />
-      <Studies school='wyzsza szkoła robienia hałasu' />
+      <Info
+        icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />}
+        text=" 11.06.1999"
+      ></Info>
+
+      <Typography
+        variant="h4"
+        component="h3"
+        color="textSecondary"
+        align="center"
+        justify="center"
+      >
+        My posts
+      </Typography>
+
       <NewPost></NewPost>
 
-      <Post
-        title='dzisiaj'
-        text='czuje sie dzisiaj swietnie :)'
-        date='11.20.19'
-      />
-      <Post
-        title='A dzisiaj'
-        text='czuje sie dzisiaj chujowo :('
-        date='10.20.19'
-      />
+      <Post title="A dzisiaj" text="czuje sie  swietnie :)" date="22.11.19" />
+      <Post title="Dzisiaj" text="czuje sie słabo :(" date="21.11.19" />
     </div>
   );
 }
@@ -97,75 +104,41 @@ function NameAndSurname(props) {
   );
 }
 
-function BirthPlace(props) {
-  const { place } = props;
-
+function Info(props) {
+  const { icon, text } = props;
   return (
-    <p>
-      <PlaceIcon /> {place}
-    </p>
-  );
-}
-
-function BirthDate(props) {
-  const { date } = props;
-
-  return (
-    <p>
-      <CakeIcon /> {date}
-    </p>
-  );
-}
-
-function Studies(props) {
-  const { school } = props;
-
-  return (
-    <p>
-      <SchoolIcon /> {school}
-    </p>
+    <div>
+      {icon}
+      {text}
+    </div>
   );
 }
 
 function NewPost() {
   const classes = useStyles();
   return (
-    <Box className={classes.addPost} borderTop={2} borderColor='#4a4949'>
+    <Box className={classes.addPost} borderColor="#4a4949">
       <Grid
         container
         spacing={5}
-        direction='column'
-        alignItems='center'
-        justify='center'
+        direction="row"
+        alignItems="center"
+        justify="center"
       >
-        <Grid item xs={3}>
-          <Typography variant='h4' component='h3' color='textSecondary'>
-            My posts
-          </Typography>
+        <Grid item xs={8}>
+          <TextField
+            id="outlined-basic"
+            className={classes.textField}
+            label="New Post"
+            variant="outlined"
+            width="auto"
+          />
         </Grid>
-
-        <Grid
-          container
-          spacing={5}
-          direction='row'
-          alignItems='center'
-          justify='center'
-        >
-          <Grid item xs={8}>
-            <TextField
-              id='outlined-basic'
-              className={classes.textField}
-              label='New Post'
-              variant='outlined'
-              width='auto'
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Fab color='primary' variant='extended' aria-label='Add'>
-              <AddIcon className={classes.extendedIcon} />
-              Post
-            </Fab>
-          </Grid>
+        <Grid item xs={4}>
+          <Fab color="primary" variant="extended" aria-label="Add">
+            <AddIcon className={classes.extendedIcon} />
+            Post
+          </Fab>
         </Grid>
       </Grid>
     </Box>

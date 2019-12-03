@@ -1,7 +1,8 @@
-import React from 'react';
-import Navbar from './navbar';
-import { Container, makeStyles } from '@material-ui/core';
-import { colors } from '../../assets/colors';
+import React, { useState, useEffect } from "react";
+import Navbar from "./navbar";
+import { Container, makeStyles } from "@material-ui/core";
+import { colors } from "../../assets/colors";
+import firebase from "firebase";
 
 const useStyles = makeStyles({
   container: {
@@ -17,13 +18,25 @@ function MainLayout(props) {
   const { children } = props;
   const classes = useStyles();
 
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      setIsLoggedIn(user ? true : false);
+      setLoading(false);
+    });
+  }, []);
+
   return (
-    <>
-      <Navbar />
-      <Container className={classes.container} maxWidth="md">
-        {children}
-      </Container>
-    </>
+    !loading && (
+      <>
+        <Navbar isLoggedIn={isLoggedIn} />
+        <Container className={classes.container} maxWidth="md">
+          {children}
+        </Container>
+      </>
+    )
   );
 }
 

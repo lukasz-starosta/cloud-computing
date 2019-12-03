@@ -17,8 +17,6 @@ const image2 = {
   width: '162px'
 };
 
-const date = '5 minutes ago';
-
 const postStyle = {
   backgroundColor: colors.AWS_whiteish,
   borderRadius: '4px',
@@ -44,13 +42,15 @@ const outerButtonsStyle = {
 };
 
 function Post(props) {
-  const { username, content } = props;
+  const { username, post } = props;
+  const { content, created_at } = post;
 
   return (
     <div style={postStyle}>
       <div style={timeAndNameStyle}>
         <h3>{username}</h3>
-        <p>{date}</p>
+        {/* epoch * 1000 to properly convert to date */}
+        <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>
       </div>
       <div style={imageStyle}>
         <img src={image1.src} alt={image1.alt} width={image1.width} />

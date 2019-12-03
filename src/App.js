@@ -7,6 +7,8 @@ import Profile from './pages/profile';
 import MainLayout from './components/layout/main-layout';
 import About from './pages/about';
 import Landing from './pages/landing';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -38,29 +40,31 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <MainLayout>
-          {/* A <Switch> looks through its children <Route>s and
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <div>
+          <MainLayout>
+            {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-          <Switch>
-            <Route exact path="/">
-              <Landing />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-            <Route path="/about">
-              <About />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-          </Switch>
-        </MainLayout>
-      </div>
+            <Switch>
+              <Route exact path='/'>
+                <Landing />
+              </Route>
+              <Route path='/dashboard'>
+                <Dashboard />
+              </Route>
+              <Route path='/profile'>
+                <Profile />
+              </Route>
+              <Route path='/about'>
+                <About />
+              </Route>
+              <Route path='/login'>
+                <Login />
+              </Route>
+            </Switch>
+          </MainLayout>
+        </div>
+      </MuiPickersUtilsProvider>
     </Router>
   );
 }
