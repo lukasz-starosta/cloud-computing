@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
-import MainLayout from './components/layout/main-layout';
+import AppComponent from './components/layout/app-component';
 import About from './pages/about';
 import Landing from './pages/landing';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -41,7 +41,7 @@ function App() {
   return (
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <MainLayout>
+        <AppComponent>
           {user => (
             <div>
               {/* A <Switch> looks through its children <Route>s and
@@ -66,7 +66,7 @@ function App() {
               </Switch>
             </div>
           )}
-        </MainLayout>
+        </AppComponent>
       </MuiPickersUtilsProvider>
     </Router>
   );

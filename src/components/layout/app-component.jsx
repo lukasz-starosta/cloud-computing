@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   }
 });
 
-function MainLayout(props) {
+function AppComponent(props) {
   const { children } = props;
   const classes = useStyles();
 
@@ -57,4 +57,4 @@ function MainLayout(props) {
   );
 }
 
-export default MainLayout;
+export default AppComponent;
