@@ -42,25 +42,31 @@ function App() {
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <AppComponent>
-          {user => (
+          {currentUser => (
             <div>
               {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
               <Switch>
-                <Route exact path='/'>
+                <Route exact path="/">
                   <Landing />
                 </Route>
                 <Route
-                  path='/dashboard'
-                  render={props => <Dashboard {...props} user={user} />}
+                  path="/dashboard"
+                  render={props => <Dashboard {...props} currentUser={currentUser} />}
                 ></Route>
-                <Route path='/profile'>
-                  <Profile />
-                </Route>
-                <Route path='/about'>
+                <Route
+                  exact
+                  path="/profile"
+                  render={props => <Profile {...props} currentUser={currentUser} />}
+                />
+                <Route
+                  path="/profile/:id"
+                  render={props => <Profile {...props} currentUser={currentUser} />}
+                />
+                <Route path="/about">
                   <About />
                 </Route>
-                <Route path='/login'>
+                <Route path="/login">
                   <Login />
                 </Route>
               </Switch>

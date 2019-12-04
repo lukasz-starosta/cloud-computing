@@ -46,7 +46,19 @@ const useStyles = makeStyles({
   }
 });
 
-function Profile() {
+function Profile(props) {
+  const { currentUser, match, history } = props;
+
+  const userId = match.params.id;
+
+  if (!userId) {
+    if (currentUser) {
+      history.push(`/profile/${currentUser.uid}`);
+    } else {
+      history.push('/login');
+    }
+  }
+
   const classes = useStyles();
 
   return (
@@ -55,18 +67,9 @@ function Profile() {
 
       <NameAndSurname name="Iga" surname="Wójcik" />
 
-      <Info
-        icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />}
-        text=" 11.06.1999"
-      ></Info>
+      <Info icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />} text=" 11.06.1999"></Info>
 
-      <Typography
-        variant="h4"
-        component="h3"
-        color="textSecondary"
-        align="center"
-        justify="center"
-      >
+      <Typography variant="h4" component="h3" color="textSecondary" align="center" justify="center">
         My posts
       </Typography>
 
@@ -86,7 +89,7 @@ function ProfilePicture() {
       <Box className={classes.profileBg}></Box>
       <Avatar
         className={classes.bigAvatar}
-        src='https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg'
+        src="https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg"
       />
     </>
   );
@@ -116,13 +119,7 @@ function NewPost() {
   const classes = useStyles();
   return (
     <Box className={classes.addPost} borderColor="#4a4949">
-      <Grid
-        container
-        spacing={5}
-        direction="row"
-        alignItems="center"
-        justify="center"
-      >
+      <Grid container spacing={5} direction="row" alignItems="center" justify="center">
         <Grid item xs={8}>
           <TextField
             id="outlined-basic"
@@ -151,18 +148,18 @@ function Post(props) {
     <div>
       <Grid>
         <Paper className={classes.post}>
-          <Box display='flex' p={1} bgcolor='background.paper'>
+          <Box display="flex" p={1} bgcolor="background.paper">
             <Box p={1} flexGrow={1}>
-              <Typography variant='h5' component='h3'>
+              <Typography variant="h5" component="h3">
                 {title}
               </Typography>
             </Box>
             <Box p={1}>
-              <Typography component='span'>{date}</Typography>
+              <Typography component="span">{date}</Typography>
             </Box>
           </Box>
 
-          <Typography component='p'>{text}</Typography>
+          <Typography component="p">{text}</Typography>
         </Paper>
       </Grid>
     </div>
