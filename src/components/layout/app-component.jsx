@@ -21,24 +21,24 @@ function AppComponent(props) {
 
   const [isLoggedIn, setIsLoggedIn] = useState();
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState();
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
     const getUser = async uid => {
       return await database.getUser(uid);
     };
 
-    firebase.auth().onAuthStateChanged(user => {
-      setIsLoggedIn(user ? true : false);
+    firebase.auth().onAuthStateChanged(currentUser => {
+      setIsLoggedIn(currentUser ? true : false);
 
-      if (user) {
-        getUser(user.uid).then(doc => {
+      if (currentUser) {
+        getUser(currentUser.uid).then(doc => {
           if (doc.exists) {
-            setUser({ ...doc.data(), uid: user.uid });
+            setCurrentUser({ ...doc.data(), uid: currentUser.uid });
           }
         });
       } else {
-        setUser(null);
+        setCurrentUser(null);
       }
 
       setLoading(false);
@@ -49,8 +49,8 @@ function AppComponent(props) {
     !loading && (
       <>
         <Navbar isLoggedIn={isLoggedIn} />
-        <Container className={classes.container} maxWidth='md'>
-          {children(user)}
+        <Container className={classes.container} maxWidth="md">
+          {children(currentUser)}
         </Container>
       </>
     )

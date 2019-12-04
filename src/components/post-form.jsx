@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const NewPost = ({ user, fetchPosts }) => {
+const NewPost = ({ currentUser, fetchPosts }) => {
   const [post, setPost] = useState({ content: '' });
 
   const classes = useStyles();
@@ -42,7 +42,7 @@ const NewPost = ({ user, fetchPosts }) => {
       await database.setPost(userUid, post);
     };
 
-    addPost(user.uid, post).then(() => {
+    addPost(currentUser.uid, post).then(() => {
       fetchPosts();
       setPost({ content: '' });
     });
@@ -55,8 +55,8 @@ const NewPost = ({ user, fetchPosts }) => {
           fullWidth={true}
           label="What's happening?"
           multiline
-          rows='4'
-          rowsMax='6'
+          rows="4"
+          rowsMax="6"
           value={post.content}
           onChange={event => {
             event.persist();
@@ -64,10 +64,10 @@ const NewPost = ({ user, fetchPosts }) => {
               content: event.target.value
             });
           }}
-          variant='outlined'
+          variant="outlined"
         />
         <div className={classes.button}>
-          <Fab color='primary' variant='extended' onClick={handleAddPost}>
+          <Fab color="primary" variant="extended" onClick={handleAddPost}>
             <PostAddIcon className={classes.extendedIcon} />
             Add Post
           </Fab>
