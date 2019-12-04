@@ -1,9 +1,15 @@
 import React from 'react';
-import logo from '../logo.svg';
 import LinkButton from '../components/link-button';
 import FeaturesList from '../components/features-list';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+const logo = {
+  src:
+    'https://i.ibb.co/CM622Zq/cumulus.png',
+  alt: 'logo',
+  width: '70%',
+  height: '70%'
+};
 
 function Landing() {
   return (
@@ -12,10 +18,7 @@ function Landing() {
         <Grid item xs={6}>
           <div align="center">
             <Grid item xs={12}>
-              <Typography variant="h2">App name</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <img src={logo} alt="Application logo" width="60%" height="60%" />
+            <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} />
             </Grid>
             <Grid item xs={12}>
               <LinkButton color="primary" destination="/login" text="Log in" />
