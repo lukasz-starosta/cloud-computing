@@ -1,7 +1,7 @@
 import React from 'react';
 import { colors } from '../assets/colors';
-import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
+import FloatingActionButton from './floating-action-button';
 
 const image1 = {
   src:
@@ -38,7 +38,8 @@ const timeAndNameStyle = {
 };
 
 const outerButtonsStyle = {
-  float: 'right'
+  float: 'right',
+  paddingRight: 0
 };
 
 function Post(props) {
@@ -54,18 +55,13 @@ function Post(props) {
       </div>
       <div style={imageStyle}>
         <img src={image1.src} alt={image1.alt} width={image1.width} />
-        <img
-          src={image2.src}
-          alt={image2.alt}
-          width={image2.width}
-          hspace='30'
-        />
+        <img src={image2.src} alt={image2.alt} width={image2.width} hspace="30" />
       </div>
       <p>{content}</p>
       <div>
         <Toolbar style={outerButtonsStyle}>
-          <Button isLikeIcon={true} color='secondary' />
-          <Button isLikeIcon={false} color='primary' />
+          <FloatingActionButton isLikeIcon color="secondary" />
+          <FloatingActionButton color="primary" />
         </Toolbar>
       </div>
     </div>
