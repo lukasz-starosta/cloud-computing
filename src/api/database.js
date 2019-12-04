@@ -1,3 +1,5 @@
+import firebase from 'firebase';
+
 const database = {
   initialize(db) {
     this.db = db;
@@ -64,6 +66,23 @@ const database = {
     const uid = user.uid;
     delete user.uid;
     users.doc(uid).set(user);
+  },
+
+  async getUser(uid) {
+    const users = this.collection('users');
+
+    return users.doc(uid).get();
+  },
+
+  async setPost(userUid, post) {
+    const posts = this.collection('users')
+      .doc(userUid)
+      .collection('posts');
+
+    posts.add({
+      ...post,
+      created_at: firebase.firestore.FieldValue.serverTimestamp()
+    });
   }
 };
 

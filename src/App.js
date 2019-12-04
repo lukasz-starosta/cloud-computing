@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
-import MainLayout from './components/layout/main-layout';
+import AppComponent from './components/layout/app-component';
 import About from './pages/about';
 import Landing from './pages/landing';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -41,29 +41,32 @@ function App() {
   return (
     <Router>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <div>
-          <MainLayout>
-            {/* A <Switch> looks through its children <Route>s and
+        <AppComponent>
+          {user => (
+            <div>
+              {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-            <Switch>
-              <Route exact path='/'>
-                <Landing />
-              </Route>
-              <Route path='/dashboard'>
-                <Dashboard />
-              </Route>
-              <Route path='/profile'>
-                <Profile />
-              </Route>
-              <Route path='/about'>
-                <About />
-              </Route>
-              <Route path='/login'>
-                <Login />
-              </Route>
-            </Switch>
-          </MainLayout>
-        </div>
+              <Switch>
+                <Route exact path='/'>
+                  <Landing />
+                </Route>
+                <Route
+                  path='/dashboard'
+                  render={props => <Dashboard {...props} user={user} />}
+                ></Route>
+                <Route path='/profile'>
+                  <Profile />
+                </Route>
+                <Route path='/about'>
+                  <About />
+                </Route>
+                <Route path='/login'>
+                  <Login />
+                </Route>
+              </Switch>
+            </div>
+          )}
+        </AppComponent>
       </MuiPickersUtilsProvider>
     </Router>
   );

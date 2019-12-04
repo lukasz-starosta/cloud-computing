@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Post from "../components/post";
-import database from "../api/database";
+import React, { useEffect, useState } from 'react';
+import Post from '../components/post';
+import NewPost from '../components/post-form';
+import database from '../api/database';
 
-function Dashboard() {
+function Dashboard({ user }) {
   const [posts, setPosts] = useState([]);
 
+  async function fetch() {
+    setPosts(await database.getPosts());
+  }
+
   useEffect(() => {
-    async function fetch() {
-
-      setPosts(await database.getPosts());
-    }
-
     fetch();
   }, []);
 
@@ -18,11 +18,14 @@ function Dashboard() {
   if (posts.length === 0) return <></>;
 
   return (
-    <div>
-      {posts.map(post => (
-        <Post key={post.post.id} username={post.username} post={post.post} />
-      ))}
-    </div>
+    <>
+      <NewPost user={user} fetchPosts={fetch} />
+      <div>
+        {posts.map(post => (
+          <Post key={post.post.id} username={post.username} post={post.post} />
+        ))}
+      </div>
+    </>
   );
 }
 
