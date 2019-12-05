@@ -2,10 +2,10 @@ import React from 'react';
 import LinkButton from '../components/link-button';
 import FeaturesList from '../components/features-list';
 import Grid from '@material-ui/core/Grid';
+import logoBig from '../assets/images/logo_big.png';
 
 const logo = {
-  src:
-    'https://i.ibb.co/CM622Zq/cumulus.png',
+  src: logoBig,
   alt: 'logo',
   width: '70%',
   height: '70%'
@@ -18,7 +18,7 @@ function Landing() {
         <Grid item xs={6}>
           <div align="center">
             <Grid item xs={12}>
-            <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} />
+              <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} />
             </Grid>
             <Grid item xs={12}>
               <LinkButton color="primary" destination="/login" text="Log in" />
