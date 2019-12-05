@@ -36,12 +36,13 @@ function AppComponent(props) {
           if (doc.exists) {
             setCurrentUser({ ...doc.data(), uid: currentUser.uid });
           }
+          setCurrentUser(null);
+          setLoading(false);
         });
       } else {
         setCurrentUser(null);
+        setLoading(false);
       }
-
-      setLoading(false);
     });
   }, []);
 
