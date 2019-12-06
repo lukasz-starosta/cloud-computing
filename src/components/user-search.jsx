@@ -5,39 +5,37 @@ import SearchIcon from '@material-ui/icons/Search';
 import database from '../api/database';
 
 const useStyles = makeStyles({
-  search: {
-    position: 'absolute',
-    right: 36,
+  searchContainer: {
+    width: 220,
+    height: 35,
+    marginLeft: 'auto'
+  },
+  searchInput: {
     borderRadius: 8,
     backgroundColor: '#3d3d4c',
     '&:hover': {
       backgroundColor: '#505061'
     },
-    marginLeft: 'auto',
-    width: 220
+    display: 'flex'
   },
   searchIcon: {
     width: 20,
-    right: 10,
-    height: '100%',
-    position: 'absolute',
     pointerEvents: 'none',
+    marginLeft: 6,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
   },
   inputRoot: {
     color: 'inherit'
   },
   inputInput: {
-    padding: '8px 8px 8px 16px',
+    padding: 8,
     width: '100%'
   },
   predictionsDropdown: {
+    position: 'relative',
+    top: 6,
     boxSizing: 'border-box',
-    position: 'absolute',
-    right: 36,
-    top: 46,
     minHeight: 200,
     width: 220,
     borderRadius: 8,
@@ -111,8 +109,8 @@ function UserSearch() {
   );
 
   return (
-    <>
-      <div className={classes.search}>
+    <div className={classes.searchContainer}>
+      <div className={classes.searchInput}>
         <div className={classes.searchIcon}>
           <SearchIcon />
         </div>
@@ -128,7 +126,7 @@ function UserSearch() {
         />
       </div>
       {showPredictionsDropdown && predictionsDropdown}
-    </>
+    </div>
   );
 }
 

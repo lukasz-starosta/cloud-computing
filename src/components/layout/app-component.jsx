@@ -35,8 +35,9 @@ function AppComponent(props) {
         getUser(currentUser.uid).then(doc => {
           if (doc.exists) {
             setCurrentUser({ ...doc.data(), uid: currentUser.uid });
+          } else {
+            setCurrentUser(null);
           }
-          setCurrentUser(null);
           setLoading(false);
         });
       } else {
