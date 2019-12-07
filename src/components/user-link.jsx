@@ -5,7 +5,8 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   link: {
-    textDecoration: 'none'
+    textDecoration: 'none',
+    color: 'inherit'
   }
 });
 

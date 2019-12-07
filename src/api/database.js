@@ -36,8 +36,8 @@ const database = {
   async getPosts() {
     const parentPromise = await this.getAllFromCollection('users');
     const users = parentPromise.docs;
-    const createPost = (username, postId, post) => ({
-      username,
+    const createPost = (user, postId, post) => ({
+      user,
       post: {
         id: postId,
         ...post
@@ -47,15 +47,9 @@ const database = {
     const posts = [];
 
     for (let i = 0; i < users.length; i++) {
-      const resultPromise = await this.getAllFromCollection(
-        `users/${users[i].id}/posts`
-      );
+      const resultPromise = await this.getAllFromCollection(`users/${users[i].id}/posts`);
 
-      posts.push(
-        ...resultPromise.docs.map(doc =>
-          createPost(users[i].data().name, doc.id, doc.data())
-        )
-      );
+      posts.push(...resultPromise.docs.map(doc => createPost(users[i], doc.id, doc.data())));
     }
 
     return posts;
