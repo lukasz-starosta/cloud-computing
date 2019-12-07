@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import { InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import database from '../api/database';
+import UserLink from './user-link';
 
 const useStyles = makeStyles({
   searchContainer: {
@@ -22,6 +23,7 @@ const useStyles = makeStyles({
     width: 20,
     pointerEvents: 'none',
     marginLeft: 6,
+    paddingTop: 2,
     display: 'flex',
     alignItems: 'center'
   },
@@ -43,6 +45,7 @@ const useStyles = makeStyles({
     background: '#3d3d4c'
   },
   user: {
+    display: 'block',
     width: '90%',
     margin: '6px auto',
     borderRadius: 8,
@@ -50,7 +53,9 @@ const useStyles = makeStyles({
     transition: 'all 0.1s ease-out',
     '&:hover': {
       background: '#505061'
-    }
+    },
+    textDecoration: 'none',
+    color: 'white'
   },
   noResults: {
     position: 'absolute',
@@ -93,9 +98,7 @@ function UserSearch() {
   const showPredictionsDropdown = value.length > 0;
 
   const displayUsernames = user => (
-    <div key={user.id} className={classes.user}>
-      {user.data().name}
-    </div>
+    <UserLink user={user} additionalClasses={classes.user} key={user.id} />
   );
 
   const predictionsDropdown = (
