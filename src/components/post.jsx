@@ -67,7 +67,7 @@ function Post(props) {
     <div style={postStyle}>
       <div style={timeAndNameStyle}>
         <Typography variant="h5" className={classes.username}>
-          <UserLink user={user} />
+          <UserLink userUid={user.userUid} username={user.username} />
         </Typography>
         {/* epoch * 1000 to properly convert to date */}
         <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>

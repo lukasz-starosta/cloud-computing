@@ -38,11 +38,11 @@ const NewPost = ({ currentUser, fetchPosts }) => {
   const classes = useStyles();
 
   const handleAddPost = () => {
-    const addPost = async (userUid, post) => {
-      await database.setPost(userUid, post);
+    const addPost = async (userUid, username, post) => {
+      await database.setPost(userUid, username, post);
     };
 
-    addPost(currentUser.uid, post).then(() => {
+    addPost(currentUser.uid, currentUser.name, post).then(() => {
       fetchPosts();
       setPost({ content: '' });
     });

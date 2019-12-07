@@ -10,12 +10,12 @@ const useStyles = makeStyles({
   }
 });
 
-function UserLink({ user, additionalClasses }) {
+function UserLink({ userUid, username, additionalClasses }) {
   const classes = useStyles();
 
   return (
-    <Link to={`/profile/${user.id}`} className={clsx(classes.link, additionalClasses)}>
-      {user.data().name}
+    <Link to={`/profile/${userUid}`} className={clsx(classes.link, additionalClasses)}>
+      {username}
     </Link>
   );
 }

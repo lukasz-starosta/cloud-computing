@@ -34,10 +34,9 @@ const database = {
   },
 
   async getPosts() {
-    const parentPromise = await this.getAllFromCollection('users');
-    const users = parentPromise.docs;
-    const createPost = (user, postId, post) => ({
-      user,
+    const createPost = (userUid, username, postId, post) => ({
+      userUid,
+      username,
       post: {
         id: postId,
         ...post
@@ -46,11 +45,17 @@ const database = {
 
     const posts = [];
 
-    for (let i = 0; i < users.length; i++) {
-      const resultPromise = await this.getAllFromCollection(`users/${users[i].id}/posts`);
-
-      posts.push(...resultPromise.docs.map(doc => createPost(users[i], doc.id, doc.data())));
-    }
+    await this.db
+      .collectionGroup('posts')
+      .orderBy('created_at', 'desc')
+      .get()
+      .then(function(querySnapshot) {
+        posts.push(
+          ...querySnapshot.docs.map(doc =>
+            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
+          )
+        );
+      });
 
     return posts;
   },
@@ -68,13 +73,15 @@ const database = {
     return users.doc(uid).get();
   },
 
-  async setPost(userUid, post) {
+  async setPost(userUid, username, post) {
     const posts = this.collection('users')
       .doc(userUid)
       .collection('posts');
 
-    posts.add({
+    await posts.add({
       ...post,
+      userUid,
+      username,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     });
   }

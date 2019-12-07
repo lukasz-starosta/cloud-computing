@@ -4,7 +4,7 @@ import NewPost from '../components/post-form';
 import database from '../api/database';
 
 function Dashboard({ currentUser }) {
-  const [postWrappers, setPostWrappers] = useState([]);
+  const [postWrappers, setPostWrappers] = useState(null);
 
   async function fetch() {
     setPostWrappers(await database.getPosts());
@@ -15,14 +15,21 @@ function Dashboard({ currentUser }) {
   }, []);
 
   // TODO: return loader
-  if (postWrappers.length === 0) return <></>;
+  if (!postWrappers) return <></>;
 
   return (
     <>
       <NewPost currentUser={currentUser} fetchPosts={fetch} />
       <div>
         {postWrappers.map(postWrapper => (
-          <Post key={postWrapper.post.id} user={postWrapper.user} post={postWrapper.post} />
+          <Post
+            key={postWrapper.post.id}
+            user={{
+              userUid: postWrapper.userUid,
+              username: postWrapper.username
+            }}
+            post={postWrapper.post}
+          />
         ))}
       </div>
     </>
