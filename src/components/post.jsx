@@ -2,6 +2,8 @@ import React from 'react';
 import { colors } from '../assets/colors';
 import Toolbar from '@material-ui/core/Toolbar';
 import FloatingActionButton from './floating-action-button';
+import { Typography, makeStyles } from '@material-ui/core';
+import UserLink from './user-link';
 
 const image1 = {
   src:
@@ -16,6 +18,16 @@ const image2 = {
   alt: 'male',
   width: '162px'
 };
+
+const useStyles = makeStyles({
+  username: {
+    marginTop: 8,
+    color: '#565656',
+    '&:hover': {
+      color: '#9a9a9a'
+    }
+  }
+});
 
 const postStyle = {
   backgroundColor: colors.AWS_whiteish,
@@ -42,14 +54,21 @@ const outerButtonsStyle = {
   paddingRight: 0
 };
 
+// TODO: Refactor styles
 function Post(props) {
-  const { username, post } = props;
+  const { user, post } = props;
   const { content, created_at } = post;
+
+  const classes = useStyles();
+
+  if (!user || !post) return null;
 
   return (
     <div style={postStyle}>
       <div style={timeAndNameStyle}>
-        <h3>{username}</h3>
+        <Typography variant="h5" className={classes.username}>
+          <UserLink userUid={user.userUid} username={user.username} />
+        </Typography>
         {/* epoch * 1000 to properly convert to date */}
         <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>
       </div>
