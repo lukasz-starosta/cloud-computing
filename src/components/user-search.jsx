@@ -3,41 +3,41 @@ import { makeStyles } from '@material-ui/styles';
 import { InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import database from '../api/database';
+import UserLink from './user-link';
 
 const useStyles = makeStyles({
-  search: {
-    position: 'absolute',
-    right: 36,
+  searchContainer: {
+    width: 220,
+    height: 35,
+    marginLeft: 'auto'
+  },
+  searchInput: {
     borderRadius: 8,
     backgroundColor: '#3d3d4c',
     '&:hover': {
       backgroundColor: '#505061'
     },
-    marginLeft: 'auto',
-    width: 220
+    display: 'flex'
   },
   searchIcon: {
     width: 20,
-    right: 10,
-    height: '100%',
-    position: 'absolute',
     pointerEvents: 'none',
+    marginLeft: 6,
+    paddingTop: 2,
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: 'center'
   },
   inputRoot: {
     color: 'inherit'
   },
   inputInput: {
-    padding: '8px 8px 8px 16px',
+    padding: 8,
     width: '100%'
   },
   predictionsDropdown: {
+    position: 'relative',
+    top: 6,
     boxSizing: 'border-box',
-    position: 'absolute',
-    right: 36,
-    top: 46,
     minHeight: 200,
     width: 220,
     borderRadius: 8,
@@ -45,6 +45,7 @@ const useStyles = makeStyles({
     background: '#3d3d4c'
   },
   user: {
+    display: 'block',
     width: '90%',
     margin: '6px auto',
     borderRadius: 8,
@@ -52,7 +53,9 @@ const useStyles = makeStyles({
     transition: 'all 0.1s ease-out',
     '&:hover': {
       background: '#505061'
-    }
+    },
+    textDecoration: 'none',
+    color: 'white'
   },
   noResults: {
     position: 'absolute',
@@ -95,9 +98,12 @@ function UserSearch() {
   const showPredictionsDropdown = value.length > 0;
 
   const displayUsernames = user => (
-    <div key={user.id} className={classes.user}>
-      {user.data().name}
-    </div>
+    <UserLink
+      userUid={user.id}
+      username={user.data().name}
+      additionalClasses={classes.user}
+      key={user.id}
+    />
   );
 
   const predictionsDropdown = (
@@ -111,8 +117,8 @@ function UserSearch() {
   );
 
   return (
-    <>
-      <div className={classes.search}>
+    <div className={classes.searchContainer}>
+      <div className={classes.searchInput}>
         <div className={classes.searchIcon}>
           <SearchIcon />
         </div>
@@ -128,7 +134,7 @@ function UserSearch() {
         />
       </div>
       {showPredictionsDropdown && predictionsDropdown}
-    </>
+    </div>
   );
 }
 

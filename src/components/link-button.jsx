@@ -16,15 +16,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function LinkButton(props) {
+  const { destination, color, text } = props;
+
   const classes = useStyles();
   return (
-    <Link to={props.destination} className={classes.link}>
-      <Button
-        variant='contained'
-        color={props.color}
-        className={classes.button}
-      >
-        {props.text}
+    <Link to={destination} className={classes.link}>
+      <Button variant="contained" color={color} className={classes.button}>
+        {text}
       </Button>
     </Link>
   );
