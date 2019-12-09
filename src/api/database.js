@@ -52,12 +52,68 @@ const database = {
       .then(function(querySnapshot) {
         posts.push(
           ...querySnapshot.docs.map(doc =>
-            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
+            createPost(
+              doc.data().userUid,
+              doc.data().username,
+              doc.id,
+              doc.data()
+            )
           )
         );
       });
-
     return posts;
+  },
+
+  async getLikes(postId) {
+    const createLikes = (likeId, userId, postId) => ({
+      likeId,
+      userId,
+      postId
+    });
+
+    const likes = [];
+
+    await this.db
+      .collection('likes')
+      .where('postId', '==', postId)
+      .get()
+      .then(function(querySnapshot) {
+        likes.push(
+          ...querySnapshot.docs.map(doc =>
+            createLikes(doc.id, doc.data().userId, doc.data().postId)
+          )
+        );
+      });
+    return likes;
+  },
+
+  async getComments(postId) {
+    const createComments = (commentId, userId, postId, content) => ({
+      commentId,
+      userId,
+      postId,
+      content
+    });
+
+    const comments = [];
+
+    await this.db
+      .collection('comments')
+      .where('postId', '==', postId)
+      .get()
+      .then(function(querySnapshot) {
+        comments.push(
+          ...querySnapshot.docs.map(doc =>
+            createLikes(
+              doc.id,
+              doc.data().userId,
+              doc.data().postId,
+              doc.data().content
+            )
+          )
+        );
+      });
+    return comment;
   },
 
   async setUser(user) {

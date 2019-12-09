@@ -4,8 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import FloatingActionButton from './floating-action-button';
 import TextField from '@material-ui/core/TextField';
-import { Typography, makeStyles } from '@material-ui/core';
-import UserLink from './user-link';
 
 const image1 = {
   src:
@@ -20,7 +18,6 @@ const image2 = {
   alt: 'male',
   width: '162px'
 };
-
 
 const useStyles = makeStyles(theme => ({
   postStyle: {
@@ -52,20 +49,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// TODO: Refactor styles
 function Post(props) {
-  const { user, post } = props;
+  const { username, post, key } = props;
   const { content, created_at } = post;
   const classes = useStyles();
-
-  if (!user || !post) return null;
 
   return (
     <div className={classes.postStyle}>
       <div className={classes.timeAndNameStyle}>
-        <Typography variant="h5" className={classes.username}>
-          <UserLink userUid={user.userUid} username={user.username} />
-        </Typography>
+        <h3>{username}</h3>
         {/* epoch * 1000 to properly convert to date */}
         <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>
       </div>
