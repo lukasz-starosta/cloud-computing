@@ -7,9 +7,9 @@ export const withAuthenticator = WrappedComponent => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-      let isMounted = false;
+      let isMounted = true;
 
-      if (!isMounted) {
+      if (isMounted) {
         firebase.auth().onAuthStateChanged(currentUser => {
           if (!currentUser) {
             history.push('/login');
@@ -20,7 +20,7 @@ export const withAuthenticator = WrappedComponent => {
       }
 
       return () => {
-        isMounted = true;
+        isMounted = false;
       };
     }, [history]);
 
