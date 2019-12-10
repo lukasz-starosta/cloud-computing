@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Post from '../components/post';
 import NewPost from '../components/post-form';
 import database from '../api/database';
+import { withAuthenticator } from '../components/authenticator-hoc';
 
 function Dashboard({ currentUser }) {
   const [postWrappers, setPostWrappers] = useState(null);
@@ -36,4 +37,4 @@ function Dashboard({ currentUser }) {
   );
 }
 
-export default Dashboard;
+export default withAuthenticator(Dashboard);
