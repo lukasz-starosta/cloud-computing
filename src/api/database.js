@@ -65,9 +65,9 @@ const database = {
   },
 
   async getLikes(postId) {
-    const createLikes = (likeId, userId, postId) => ({
+    const createLikes = (likeId, /*userId,*/ postId) => ({
       likeId,
-      userId,
+      //userId,
       postId
     });
 
@@ -80,7 +80,7 @@ const database = {
       .then(function(querySnapshot) {
         likes.push(
           ...querySnapshot.docs.map(doc =>
-            createLikes(doc.id, doc.data().userId, doc.data().postId)
+            createLikes(doc.id, /*doc.data().userId,*/ doc.data().postId)
           )
         );
       });
@@ -104,7 +104,7 @@ const database = {
       .then(function(querySnapshot) {
         comments.push(
           ...querySnapshot.docs.map(doc =>
-            createLikes(
+            createComments(
               doc.id,
               doc.data().userId,
               doc.data().postId,
@@ -113,7 +113,7 @@ const database = {
           )
         );
       });
-    return comment;
+    return comments;
   },
 
   async setUser(user) {
@@ -138,6 +138,16 @@ const database = {
       ...post,
       userUid,
       username,
+      created_at: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  },
+
+  async setLike(postId) {
+    const likes = this.collection('likes');
+
+    await likes.add({
+      postId,
+      //userId,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     });
   }

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { colors } from '../assets/colors';
-import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import FloatingActionButton from './floating-action-button';
 import TextField from '@material-ui/core/TextField';
+import { Typography, makeStyles } from '@material-ui/core';
+import UserLink from './user-link';
+import database from '../api/database';
+import Comment from '../components/comment';
 
 const image1 = {
   src:
@@ -49,15 +52,37 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// TODO: Refactor styles
 function Post(props) {
-  const { username, post, key } = props;
+  const { user, post } = props;
   const { content, created_at } = post;
   const classes = useStyles();
+  //const currentUserId = props.currentUser.uid;
+
+  const [likes, setLikes] = useState(null);
+  const [comments, setComments] = useState(null);
+  var countLikes;
+
+  async function fetch() {
+    setLikes(await database.getLikes(post.id));
+    setComments(await database.getComments(post.id));
+  }
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  if (!user || !post) return null;
+
+  if (!likes) countLikes = 0;
+  else countLikes = likes.length; //likes.length;
 
   return (
     <div className={classes.postStyle}>
       <div className={classes.timeAndNameStyle}>
-        <h3>{username}</h3>
+        <Typography variant="h5" className={classes.username}>
+          <UserLink userUid={user.userUid} username={user.username} />
+        </Typography>
         {/* epoch * 1000 to properly convert to date */}
         <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>
       </div>
@@ -71,6 +96,7 @@ function Post(props) {
         />
       </div>
       <p>{content}</p>
+      <Comment username="Wuja" content={post.id} />
       <div>
         <form className={classes.comment} noValidate autoComplete="off">
           <TextField
@@ -81,13 +107,18 @@ function Post(props) {
             variant="outlined"
           />
         </form>
+        {countLikes}
       </div>
       <div>
         <Toolbar className={classes.outerButtonsStyle}>
-          <FloatingActionButton isLikeIcon color="secondary" />
+          <FloatingActionButton
+            isLikeIcon
+            color="secondary"
+            postId={post.id}
+            /*userId={currentUserId}*/
+          />
           <FloatingActionButton color="primary" />
         </Toolbar>
-        {likes}
       </div>
     </div>
   );

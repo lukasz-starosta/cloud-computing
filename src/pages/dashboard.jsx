@@ -29,6 +29,7 @@ function Dashboard({ currentUser }) {
               username: postWrapper.username
             }}
             post={postWrapper.post}
+            currentUser={currentUser}
           />
         ))}
       </div>
