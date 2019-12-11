@@ -1,5 +1,3 @@
-import firebase from 'firebase';
-
 const storage = {
   initialize(storage) {
     this.storageRef = storage.ref();
