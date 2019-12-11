@@ -13,6 +13,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import database from './api/database';
+import storage from './api/storage';
 
 function App() {
   const [isReady, setIsReady] = useState(false);
@@ -31,6 +32,7 @@ function App() {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     database.initialize(firebase.firestore());
+    storage.initialize(firebase.storage());
 
     setIsReady(true);
   }, []);
@@ -47,26 +49,32 @@ function App() {
               {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
               <Switch>
-                <Route exact path="/">
+                <Route exact path='/'>
                   <Landing />
                 </Route>
                 <Route
-                  path="/dashboard"
-                  render={props => <Dashboard {...props} currentUser={currentUser} />}
+                  path='/dashboard'
+                  render={props => (
+                    <Dashboard {...props} currentUser={currentUser} />
+                  )}
                 ></Route>
                 <Route
                   exact
-                  path="/profile"
-                  render={props => <Profile {...props} currentUser={currentUser} />}
+                  path='/profile'
+                  render={props => (
+                    <Profile {...props} currentUser={currentUser} />
+                  )}
                 />
                 <Route
-                  path="/profile/:id"
-                  render={props => <Profile {...props} currentUser={currentUser} />}
+                  path='/profile/:id'
+                  render={props => (
+                    <Profile {...props} currentUser={currentUser} />
+                  )}
                 />
-                <Route path="/about">
+                <Route path='/about'>
                   <About />
                 </Route>
-                <Route path="/login">
+                <Route path='/login'>
                   <Login />
                 </Route>
               </Switch>
