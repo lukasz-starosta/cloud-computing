@@ -54,10 +54,9 @@ const useStyles = makeStyles(theme => ({
 
 // TODO: Refactor styles
 function Post(props) {
-  const { user, post } = props;
+  const { user, post, currentUserId } = props;
   const { content, created_at } = post;
   const classes = useStyles();
-  //const currentUserId = props.currentUser.uid;
 
   const [likes, setLikes] = useState(null);
   const [comments, setComments] = useState(null);
@@ -115,7 +114,7 @@ function Post(props) {
             isLikeIcon
             color="secondary"
             postId={post.id}
-            /*userId={currentUserId}*/
+            userId={currentUserId}
           />
           <FloatingActionButton color="primary" />
         </Toolbar>

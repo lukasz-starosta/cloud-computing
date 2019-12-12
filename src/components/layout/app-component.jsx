@@ -27,14 +27,15 @@ function AppComponent(props) {
     const getUser = async uid => {
       return await database.getUser(uid);
     };
-
     firebase.auth().onAuthStateChanged(currentUser => {
       setIsLoggedIn(currentUser ? true : false);
+      console.log(currentUser);
 
       if (currentUser) {
         getUser(currentUser.uid).then(doc => {
           if (doc.exists) {
             setCurrentUser({ ...doc.data(), uid: currentUser.uid });
+            console.log(doc.data());
           } else {
             setCurrentUser(null);
           }
