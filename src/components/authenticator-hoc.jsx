@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 import firebase from 'firebase';
 
 export const withAuthenticator = WrappedComponent => {
-  const HOC = ({ history }) => {
+  const HOC = props => {
+    const { history } = props;
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -24,7 +25,7 @@ export const withAuthenticator = WrappedComponent => {
       };
     }, [history]);
 
-    return !loading && <WrappedComponent />;
+    return !loading && <WrappedComponent {...props} />;
   };
 
   return withRouter(HOC);
