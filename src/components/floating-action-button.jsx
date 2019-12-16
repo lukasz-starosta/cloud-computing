@@ -19,11 +19,9 @@ export default function FloatingActionButton(props) {
   const isLikeIcon = props.isLikeIcon;
   const color = props.color;
   const icon = isLikeIcon ? (
-    <FavoriteIcon
-      onClick={() => database.setLike(props.postId, props.userId)}
-    />
+    <FavoriteIcon onClick={props.addLike} />
   ) : (
-    <AddCommentIcon onClick={() => alert('You commented on the post')} />
+    <AddCommentIcon onClick={props.addComment} />
   );
 
   return (

@@ -54,21 +54,46 @@ const useStyles = makeStyles(theme => ({
 
 // TODO: Refactor styles
 function Post(props) {
-  const { user, post, currentUserId } = props;
+  const { user, post, currentUser } = props;
   const { content, created_at } = post;
   const classes = useStyles();
 
-  const [likes, setLikes] = useState(null);
-  const [comments, setComments] = useState(null);
+  const [likes, setLike] = useState(null);
+  const [comments, setComment] = useState(null);
   var countLikes;
 
-  async function fetch() {
-    setLikes(await database.getLikes(post.id));
-    setComments(await database.getComments(post.id));
+  async function fetchLikes() {
+    setLike(await database.getLikes(post.id));
   }
 
+  async function fetchComments() {
+    setComment(await database.getComments(post.id));
+  }
+
+  const handleAddComment = () => {
+    const addComment = async (userId, postId, content) => {
+      await database.setComment(userId, postId, content);
+    };
+
+    addComment(currentUser.uid, post.id, content).then(() => {
+      fetchComments();
+      setComment({ content: '' });
+    });
+  };
+
+  const handleAddLike = () => {
+    const addLike = async (userId, postId) => {
+      await database.setLike(userId, postId);
+    };
+
+    addLike(currentUser.uid, post.id).then(() => {
+      fetchLikes();
+    });
+  };
+
   useEffect(() => {
-    fetch();
+    fetchComments();
+    fetchLikes();
   }, []);
 
   if (!user || !post) return null;
@@ -95,7 +120,15 @@ function Post(props) {
         />
       </div>
       <p>{content}</p>
-      <Comment username="Wuja" content={post.id} />
+      {comments &&
+        comments.map(comment => (
+          <Comment
+            key={comment.commentId}
+            username={`${currentUser.name}  ${currentUser.surname}`}
+            content={comment.content}
+          />
+        ))}
+      {/*<Comment username="Wuja" content={post.id} />*/}
       <div>
         <form className={classes.comment} noValidate autoComplete="off">
           <TextField
@@ -104,6 +137,13 @@ function Post(props) {
             multiline
             rowsMax="3"
             variant="outlined"
+            value={''}
+            onChange={event => {
+              event.persist();
+              setComment({
+                content: event.target.value
+              });
+            }}
           />
         </form>
         {countLikes}
@@ -113,10 +153,12 @@ function Post(props) {
           <FloatingActionButton
             isLikeIcon
             color="secondary"
-            postId={post.id}
-            userId={currentUserId}
+            addLike={handleAddLike}
+            //onClick={() => database.setLike(post.id, currentUser.uid)}
+            /*postId={post.id}
+            userId={currentUser.uid}*/
           />
-          <FloatingActionButton color="primary" />
+          <FloatingActionButton color="primary" addComment={handleAddComment} />
         </Toolbar>
       </div>
     </div>

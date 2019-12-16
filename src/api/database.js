@@ -142,12 +142,23 @@ const database = {
     });
   },
 
-  async setLike(postId, userId) {
+  async setLike(userId, postId) {
     const likes = this.collection('likes');
 
     await likes.add({
       postId,
       userId,
+      created_at: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  },
+
+  async setComment(postId, userId, content) {
+    const comments = this.collection('comments');
+
+    await comments.add({
+      postId,
+      userId,
+      content,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     });
   }
