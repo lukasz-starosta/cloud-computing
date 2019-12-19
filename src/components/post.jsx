@@ -5,20 +5,6 @@ import FloatingActionButton from './floating-action-button';
 import { Typography, makeStyles } from '@material-ui/core';
 import UserLink from './user-link';
 
-const image1 = {
-  src:
-    'https://i1.wp.com/koomeministries.com/wp-content/uploads/2019/06/profile-placeholder-female.png?fit=250%2C350&ssl=1',
-  alt: 'female',
-  width: '162px'
-};
-
-const image2 = {
-  src:
-    'https://149354401.v2.pressablecdn.com/wp-content/uploads/2018/01/placeholder-male-150x150.jpg',
-  alt: 'male',
-  width: '162px'
-};
-
 const useStyles = makeStyles({
   username: {
     marginTop: 8,
@@ -72,10 +58,11 @@ function Post(props) {
         {/* epoch * 1000 to properly convert to date */}
         <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>
       </div>
-      <div style={imageStyle}>
-        <img src={image1.src} alt={image1.alt} width={image1.width} />
-        <img src={image2.src} alt={image2.alt} width={image2.width} hspace="30" />
-      </div>
+      {post.image && (
+        <div style={imageStyle}>
+          <img src={post.image} alt="post pick" width={300} />
+        </div>
+      )}
       <p>{content}</p>
       <div>
         <Toolbar style={outerButtonsStyle}>

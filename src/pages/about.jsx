@@ -9,10 +9,10 @@ function About() {
 
   return (
     <>
-      <img src={img} alt='konis' />
+      <img src={img} alt="konis" />
       <input
-        type='file'
-        accept='image/*'
+        type="file"
+        accept="image/*"
         onChange={event => {
           setFiles(event.target.files);
         }}

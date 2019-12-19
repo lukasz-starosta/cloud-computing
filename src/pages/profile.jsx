@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, makeStyles } from '@material-ui/core';
 import CakeIcon from '@material-ui/icons/Cake';
 import AddIcon from '@material-ui/icons/Add';
@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import database from '../api/database';
 
 const useStyles = makeStyles({
   profileBg: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles({
 
 function Profile(props) {
   const { currentUser, match, history } = props;
+  const classes = useStyles();
 
   const userId = match.params.id;
 
@@ -59,27 +61,86 @@ function Profile(props) {
     }
   }
 
-  const classes = useStyles();
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    async function fetchUser() {
+      const userQuery = await database.getUser(userId);
+
+      var userdata = userQuery.data();
+      setUser(userQuery.data());
+    }
+
+    async function fetchPosts() {
+      const postQuery = await database.getPosts(userId);
+      console.log('postQuery', postQuery);
+      setPosts(postQuery);
+    }
+
+    fetchUser();
+    fetchPosts();
+  }, []);
+
+  if (!user) return <></>;
+  if (!posts) return <></>;
+
+  // console.log(user);
 
   return (
     <div className={classes.profile}>
       <ProfilePicture />
-
-      <NameAndSurname name="Iga" surname="Wójcik" />
-
-      <Info icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />} text=" 11.06.1999"></Info>
-
-      <Typography variant="h4" component="h3" color="textSecondary" align="center" justify="center">
+      <NameAndSurname name={user.name} surname={user.surname} />
+      <Info
+        icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />}
+        text={new Date(user.birthDate.seconds * 1000).toDateString()}
+      ></Info>
+      <Typography
+        variant="h4"
+        component="h3"
+        color="textSecondary"
+        align="center"
+        justify="center"
+      >
         My posts
       </Typography>
-
       <NewPost></NewPost>
 
-      <Post title="A dzisiaj" text="czuje sie  swietnie :)" date="22.11.19" />
-      <Post title="Dzisiaj" text="czuje sie słabo :(" date="21.11.19" />
+      <div>
+        {posts.map(item => (
+          <Post
+            text={item.post.content}
+            date={new Date(item.post.content.seconds).toString()}
+          />
+        ))}
+      </div>
+      {/* ReactDOM.render(){RenderPosts(userId)}; */}
     </div>
   );
 }
+
+// function RenderPosts(props) {
+//   const { user } = props;
+
+//   const postsData = database.getPosts(user);
+
+//   if (postsData) {
+//     var components = [];
+//     var posts = [];
+//     const request = async () => {
+//       await postsData.then(list => {
+//         for (var i = 0; i < list.length; i++) {
+//         }
+//       });
+//     };
+//     request();
+
+//     return null;
+//   } else {
+//     console.log('else');
+//     return null;
+//   }
+// }
 
 function ProfilePicture() {
   const classes = useStyles();
@@ -119,7 +180,13 @@ function NewPost() {
   const classes = useStyles();
   return (
     <Box className={classes.addPost} borderColor="#4a4949">
-      <Grid container spacing={5} direction="row" alignItems="center" justify="center">
+      <Grid
+        container
+        spacing={5}
+        direction="row"
+        alignItems="center"
+        justify="center"
+      >
         <Grid item xs={8}>
           <TextField
             id="outlined-basic"
@@ -141,7 +208,7 @@ function NewPost() {
 }
 
 function Post(props) {
-  const { title, text, date } = props;
+  const { text, date } = props;
   const classes = useStyles();
 
   return (
@@ -150,9 +217,7 @@ function Post(props) {
         <Paper className={classes.post}>
           <Box display="flex" p={1} bgcolor="background.paper">
             <Box p={1} flexGrow={1}>
-              <Typography variant="h5" component="h3">
-                {title}
-              </Typography>
+              <Typography variant="h5" component="h3"></Typography>
             </Box>
             <Box p={1}>
               <Typography component="span">{date}</Typography>

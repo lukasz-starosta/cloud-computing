@@ -5,7 +5,6 @@ import { colors } from '../assets/colors';
 import Fab from '@material-ui/core/Fab';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import database from '../api/database';
-import storage from '../api/storage';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -35,18 +34,12 @@ const useStyles = makeStyles(theme => ({
 
 const NewPost = ({ currentUser, fetchPosts }) => {
   const [post, setPost] = useState({ content: '' });
-  const [files, setFiles] = useState();
 
   const classes = useStyles();
 
   const handleAddPost = () => {
     const addPost = async (userUid, username, post) => {
-      if (files.length > 0) {
-        const url = await storage.upload(files[0]);
-        await database.setPost(userUid, username, { ...post, image: url });
-      } else {
-        await database.setPost(userUid, username, post);
-      }
+      await database.setPost(userUid, username, post);
     };
 
     addPost(currentUser.uid, currentUser.name, post).then(() => {
@@ -73,21 +66,6 @@ const NewPost = ({ currentUser, fetchPosts }) => {
           }}
           variant="outlined"
         />
-        {/* <div className={classes.button}>
-          <Fab color="primary" variant="extended" onClick={handleAddPost}>
-            <PostAddIcon className={classes.extendedIcon} />
-            Add Post
-          </Fab>
-        </div> */}
-        <div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={event => {
-              setFiles(event.target.files);
-            }}
-          />
-        </div>
         <div className={classes.button}>
           <Fab color="primary" variant="extended" onClick={handleAddPost}>
             <PostAddIcon className={classes.extendedIcon} />
