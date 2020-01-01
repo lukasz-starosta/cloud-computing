@@ -34,7 +34,7 @@ const useStyles = makeStyles({
     borderColor: '#FFF'
   },
   post: {
-    marginBottom: 10,
+    marginTop: 10,
     padding: 20
   },
   textField: {
@@ -74,7 +74,6 @@ function Profile(props) {
 
     async function fetchPosts() {
       const postQuery = await database.getPosts(userId);
-      console.log('postQuery', postQuery);
       setPosts(postQuery);
     }
 
@@ -84,8 +83,6 @@ function Profile(props) {
 
   if (!user) return <></>;
   if (!posts) return <></>;
-
-  // console.log(user);
 
   return (
     <div className={classes.profile}>
@@ -104,43 +101,25 @@ function Profile(props) {
       >
         My posts
       </Typography>
-      <NewPost></NewPost>
 
       <div>
         {posts.map(item => (
           <Post
             text={item.post.content}
             date={new Date(item.post.content.seconds).toString()}
+            image={
+              item.post.image && (
+                <div style={{ textAlign: 'center' }}>
+                  <img src={item.post.image} alt="post pick" width={300} />
+                </div>
+              )
+            }
           />
         ))}
       </div>
-      {/* ReactDOM.render(){RenderPosts(userId)}; */}
     </div>
   );
 }
-
-// function RenderPosts(props) {
-//   const { user } = props;
-
-//   const postsData = database.getPosts(user);
-
-//   if (postsData) {
-//     var components = [];
-//     var posts = [];
-//     const request = async () => {
-//       await postsData.then(list => {
-//         for (var i = 0; i < list.length; i++) {
-//         }
-//       });
-//     };
-//     request();
-
-//     return null;
-//   } else {
-//     console.log('else');
-//     return null;
-//   }
-// }
 
 function ProfilePicture() {
   const classes = useStyles();
@@ -176,39 +155,8 @@ function Info(props) {
   );
 }
 
-function NewPost() {
-  const classes = useStyles();
-  return (
-    <Box className={classes.addPost} borderColor="#4a4949">
-      <Grid
-        container
-        spacing={5}
-        direction="row"
-        alignItems="center"
-        justify="center"
-      >
-        <Grid item xs={8}>
-          <TextField
-            id="outlined-basic"
-            className={classes.textField}
-            label="New Post"
-            variant="outlined"
-            width="auto"
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <Fab color="primary" variant="extended" aria-label="Add">
-            <AddIcon className={classes.extendedIcon} />
-            Post
-          </Fab>
-        </Grid>
-      </Grid>
-    </Box>
-  );
-}
-
 function Post(props) {
-  const { text, date } = props;
+  const { text, date, image } = props;
   const classes = useStyles();
 
   return (
@@ -223,7 +171,7 @@ function Post(props) {
               <Typography component="span">{date}</Typography>
             </Box>
           </Box>
-
+          {image}
           <Typography component="p">{text}</Typography>
         </Paper>
       </Grid>

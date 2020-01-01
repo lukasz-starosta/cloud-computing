@@ -30,7 +30,9 @@ const useStyles = makeStyles(theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
-  }
+  },
+
+  file: {}
 }));
 
 const NewPost = ({ currentUser, fetchPosts }) => {
@@ -73,13 +75,7 @@ const NewPost = ({ currentUser, fetchPosts }) => {
           }}
           variant="outlined"
         />
-        {/* <div className={classes.button}>
-          <Fab color="primary" variant="extended" onClick={handleAddPost}>
-            <PostAddIcon className={classes.extendedIcon} />
-            Add Post
-          </Fab>
-        </div> */}
-        <div>
+        <div className={classes.file}>
           <input
             type="file"
             accept="image/*"
@@ -91,7 +87,7 @@ const NewPost = ({ currentUser, fetchPosts }) => {
         <div className={classes.button}>
           <Fab color="primary" variant="extended" onClick={handleAddPost}>
             <PostAddIcon className={classes.extendedIcon} />
-            Add Post
+            Add Postp
           </Fab>
         </div>
       </div>

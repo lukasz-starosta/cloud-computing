@@ -22,8 +22,6 @@ function About() {
           const uploadFile = async () => {
             const url = await storage.upload(files[0]);
 
-            console.log('File available at ', url);
-
             setImg(url);
           };
           uploadFile();
