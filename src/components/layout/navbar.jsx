@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import UserSearch from '../user-search';
 import clsx from 'clsx';
 import logoBig from '../../assets/images/logo_big.png';
+import logoSmall from '../../assets/images/logo2.png';
 
 const useStyles = makeStyles({
   appBar: {
@@ -52,7 +53,7 @@ function Navbar({ isLoggedIn }) {
     <AppBar className={classes.appBar}>
       <Toolbar className={classes.toolbar} variant="dense">
         <Link className={clsx(classes.link, classes.logo)} to="/">
-          <img className={classes.logoImg} src={logoBig} alt="logo" />
+          <img className={classes.logoImg} src={logoSmall} alt="logo" />
         </Link>
         <Link className={clsx(classes.link, classes.dashboard)} to="/dashboard">
           Dashboard
