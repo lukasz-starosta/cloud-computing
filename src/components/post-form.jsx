@@ -87,7 +87,7 @@ const NewPost = ({ currentUser, fetchPosts }) => {
         <div className={classes.button}>
           <Fab color="primary" variant="extended" onClick={handleAddPost}>
             <PostAddIcon className={classes.extendedIcon} />
-            Add Postp
+            Add Post
           </Fab>
         </div>
       </div>
