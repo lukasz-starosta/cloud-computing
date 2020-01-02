@@ -43,7 +43,7 @@ const NewPost = ({ currentUser, fetchPosts }) => {
 
   const handleAddPost = () => {
     const addPost = async (userUid, username, post) => {
-      if (files.length > 0) {
+      if (files && files.length > 0) {
         const url = await storage.upload(files[0]);
         await database.setPost(userUid, username, { ...post, image: url });
       } else {
