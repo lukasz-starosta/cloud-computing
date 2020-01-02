@@ -5,7 +5,6 @@ import { colors } from '../../assets/colors';
 import firebase from 'firebase';
 import UserSearch from '../user-search';
 import clsx from 'clsx';
-import logoBig from '../../assets/images/logo_big.png';
 import logoSmall from '../../assets/images/logo2.png';
 
 const useStyles = makeStyles({

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, makeStyles } from '@material-ui/core';
 import CakeIcon from '@material-ui/icons/Cake';
-import AddIcon from '@material-ui/icons/Add';
-import Fab from '@material-ui/core/Fab';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import database from '../api/database';
 
@@ -81,8 +78,7 @@ function Profile(props) {
     fetchPosts();
   }, []);
 
-  if (!user) return <></>;
-  if (!posts) return <></>;
+  if (!user || !posts) return <></>;
 
   return (
     <div className={classes.profile}>
@@ -163,14 +159,9 @@ function Post(props) {
     <div>
       <Grid>
         <Paper className={classes.post}>
-          <Box display="flex" p={1} bgcolor="background.paper">
-            <Box p={1} flexGrow={1}>
-              <Typography variant="h5" component="h3"></Typography>
-            </Box>
-            <Box p={1}>
-              <Typography component="span">{date}</Typography>
-            </Box>
-          </Box>
+          <Typography variant="caption" component="p" align="right">
+            {date}
+          </Typography>
           {image}
           <Typography component="p">{text}</Typography>
         </Paper>
