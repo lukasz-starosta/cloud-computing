@@ -50,22 +50,19 @@ function Navbar({ isLoggedIn }) {
 
   return (
     <AppBar className={classes.appBar}>
-      <Toolbar className={classes.toolbar} variant="dense">
-        <Link className={clsx(classes.link, classes.logo)} to="/">
-          <img className={classes.logoImg} src={logoSmall} alt="logo" />
+      <Toolbar className={classes.toolbar} variant='dense'>
+        <Link className={clsx(classes.link, classes.logo)} to='/'>
+          <img className={classes.logoImg} src={logoSmall} alt='logo' />
         </Link>
-        <Link className={clsx(classes.link, classes.dashboard)} to="/dashboard">
+        <Link className={clsx(classes.link, classes.dashboard)} to='/dashboard'>
           Dashboard
         </Link>
-        <Link className={classes.link} to="/about">
-          About
-        </Link>
         <UserSearch />
-        <Link className={classes.link} to="/profile">
+        <Link className={classes.link} to='/profile'>
           Profile
         </Link>
         {!isLoggedIn ? (
-          <Link className={classes.link} to="/login">
+          <Link className={classes.link} to='/login'>
             Login
           </Link>
         ) : (
@@ -75,7 +72,7 @@ function Navbar({ isLoggedIn }) {
               firebase.auth().signOut();
             }}
           >
-            <Link className={classes.link} to="/">
+            <Link className={classes.link} to='/'>
               Log out
             </Link>
           </button>

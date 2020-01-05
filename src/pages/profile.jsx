@@ -64,8 +64,6 @@ function Profile(props) {
   useEffect(() => {
     async function fetchUser() {
       const userQuery = await database.getUser(userId);
-
-      var userdata = userQuery.data();
       setUser(userQuery.data());
     }
 
@@ -74,9 +72,11 @@ function Profile(props) {
       setPosts(postQuery);
     }
 
-    fetchUser();
-    fetchPosts();
-  }, []);
+    if (userId) {
+      fetchUser();
+      fetchPosts();
+    }
+  }, [userId]);
 
   if (!user || !posts) return <></>;
 
@@ -89,11 +89,11 @@ function Profile(props) {
         text={new Date(user.birthDate.seconds * 1000).toDateString()}
       ></Info>
       <Typography
-        variant="h4"
-        component="h3"
-        color="textSecondary"
-        align="center"
-        justify="center"
+        variant='h4'
+        component='h3'
+        color='textSecondary'
+        align='center'
+        justify='center'
       >
         My posts
       </Typography>
@@ -101,12 +101,13 @@ function Profile(props) {
       <div>
         {posts.map(item => (
           <Post
+            key={item.post.id}
             text={item.post.content}
             date={new Date(item.post.content.seconds).toString()}
             image={
               item.post.image && (
                 <div style={{ textAlign: 'center' }}>
-                  <img src={item.post.image} alt="post pick" width={300} />
+                  <img src={item.post.image} alt='post pick' width={300} />
                 </div>
               )
             }
@@ -125,7 +126,7 @@ function ProfilePicture() {
       <Box className={classes.profileBg}></Box>
       <Avatar
         className={classes.bigAvatar}
-        src="https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg"
+        src='https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg'
       />
     </>
   );
@@ -159,11 +160,11 @@ function Post(props) {
     <div>
       <Grid>
         <Paper className={classes.post}>
-          <Typography variant="caption" component="p" align="right">
+          <Typography variant='caption' component='p' align='right'>
             {date}
           </Typography>
           {image}
-          <Typography component="p">{text}</Typography>
+          <Typography component='p'>{text}</Typography>
         </Paper>
       </Grid>
     </div>
