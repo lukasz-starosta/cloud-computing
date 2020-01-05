@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, makeStyles } from '@material-ui/core';
-import CakeIcon from '@material-ui/icons/Cake';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import database from '../api/database';
+import React, { useEffect, useState } from "react";
+import { Avatar, makeStyles } from "@material-ui/core";
+import CakeIcon from "@material-ui/icons/Cake";
+import EditIcon from "@material-ui/icons/Edit";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import database from "../api/database";
+import Popup from "reactjs-popup";
 
 const useStyles = makeStyles({
   profileBg: {
-    backgroundColor: '#4d1d2c',
-    backgroundImage: `url(${'http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg'})`,
-    backgroundSize: 'cover',
+    backgroundColor: "#4d1d2c",
+    backgroundImage: `url(${"http://justfunfacts.com/wp-content/uploads/2018/03/mountains.jpg"})`,
+    backgroundSize: "cover",
     height: 250,
     marginLeft: -32,
     marginRight: -32
@@ -26,9 +28,9 @@ const useStyles = makeStyles({
     margin: 10,
     marginLeft: 40,
     marginTop: -100,
-    border: 'solid',
+    border: "solid",
     borderWidth: 5,
-    borderColor: '#FFF'
+    borderColor: "#FFF"
   },
   post: {
     marginTop: 10,
@@ -37,11 +39,23 @@ const useStyles = makeStyles({
   textField: {
     width: 600
   },
-
   addPost: {
     marginTop: 30,
     marginBottom: 30
-  }
+  },
+  close: {
+    cursor: 'pointer',
+    position: 'absolute',
+    display: 'block',
+    padding: "2px 5px",
+    //lineHeight: 20,
+    right: 0,
+    top: 0,
+    fontSize: 24,
+    //background: "#ffffff",
+    //borderRadius: 18,
+    //border: "1px solid #cfcece"
+  },
 });
 
 function Profile(props) {
@@ -54,7 +68,7 @@ function Profile(props) {
     if (currentUser) {
       history.push(`/profile/${currentUser.uid}`);
     } else {
-      history.push('/login');
+      history.push("/login");
     }
   }
 
@@ -82,18 +96,34 @@ function Profile(props) {
 
   return (
     <div className={classes.profile}>
-      <ProfilePicture />
-      <NameAndSurname name={user.name} surname={user.surname} />
+      <ProfilePicture
+        // icon={
+        //   <EditIcon
+        //     style={{ position: "absolute", left: 505, top: 380, zIndex: 9999 }}
+        //   />
+        // }
+        // icon2={
+        //   <EditIcon
+        //     style={{ position: "absolute", right: 280, top: 290, zIndex: 9999 }}
+        //   />
+        // }
+      />
+      <NameAndSurname
+        name={user.name}
+        surname={user.surname}
+        icon={<EditIcon style={{ verticalAlign: "bottom" }} />}
+      />
       <Info
-        icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />}
+        icon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
         text={new Date(user.birthDate.seconds * 1000).toDateString()}
+        icon2={<EditIcon style={{ verticalAlign: "bottom" }} />}
       ></Info>
       <Typography
-        variant='h4'
-        component='h3'
-        color='textSecondary'
-        align='center'
-        justify='center'
+        variant="h4"
+        component="h3"
+        color="textSecondary"
+        align="center"
+        justify="center"
       >
         My posts
       </Typography>
@@ -106,8 +136,8 @@ function Profile(props) {
             date={new Date(item.post.content.seconds).toString()}
             image={
               item.post.image && (
-                <div style={{ textAlign: 'center' }}>
-                  <img src={item.post.image} alt='post pick' width={300} />
+                <div style={{ textAlign: "center" }}>
+                  <img src={item.post.image} alt="post pick" width={300} />
                 </div>
               )
             }
@@ -118,36 +148,55 @@ function Profile(props) {
   );
 }
 
-function ProfilePicture() {
+function ProfilePicture(props) {
   const classes = useStyles();
+  const { icon, icon2 } = props;
 
   return (
     <>
+      {icon2}
       <Box className={classes.profileBg}></Box>
+      {icon}
       <Avatar
         className={classes.bigAvatar}
-        src='https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg'
+        src="https://image.shutterstock.com/image-vector/female-profile-picture-placeholder-vector-260nw-450966889.jpg"
       />
     </>
   );
 }
 
 function NameAndSurname(props) {
-  const { name, surname } = props;
+  const { name, surname, icon } = props;
 
   return (
     <h3>
       {name} {surname}
+      <Popup modal trigger={icon}>
+        {close => <Content close={close} />}
+      </Popup>
     </h3>
   );
 }
 
+const Content = ({ close }) => {
+  const classes = useStyles();
+  return (
+    <>
+      <a className={classes.close} onClick={close}>
+        &times;
+      </a>
+      <div>Modal Content</div>
+    </>
+  );
+};
+
 function Info(props) {
-  const { icon, text } = props;
+  const { icon2, icon, text } = props;
   return (
     <div>
       {icon}
       {text}
+      {icon2}
     </div>
   );
 }
@@ -160,11 +209,11 @@ function Post(props) {
     <div>
       <Grid>
         <Paper className={classes.post}>
-          <Typography variant='caption' component='p' align='right'>
+          <Typography variant="caption" component="p" align="right">
             {date}
           </Typography>
           {image}
-          <Typography component='p'>{text}</Typography>
+          <Typography component="p">{text}</Typography>
         </Paper>
       </Grid>
     </div>
