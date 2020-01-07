@@ -55,12 +55,16 @@ const useStyles = makeStyles({
 function Profile(props) {
   const { currentUser, match, history } = props;
   const classes = useStyles();
-  const [openName, setOpenName] = React.useState(false);
-  const [openDate, setOpenDate] = React.useState(false);
-  const [openProfilePicture, setOpenProfilePicture] = React.useState(false);
-  const [openBackgroundPicture, setOpenBackgroundPicture] = React.useState(
-    false
-  );
+  const [openName, setOpenName] = useState(false);
+  const [openDate, setOpenDate] = useState(false);
+  const [openProfilePicture, setOpenProfilePicture] = useState(false);
+  const [openBackgroundPicture, setOpenBackgroundPicture] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [posts, setPosts] = useState(null);
+  const [data, setData] = useState({});
+  const [profilePicture, setProfilePicture] = useState();
+  const [backgroundPicture, setBackgroundPicture] = useState();
 
   const handleClickOpenName = () => {
     setOpenName(true);
@@ -68,7 +72,6 @@ function Profile(props) {
 
   const handleCloseName = () => {
     setOpenName(false);
-    //setData(null);
   };
 
   const handleClickOpenDate = () => {
@@ -77,7 +80,6 @@ function Profile(props) {
 
   const handleCloseDate = () => {
     setOpenDate(false);
-    //setData(null);
   };
 
   const handleClickOpenProfilePicture = () => {
@@ -100,24 +102,29 @@ function Profile(props) {
 
   const handleUpdateBackgroundPicture = () => {
     const updateBackgroundPicture = async (userId, backgroundPicture) => {
+      setLoading(true);
       if (backgroundPicture && backgroundPicture.length > 0) {
         const url = await storage.upload(backgroundPicture[0]);
         await database.updateUser(userId, { backgroundPicture: url });
       }
       await fetchUser();
       handleCloseBackgroundPicture();
+      setLoading(false);
     };
+
     updateBackgroundPicture(currentUser.uid, backgroundPicture);
   };
 
   const handleUpdateProfilePicture = () => {
     const updateProfilePicture = async (userId, profilePicture) => {
+      setLoading(true);
       if (profilePicture && profilePicture.length > 0) {
         const url = await storage.upload(profilePicture[0]);
         await database.updateUser(userId, { profilePicture: url });
       }
       await fetchUser();
       handleCloseProfilePicture();
+      setLoading(false);
     };
     updateProfilePicture(currentUser.uid, profilePicture);
   };
@@ -142,12 +149,6 @@ function Profile(props) {
       history.push("/login");
     }
   }
-
-  const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState(null);
-  const [data, setData] = useState({});
-  const [profilePicture, setProfilePicture] = useState();
-  const [backgroundPicture, setBackgroundPicture] = useState();
 
   async function fetchUser() {
     const userQuery = await database.getUser(userId);
@@ -197,6 +198,9 @@ function Profile(props) {
               setProfilePicture(event.target.files);
             }}
           />
+          {loading && (
+            <p>Wait a second, the window will close automatically...</p>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseProfilePicture} color="primary">
@@ -230,6 +234,9 @@ function Profile(props) {
               setBackgroundPicture(event.target.files);
             }}
           />
+           {loading && (
+            <p>Wait a second, the window will close automatically...</p>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseBackgroundPicture} color="primary">
