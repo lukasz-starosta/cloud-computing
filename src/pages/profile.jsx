@@ -7,15 +7,15 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import database from "../api/database";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import storage from '../api/storage';
-import { DatePicker } from '@material-ui/pickers';
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import storage from "../api/storage";
+import { DatePicker } from "@material-ui/pickers";
 
 const useStyles = makeStyles({
   profileBg: {
@@ -49,7 +49,7 @@ const useStyles = makeStyles({
   addPost: {
     marginTop: 30,
     marginBottom: 30
-  },
+  }
 });
 
 function Profile(props) {
@@ -58,7 +58,9 @@ function Profile(props) {
   const [openName, setOpenName] = React.useState(false);
   const [openDate, setOpenDate] = React.useState(false);
   const [openProfilePicture, setOpenProfilePicture] = React.useState(false);
-  const [openBackgroundPicture, setOpenBackgroundPicture] = React.useState(false);
+  const [openBackgroundPicture, setOpenBackgroundPicture] = React.useState(
+    false
+  );
 
   const handleClickOpenName = () => {
     setOpenName(true);
@@ -102,10 +104,10 @@ function Profile(props) {
         const url = await storage.upload(backgroundPicture[0]);
         await database.updateUser(userId, { backgroundPicture: url });
       }
+      await fetchUser();
+      handleCloseBackgroundPicture();
     };
     updateBackgroundPicture(currentUser.uid, backgroundPicture);
-    handleCloseBackgroundPicture();
-    fetchUser();
   };
 
   const handleUpdateProfilePicture = () => {
@@ -114,10 +116,10 @@ function Profile(props) {
         const url = await storage.upload(profilePicture[0]);
         await database.updateUser(userId, { profilePicture: url });
       }
+      await fetchUser();
+      handleCloseProfilePicture();
     };
     updateProfilePicture(currentUser.uid, profilePicture);
-    handleCloseProfilePicture();
-    fetchUser();
   };
 
   const handleUpdateData = () => {
@@ -129,7 +131,7 @@ function Profile(props) {
     handleCloseName();
     handleCloseDate();
     fetchUser();
-  }
+  };
 
   const userId = match.params.id;
 
@@ -142,18 +144,18 @@ function Profile(props) {
   }
 
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState(null);;
-  const [data, setData] = useState({ birthDate: new Date() });
+  const [posts, setPosts] = useState(null);
+  const [data, setData] = useState({});
   const [profilePicture, setProfilePicture] = useState();
   const [backgroundPicture, setBackgroundPicture] = useState();
 
   async function fetchUser() {
     const userQuery = await database.getUser(userId);
     setUser(userQuery.data());
+    setData({ birthDate: userQuery.data().birthDate.toDate() });
   }
 
   useEffect(() => {
-
     async function fetchPosts() {
       const postQuery = await database.getPosts(userId);
       setPosts(postQuery);
@@ -168,9 +170,17 @@ function Profile(props) {
   if (!user || !posts) return <></>;
   return (
     <div className={classes.profile}>
-      <ProfilePicture onClick1={handleClickOpenProfilePicture} onClick2={handleClickOpenBackgroundPicture} profilePicture={user.profilePicture} backgroundPicture={user.backgroundPicture}
+      <ProfilePicture
+        onClick1={handleClickOpenProfilePicture}
+        onClick2={handleClickOpenBackgroundPicture}
+        profilePicture={user.profilePicture}
+        backgroundPicture={user.backgroundPicture}
       />
-      <Dialog open={openProfilePicture} onClose={handleCloseProfilePicture} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={openProfilePicture}
+        onClose={handleCloseProfilePicture}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Change profile picture</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -182,7 +192,7 @@ function Profile(props) {
             id="profilePicture"
             label="Profile picture"
             type="file"
-            accept='image/*'
+            accept="image/*"
             onChange={event => {
               setProfilePicture(event.target.files);
             }}
@@ -197,8 +207,14 @@ function Profile(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Dialog open={openBackgroundPicture} onClose={handleCloseBackgroundPicture} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Change background picture</DialogTitle>
+      <Dialog
+        open={openBackgroundPicture}
+        onClose={handleCloseBackgroundPicture}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          Change background picture
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please upload new background picture:
@@ -209,7 +225,7 @@ function Profile(props) {
             id="backgroundPicture"
             label="Background picture"
             type="file"
-            accept='image/*'
+            accept="image/*"
             onChange={event => {
               setBackgroundPicture(event.target.files);
             }}
@@ -227,10 +243,21 @@ function Profile(props) {
       <NameAndSurname
         name={user.name}
         surname={user.surname}
-        icon={<EditIcon style={{ verticalAlign: "bottom" }} onClick={handleClickOpenName} />}
+        icon={
+          <EditIcon
+            style={{ verticalAlign: "bottom" }}
+            onClick={handleClickOpenName}
+          />
+        }
       />
-      <Dialog open={openName} onClose={handleCloseName} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Change name and surname</DialogTitle>
+      <Dialog
+        open={openName}
+        onClose={handleCloseName}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          Change name and surname
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please insert new name and surname:
@@ -276,26 +303,33 @@ function Profile(props) {
       <Info
         icon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
         text={new Date(user.birthDate.seconds * 1000).toDateString()}
-        icon2={<EditIcon style={{ verticalAlign: "bottom" }} onClick={handleClickOpenDate} />}
+        icon2={
+          <EditIcon
+            style={{ verticalAlign: "bottom" }}
+            onClick={handleClickOpenDate}
+          />
+        }
       ></Info>
-      <Dialog open={openDate} onClose={handleCloseDate} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={openDate}
+        onClose={handleCloseDate}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Change birth date</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please insert new birth date:
-          </DialogContentText>
+          <DialogContentText>Please insert new birth date:</DialogContentText>
           <DatePicker
             required
-            variant='inline'
-            inputVariant='outlined'
-            label='Birth date'
+            variant="inline"
+            inputVariant="outlined"
+            label="Birth date"
             value={data.birthDate}
             onChange={date => {
               setData(rest => {
                 return { ...rest, birthDate: date };
               });
             }}
-            format='MM/dd/yyyy'
+            format="MM/dd/yyyy"
           />
         </DialogContent>
         <DialogActions>
@@ -342,7 +376,11 @@ function ProfilePicture(props) {
   const { onClick1, onClick2, profilePicture, backgroundPicture } = props;
   return (
     <>
-      <Box className={classes.profileBg} style={{ backgroundImage: `url(${backgroundPicture})` }} onClick={onClick2} />
+      <Box
+        className={classes.profileBg}
+        style={{ backgroundImage: `url(${backgroundPicture})` }}
+        onClick={onClick2}
+      />
       <Avatar
         className={classes.bigAvatar}
         src={profilePicture}
@@ -351,7 +389,6 @@ function ProfilePicture(props) {
     </>
   );
 }
-
 
 function NameAndSurname(props) {
   const { name, surname, icon } = props;
@@ -363,7 +400,6 @@ function NameAndSurname(props) {
     </h3>
   );
 }
-
 
 function Info(props) {
   const { icon2, icon, text } = props;
