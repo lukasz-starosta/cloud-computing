@@ -109,7 +109,7 @@ function Profile(props) {
       }
       await fetchUser();
       handleCloseBackgroundPicture();
-      setLoading(false);  
+      setLoading(false);
     };
 
     updateBackgroundPicture(currentUser.uid, backgroundPicture);
@@ -234,7 +234,7 @@ function Profile(props) {
               setBackgroundPicture(event.target.files);
             }}
           />
-           {loading && (
+          {loading && (
             <p>Wait a second, the window will close automatically...</p>
           )}
         </DialogContent>
@@ -252,7 +252,7 @@ function Profile(props) {
         surname={user.surname}
         icon={
           <EditIcon
-            style={{ verticalAlign: "bottom", cursor:"pointer" }}
+            style={{ verticalAlign: "bottom", cursor: "pointer" }}
             onClick={handleClickOpenName}
           />
         }
