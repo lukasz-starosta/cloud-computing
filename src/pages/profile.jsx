@@ -182,8 +182,8 @@ function Profile(props) {
   return (
     <div className={classes.profile}>
       <ProfilePicture
-        onClick1={handleClickOpenProfilePicture}
-        onClick2={handleClickOpenBackgroundPicture}
+        onClickProfilePicture={handleClickOpenProfilePicture}
+        onClickBackgroundPicture={handleClickOpenBackgroundPicture}
         profilePicture={user.profilePicture}
         backgroundPicture={user.backgroundPicture}
       />
