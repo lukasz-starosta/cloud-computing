@@ -109,7 +109,7 @@ function Profile(props) {
       }
       await fetchUser();
       handleCloseBackgroundPicture();
-      setLoading(false);
+      setLoading(false);  
     };
 
     updateBackgroundPicture(currentUser.uid, backgroundPicture);
@@ -252,7 +252,7 @@ function Profile(props) {
         surname={user.surname}
         icon={
           <EditIcon
-            style={{ verticalAlign: "bottom" }}
+            style={{ verticalAlign: "bottom", cursor:"pointer" }}
             onClick={handleClickOpenName}
           />
         }
@@ -275,6 +275,7 @@ function Profile(props) {
             id="name"
             label="Name"
             type="string"
+            value={user.name}
             fullWidth
             onChange={event => {
               event.persist();
@@ -289,6 +290,7 @@ function Profile(props) {
             id="surname"
             label="Surname"
             type="string"
+            value={user.surname}
             fullWidth
             onChange={event => {
               event.persist();
