@@ -55,10 +55,16 @@ const useStyles = makeStyles({
 function Profile(props) {
   const { currentUser, match, history } = props;
   const classes = useStyles();
-  const [openName, setOpenName] = useState(false);
-  const [openDate, setOpenDate] = useState(false);
-  const [openProfilePicture, setOpenProfilePicture] = useState(false);
-  const [openBackgroundPicture, setOpenBackgroundPicture] = useState(false);
+  const [isEditNameWindowOpen, setIsEditNameWindowOpen] = useState(false);
+  const [isEditDateWindowOpen, setIsEditDateWindowOpen] = useState(false);
+  const [
+    isEditProfilePictureWindowOpen,
+    setIsEditProfilePictureWindowOpen
+  ] = useState(false);
+  const [
+    isEditBackgroundPictureWindowOpen,
+    setIsEditBackgroundPictureWindowOpen
+  ] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState(null);
@@ -67,36 +73,36 @@ function Profile(props) {
   const [backgroundPicture, setBackgroundPicture] = useState();
 
   const handleClickOpenName = () => {
-    setOpenName(true);
+    setIsEditNameWindowOpen(true);
   };
 
   const handleCloseName = () => {
-    setOpenName(false);
+    setIsEditNameWindowOpen(false);
   };
 
   const handleClickOpenDate = () => {
-    setOpenDate(true);
+    setIsEditDateWindowOpen(true);
   };
 
   const handleCloseDate = () => {
-    setOpenDate(false);
+    setIsEditDateWindowOpen(false);
   };
 
   const handleClickOpenProfilePicture = () => {
-    setOpenProfilePicture(true);
+    setIsEditProfilePictureWindowOpen(true);
   };
 
   const handleCloseProfilePicture = () => {
-    setOpenProfilePicture(false);
+    setIsEditProfilePictureWindowOpen(false);
     setProfilePicture(null);
   };
 
   const handleClickOpenBackgroundPicture = () => {
-    setOpenBackgroundPicture(true);
+    setIsEditBackgroundPictureWindowOpen(true);
   };
 
   const handleCloseBackgroundPicture = () => {
-    setOpenBackgroundPicture(false);
+    setIsEditBackgroundPictureWindowOpen(false);
     setBackgroundPicture(null);
   };
 
@@ -153,7 +159,11 @@ function Profile(props) {
   async function fetchUser() {
     const userQuery = await database.getUser(userId);
     setUser(userQuery.data());
-    setData({ birthDate: userQuery.data().birthDate.toDate() });
+    setData({
+      birthDate: userQuery.data().birthDate.toDate(),
+      name: userQuery.data().name,
+      surname: userQuery.data().surname
+    });
   }
 
   useEffect(() => {
@@ -178,7 +188,7 @@ function Profile(props) {
         backgroundPicture={user.backgroundPicture}
       />
       <Dialog
-        open={openProfilePicture}
+        open={isEditProfilePictureWindowOpen}
         onClose={handleCloseProfilePicture}
         aria-labelledby="form-dialog-title"
       >
@@ -212,7 +222,7 @@ function Profile(props) {
         </DialogActions>
       </Dialog>
       <Dialog
-        open={openBackgroundPicture}
+        open={isEditBackgroundPictureWindowOpen}
         onClose={handleCloseBackgroundPicture}
         aria-labelledby="form-dialog-title"
       >
@@ -258,7 +268,7 @@ function Profile(props) {
         }
       />
       <Dialog
-        open={openName}
+        open={isEditNameWindowOpen}
         onClose={handleCloseName}
         aria-labelledby="form-dialog-title"
       >
@@ -275,7 +285,7 @@ function Profile(props) {
             id="name"
             label="Name"
             type="string"
-            value={user.name}
+            value={data.name}
             fullWidth
             onChange={event => {
               event.persist();
@@ -290,7 +300,7 @@ function Profile(props) {
             id="surname"
             label="Surname"
             type="string"
-            value={user.surname}
+            value={data.surname}
             fullWidth
             onChange={event => {
               event.persist();
@@ -320,7 +330,7 @@ function Profile(props) {
         }
       ></Info>
       <Dialog
-        open={openDate}
+        open={isEditDateWindowOpen}
         onClose={handleCloseDate}
         aria-labelledby="form-dialog-title"
       >

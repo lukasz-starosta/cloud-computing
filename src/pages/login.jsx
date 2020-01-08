@@ -38,6 +38,8 @@ const Login = ({ history }) => {
   });
 
   const classes = useStyles();
+  const profilePicture = "https://elysator.com/wp-content/uploads/blank-profile-picture-973460_1280-e1523978675847.png";
+  const backgroundPicture= "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
 
   const handleRegistration = () => {
     const createUser = async user => {
@@ -47,10 +49,8 @@ const Login = ({ history }) => {
         name: data.name,
         surname: data.surname,
         birthDate: data.birthDate,
-        profilePicture:
-          "https://elysator.com/wp-content/uploads/blank-profile-picture-973460_1280-e1523978675847.png",
-        backgroundPicture:
-          "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        profilePicture: profilePicture,
+        backgroundPicture: backgroundPicture,
       });
     };
 
