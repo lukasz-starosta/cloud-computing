@@ -73,6 +73,11 @@ const database = {
     return users.doc(uid).get();
   },
 
+  async updateUser(uid, userData) {
+    const users = this.collection('users');
+    await users.doc(uid).update(userData);
+  },
+
   async setPost(userUid, username, post) {
     const posts = this.collection('users')
       .doc(userUid)
