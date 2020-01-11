@@ -60,11 +60,27 @@ function Post(props) {
 
   const [likes, setLike] = useState(null);
   const [comments, setComment] = useState(null);
+  const [isLikedByCurrentUser, setIsLikedByCurrentUser] = useState(false);
   var countLikes;
 
   async function fetchLikes() {
-    setLike(await database.getLikes(post.id));
+    const likes = await database.getLikes(post.id);
+    setLike(likes);
+    const isLiked = likes.find(like => currentUser.uid === like.userId);
+    setIsLikedByCurrentUser(isLiked);
   }
+
+  useEffect(() => {
+    fetchComments();
+    fetchLikes();
+  }, []);
+
+  // na button
+  const handleClick = () => setIsLikedByCurrentUser(!isLikedByCurrentUser);
+  useEffect(() => {
+    if (isLikedByCurrentUser) database.deleteLike(currentUser.uid, post.id);
+    else database.setLike(currentUser.uid, post.id);
+  }, [isLikedByCurrentUser]);
 
   async function fetchComments() {
     setComment(await database.getComments(post.id));
@@ -81,20 +97,15 @@ function Post(props) {
     });
   };
 
-  const handleAddLike = () => {
-    const addLike = async (userId, postId) => {
+  const handleAddDeleteLike = () => {
+    const handleLike = async (userId, postId) => {
       await database.setLike(userId, postId);
     };
 
-    addLike(currentUser.uid, post.id).then(() => {
+    handleLike(currentUser.uid, post.id).then(() => {
       fetchLikes();
     });
   };
-
-  useEffect(() => {
-    fetchComments();
-    fetchLikes();
-  }, []);
 
   if (!user || !post) return null;
 
@@ -137,7 +148,7 @@ function Post(props) {
             multiline
             rowsMax="3"
             variant="outlined"
-            value={''}
+            value=""
             onChange={event => {
               event.persist();
               setComment({
@@ -153,10 +164,11 @@ function Post(props) {
           <FloatingActionButton
             isLikeIcon
             color="secondary"
-            addLike={handleAddLike}
+            addLike={handleAddDeleteLike}
+            click={handleClick}
             //onClick={() => database.setLike(post.id, currentUser.uid)}
             /*postId={post.id}
-            userId={currentUser.uid}*/
+              userId={currentUser.uid}*/
           />
           <FloatingActionButton color="primary" addComment={handleAddComment} />
         </Toolbar>

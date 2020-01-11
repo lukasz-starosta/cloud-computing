@@ -19,7 +19,12 @@ export default function FloatingActionButton(props) {
   const isLikeIcon = props.isLikeIcon;
   const color = props.color;
   const icon = isLikeIcon ? (
-    <FavoriteIcon onClick={props.addLike} />
+    <FavoriteIcon
+      onClick={() => {
+        props.addLike();
+        props.click();
+      }}
+    />
   ) : (
     <AddCommentIcon onClick={props.addComment} />
   );

@@ -152,6 +152,14 @@ const database = {
     });
   },
 
+  async deleteLike(userId, postId) {
+    await this.db
+      .collection('likes')
+      .where('postId', '==', postId)
+      .where('userId', '==', userId)
+      .delete();
+  },
+
   async setComment(postId, userId, content) {
     const comments = this.collection('comments');
 
