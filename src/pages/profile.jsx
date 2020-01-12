@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Avatar, makeStyles } from "@material-ui/core";
-import CakeIcon from "@material-ui/icons/Cake";
-import EditIcon from "@material-ui/icons/Edit";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import database from "../api/database";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import storage from "../api/storage";
-import { DatePicker } from "@material-ui/pickers";
+import React, { useEffect, useState } from 'react';
+import { Avatar, makeStyles } from '@material-ui/core';
+import CakeIcon from '@material-ui/icons/Cake';
+import EditIcon from '@material-ui/icons/Edit';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import database from '../api/database';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import storage from '../api/storage';
+import { DatePicker } from '@material-ui/pickers';
 
 const useStyles = makeStyles({
   profileBg: {
-    backgroundColor: "#4d1d2c",
-    backgroundSize: "cover",
+    backgroundColor: '#4d1d2c',
+    backgroundSize: 'cover',
     height: 250,
     marginLeft: -32,
     marginRight: -32
@@ -35,9 +35,9 @@ const useStyles = makeStyles({
     margin: 10,
     marginLeft: 40,
     marginTop: -100,
-    border: "solid",
+    border: 'solid',
     borderWidth: 5,
-    borderColor: "#FFF"
+    borderColor: '#FFF'
   },
   post: {
     marginTop: 10,
@@ -152,7 +152,7 @@ function Profile(props) {
     if (currentUser) {
       history.push(`/profile/${currentUser.uid}`);
     } else {
-      history.push("/login");
+      history.push('/login');
     }
   }
 
@@ -168,7 +168,7 @@ function Profile(props) {
 
   useEffect(() => {
     async function fetchPosts() {
-      const postQuery = await database.getPosts(userId);
+      const postQuery = await database.getPosts();
       setPosts(postQuery);
     }
 
@@ -178,7 +178,9 @@ function Profile(props) {
     }
   }, [userId]);
 
+  console.log(posts);
   if (!user || !posts) return <></>;
+
   return (
     <div className={classes.profile}>
       <ProfilePicture
@@ -262,7 +264,7 @@ function Profile(props) {
         surname={user.surname}
         icon={
           <EditIcon
-            style={{ verticalAlign: "bottom", cursor: "pointer" }}
+            style={{ verticalAlign: 'bottom', cursor: 'pointer' }}
             onClick={handleClickOpenName}
           />
         }
@@ -320,11 +322,11 @@ function Profile(props) {
         </DialogActions>
       </Dialog>
       <Info
-        icon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
+        icon={<CakeIcon style={{ verticalAlign: 'bottom' }} />}
         text={new Date(user.birthDate.seconds * 1000).toDateString()}
         icon2={
           <EditIcon
-            style={{ verticalAlign: "bottom" }}
+            style={{ verticalAlign: 'bottom' }}
             onClick={handleClickOpenDate}
           />
         }
@@ -371,20 +373,22 @@ function Profile(props) {
       </Typography>
 
       <div>
-        {posts.map(item => (
-          <Post
-            key={item.post.id}
-            text={item.post.content}
-            date={new Date(item.post.content.seconds).toString()}
-            image={
-              item.post.image && (
-                <div style={{ textAlign: "center" }}>
-                  <img src={item.post.image} alt="post pick" width={300} />
-                </div>
-              )
-            }
-          />
-        ))}
+        {posts
+          .filter(item => item.userUid === userId)
+          .map(item => (
+            <Post
+              key={item.post.id}
+              text={item.post.content}
+              date={new Date(item.post.created_at.seconds * 1000).toUTCString()}
+              image={
+                item.post.image && (
+                  <div style={{ textAlign: 'center' }}>
+                    <img src={item.post.image} alt="post pick" width={300} />
+                  </div>
+                )
+              }
+            />
+          ))}
       </div>
     </div>
   );

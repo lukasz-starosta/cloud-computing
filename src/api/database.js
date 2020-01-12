@@ -52,7 +52,12 @@ const database = {
       .then(function(querySnapshot) {
         posts.push(
           ...querySnapshot.docs.map(doc =>
-            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
+            createPost(
+              doc.data().userUid,
+              doc.data().username,
+              doc.id,
+              doc.data()
+            )
           )
         );
       });
