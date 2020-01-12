@@ -178,7 +178,6 @@ function Profile(props) {
     }
   }, [userId]);
 
-  console.log(posts);
   if (!user || !posts) return <></>;
 
   return (
@@ -379,7 +378,12 @@ function Profile(props) {
             <Post
               key={item.post.id}
               text={item.post.content}
-              date={new Date(item.post.created_at.seconds * 1000).toUTCString()}
+              date={new Date(
+                item.post.created_at.seconds * 1000
+              ).toDateString()}
+              time={new Date(
+                item.post.created_at.seconds * 1000
+              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               image={
                 item.post.image && (
                   <div style={{ textAlign: 'center' }}>
@@ -436,7 +440,7 @@ function Info(props) {
 }
 
 function Post(props) {
-  const { text, date, image } = props;
+  const { text, date, image, time } = props;
   const classes = useStyles();
 
   return (
@@ -445,6 +449,9 @@ function Post(props) {
         <Paper className={classes.post}>
           <Typography variant="caption" component="p" align="right">
             {date}
+          </Typography>
+          <Typography variant="caption" component="p" align="right">
+            {time}
           </Typography>
           {image}
           <Typography component="p">{text}</Typography>
