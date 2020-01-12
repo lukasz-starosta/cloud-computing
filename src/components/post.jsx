@@ -70,21 +70,30 @@ function Post(props) {
     setIsLikedByCurrentUser(isLiked);
   }
 
+  async function fetchComments() {
+    setComment(await database.getComments(post.id));
+  }
+
   useEffect(() => {
     fetchComments();
     fetchLikes();
   }, []);
 
+  function handleLikeClick() {
+    console.log(isLikedByCurrentUser);
+    setIsLikedByCurrentUser(!isLikedByCurrentUser);
+    if (isLikedByCurrentUser) database.deleteLike(currentUser.uid, post.id);
+    else database.setLike(currentUser.uid, post.id);
+    //fetchLikes();
+  }
+
   // na button
-  const handleClick = () => setIsLikedByCurrentUser(!isLikedByCurrentUser);
+  /*const handleClick = () => setIsLikedByCurrentUser(!isLikedByCurrentUser);
   useEffect(() => {
     if (isLikedByCurrentUser) database.deleteLike(currentUser.uid, post.id);
     else database.setLike(currentUser.uid, post.id);
-  }, [isLikedByCurrentUser]);
-
-  async function fetchComments() {
-    setComment(await database.getComments(post.id));
-  }
+    fetchLikes();
+  }, [isLikedByCurrentUser]);*/
 
   const handleAddComment = () => {
     const addComment = async (userId, postId, content) => {
@@ -97,7 +106,7 @@ function Post(props) {
     });
   };
 
-  const handleAddDeleteLike = () => {
+  /*const handleAddDeleteLike = () => {
     const handleLike = async (userId, postId) => {
       await database.setLike(userId, postId);
     };
@@ -105,7 +114,7 @@ function Post(props) {
     handleLike(currentUser.uid, post.id).then(() => {
       fetchLikes();
     });
-  };
+  };*/
 
   if (!user || !post) return null;
 
@@ -164,11 +173,8 @@ function Post(props) {
           <FloatingActionButton
             isLikeIcon
             color="secondary"
-            addLike={handleAddDeleteLike}
-            click={handleClick}
-            //onClick={() => database.setLike(post.id, currentUser.uid)}
-            /*postId={post.id}
-              userId={currentUser.uid}*/
+            //addLike={handleAddDeleteLike}
+            click={handleLikeClick}
           />
           <FloatingActionButton color="primary" addComment={handleAddComment} />
         </Toolbar>

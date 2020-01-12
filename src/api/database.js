@@ -152,12 +152,27 @@ const database = {
     });
   },
 
+  async getLikeId(userId, postId) {
+    const likeId = await this.db
+      .collection('likes')
+      .where('postId', '==', postId)
+      .where('userId', '==', userId);
+
+    return likeId.doc.id;
+  },
+
   async deleteLike(userId, postId) {
-    await this.db
+    const likeId = await this.db
       .collection('likes')
       .where('postId', '==', postId)
       .where('userId', '==', userId)
-      .delete();
+      .get();
+    if (!(typeof likeId.docs === 'undefined')) {
+      await this.db
+        .collection('likes')
+        .doc(likeId.docs[0].id)
+        .delete();
+    }
   },
 
   async setComment(postId, userId, content) {
