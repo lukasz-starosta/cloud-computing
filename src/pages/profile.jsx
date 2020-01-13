@@ -16,6 +16,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import storage from "../api/storage";
 import { DatePicker } from "@material-ui/pickers";
+import { withAuthenticator } from '../components/authenticator-hoc'
 
 const useStyles = makeStyles({
   profileBg: {
@@ -450,4 +451,4 @@ function Post(props) {
   );
 }
 
-export default Profile;
+export default withAuthenticator(Profile);
