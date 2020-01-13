@@ -89,6 +89,29 @@ const database = {
       username,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     });
+  },
+
+  async getIsFollowedByCurrentUser(currentUserUid, userUid) {
+    const users = this.collection('users');
+    const followedUsers = users.doc(currentUserUid).collection('followedUsersIds');
+
+    return await followedUsers
+      .doc(userUid)
+      .get()
+      .then(docSnapshot => docSnapshot.exists);
+  },
+
+  async followUser(currentUserUid, userUid) {
+    if (currentUserUid === userUid) return;
+    const users = this.collection('users');
+    const followedUsers = users.doc(currentUserUid).collection('followedUsersIds');
+    await followedUsers.doc(userUid).set({});
+  },
+
+  async unfollowUser(currentUserUid, userUid) {
+    const users = this.collection('users');
+    const followedUsers = users.doc(currentUserUid).collection('followedUsersIds');
+    await followedUsers.doc(userUid).delete();
   }
 };
 
