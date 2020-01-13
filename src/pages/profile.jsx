@@ -190,7 +190,7 @@ function Profile(props) {
 
   useEffect(() => {
     async function fetchPosts() {
-      const postQuery = await database.getPosts(userId);
+      const postQuery = await database.getPosts();
       setPosts(postQuery);
     }
 

@@ -8,7 +8,7 @@ function Dashboard({ currentUser }) {
   const [postWrappers, setPostWrappers] = useState(null);
 
   async function fetch() {
-    setPostWrappers(await database.getPosts());
+    setPostWrappers(await database.getPostsOfFollowedUsers(currentUser.uid));
   }
 
   useEffect(() => {

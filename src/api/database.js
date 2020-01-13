@@ -60,6 +60,43 @@ const database = {
     return posts;
   },
 
+  async getPostsOfFollowedUsers(userUid) {
+    const createPost = (userUid, username, postId, post) => ({
+      userUid,
+      username,
+      post: {
+        id: postId,
+        ...post
+      }
+    });
+
+    const posts = [];
+
+    const users = this.collection('users');
+
+    const followedUsersIdsQueryResult = await users
+      .doc(userUid)
+      .collection('followedUsersIds')
+      .get();
+
+    const followedUsersIds = followedUsersIdsQueryResult.docs.map(doc => doc.id);
+
+    await this.db
+      .collectionGroup('posts')
+      .where('userUid', 'in', followedUsersIds)
+      .orderBy('created_at', 'desc')
+      .get()
+      .then(function(querySnapshot) {
+        posts.push(
+          ...querySnapshot.docs.map(doc =>
+            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
+          )
+        );
+      });
+
+    return posts;
+  },
+
   async setUser(user) {
     const users = this.collection('users');
     const uid = user.uid;
