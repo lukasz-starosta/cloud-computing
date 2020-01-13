@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import database from '../api/database';
+import { withAuthenticator } from '../components/authenticator-hoc'
 
 const useStyles = makeStyles({
   profileBg: {
@@ -171,4 +172,4 @@ function Post(props) {
   );
 }
 
-export default Profile;
+export default withAuthenticator(Profile);
