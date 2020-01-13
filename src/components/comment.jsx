@@ -23,17 +23,23 @@ const useStyles = makeStyles(theme => ({
   userStyle: {
     color: 'white',
     fontSize: 20
+  },
+  timeStyle: {
+    color: 'white',
+    fontSize: 10,
+    float: 'right'
   }
 }));
 
 function Comment(props) {
-  const { username, content } = props;
+  const { username, content, time } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.commentStyle}>
       <Typography className={classes.userStyle}>{username}</Typography>
       <Typography className={classes.textStyle}>{content}</Typography>
+      <Typography className={classes.timeStyle}>{time}</Typography>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { Typography, makeStyles } from '@material-ui/core';
 import UserLink from './user-link';
 import database from '../api/database';
 import Comment from '../components/comment';
+import grey from '@material-ui/core/colors/grey';
 
 const image1 = {
   src:
@@ -59,19 +60,27 @@ function Post(props) {
   const classes = useStyles();
 
   const [likes, setLike] = useState(null);
-  const [comments, setComment] = useState(null);
+  const [comment, setComment] = useState({ commentContent: '' });
+  const [comments, setComments] = useState(null);
   const [isLikedByCurrentUser, setIsLikedByCurrentUser] = useState(false);
-  var countLikes;
+  const [buttonColor, setButtonColor] = useState(null);
+  const [likeButtonIsDisabled, setLikeButtonIsDisabled] = useState(false);
+  const [commentButtonIsDisabled, setCommentButtonIsDisabled] = useState(false);
+  const [countLikes, setCountLikes] = useState(0);
 
   async function fetchLikes() {
     const likes = await database.getLikes(post.id);
+    setCountLikes(likes.length);
     setLike(likes);
-    const isLiked = likes.find(like => currentUser.uid === like.userId);
+    const isLiked = !!likes.find(like => currentUser.uid === like.userId);
     setIsLikedByCurrentUser(isLiked);
+    if (isLiked) setButtonColor('secondary');
+    else setButtonColor(grey[50]);
   }
 
   async function fetchComments() {
-    setComment(await database.getComments(post.id));
+    const comments = await database.getComments(post.id);
+    setComments(comments);
   }
 
   useEffect(() => {
@@ -79,47 +88,37 @@ function Post(props) {
     fetchLikes();
   }, []);
 
-  function handleLikeClick() {
-    console.log(isLikedByCurrentUser);
-    setIsLikedByCurrentUser(!isLikedByCurrentUser);
-    if (isLikedByCurrentUser) database.deleteLike(currentUser.uid, post.id);
-    else database.setLike(currentUser.uid, post.id);
-    //fetchLikes();
+  async function handleLikeClick() {
+    setLikeButtonIsDisabled(true);
+    const newLiked = !isLikedByCurrentUser;
+    setIsLikedByCurrentUser(newLiked);
+    if (newLiked) {
+      setCountLikes(countLikes + 1);
+      await database.setLike(currentUser.uid, post.id);
+    } else {
+      setCountLikes(countLikes - 1);
+      await database.deleteLike(currentUser.uid, post.id);
+    }
+    await fetchLikes();
+    setLikeButtonIsDisabled(false);
   }
 
-  // na button
-  /*const handleClick = () => setIsLikedByCurrentUser(!isLikedByCurrentUser);
-  useEffect(() => {
-    if (isLikedByCurrentUser) database.deleteLike(currentUser.uid, post.id);
-    else database.setLike(currentUser.uid, post.id);
-    fetchLikes();
-  }, [isLikedByCurrentUser]);*/
+  async function handleAddComment() {
+    if (comment.commentContent != '') {
+      setCommentButtonIsDisabled(true);
+      const addComment = async (postId, userId, comment) => {
+        await database.setComment(postId, userId, comment.commentContent);
+      };
 
-  const handleAddComment = () => {
-    const addComment = async (userId, postId, content) => {
-      await database.setComment(userId, postId, content);
-    };
-
-    addComment(currentUser.uid, post.id, content).then(() => {
-      fetchComments();
-      setComment({ content: '' });
-    });
-  };
-
-  /*const handleAddDeleteLike = () => {
-    const handleLike = async (userId, postId) => {
-      await database.setLike(userId, postId);
-    };
-
-    handleLike(currentUser.uid, post.id).then(() => {
-      fetchLikes();
-    });
-  };*/
+      addComment(post.id, currentUser.uid, comment).then(() => {
+        fetchComments();
+        setComment({ commentContent: '' });
+      });
+      setCommentButtonIsDisabled(false);
+    }
+  }
 
   if (!user || !post) return null;
-
-  if (!likes) countLikes = 0;
-  else countLikes = likes.length; //likes.length;
 
   return (
     <div className={classes.postStyle}>
@@ -141,11 +140,12 @@ function Post(props) {
       </div>
       <p>{content}</p>
       {comments &&
-        comments.map(comment => (
+        comments.map(currentComment => (
           <Comment
-            key={comment.commentId}
+            key={currentComment.commentId}
             username={`${currentUser.name}  ${currentUser.surname}`}
-            content={comment.content}
+            content={currentComment.content}
+            time={new Date(currentComment.created_at.seconds * 1000).toUTCString()}
           />
         ))}
       {/*<Comment username="Wuja" content={post.id} />*/}
@@ -157,26 +157,31 @@ function Post(props) {
             multiline
             rowsMax="3"
             variant="outlined"
-            value=""
+            value={comment.commentContent}
             onChange={event => {
               event.persist();
               setComment({
-                content: event.target.value
+                commentContent: event.target.value
               });
             }}
           />
         </form>
-        {countLikes}
+        Likes: {countLikes}
       </div>
       <div>
         <Toolbar className={classes.outerButtonsStyle}>
           <FloatingActionButton
+            isDisabled={likeButtonIsDisabled}
             isLikeIcon
-            color="secondary"
+            color={buttonColor}
             //addLike={handleAddDeleteLike}
             click={handleLikeClick}
           />
-          <FloatingActionButton color="primary" addComment={handleAddComment} />
+          <FloatingActionButton
+            isDisabled={commentButtonIsDisabled}
+            color="primary"
+            addComment={handleAddComment}
+          />
         </Toolbar>
       </div>
     </div>

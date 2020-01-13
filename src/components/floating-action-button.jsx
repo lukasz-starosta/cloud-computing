@@ -26,12 +26,17 @@ export default function FloatingActionButton(props) {
       }}
     />
   ) : (
-    <AddCommentIcon onClick={props.addComment} />
+    <AddCommentIcon onClick={() => props.addComment()} />
   );
 
   return (
     <div>
-      <Fab color={color} aria-label="add" className={classes.fab}>
+      <Fab
+        disabled={props.isDisabled}
+        color={color}
+        aria-label="add"
+        className={classes.fab}
+      >
         {icon}
       </Fab>
     </div>

@@ -88,11 +88,18 @@ const database = {
   },
 
   async getComments(postId) {
-    const createComments = (commentId, userId, postId, content) => ({
+    const createComments = (
       commentId,
       userId,
       postId,
-      content
+      content,
+      created_at
+    ) => ({
+      commentId,
+      userId,
+      postId,
+      content,
+      created_at
     });
 
     const comments = [];
@@ -108,7 +115,8 @@ const database = {
               doc.id,
               doc.data().userId,
               doc.data().postId,
-              doc.data().content
+              doc.data().content,
+              doc.data().created_at
             )
           )
         );
