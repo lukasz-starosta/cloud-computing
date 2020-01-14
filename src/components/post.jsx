@@ -23,6 +23,10 @@ const image2 = {
   width: '162px'
 };
 
+const imageStyle = {
+  textAlign: 'center'
+};
+
 const useStyles = makeStyles(theme => ({
   postStyle: {
     backgroundColor: colors.AWS_whiteish,
@@ -33,9 +37,6 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: '75px',
     paddingRight: '20px',
     boxShadow: '0 10px 30px -10px rgba(0,0,0,0.1)'
-  },
-  imageStyle: {
-    textAlign: 'center'
   },
   timeAndNameStyle: {
     lineHeight: '5px',
