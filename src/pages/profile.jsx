@@ -17,7 +17,6 @@ import TextField from "@material-ui/core/TextField";
 import storage from "../api/storage";
 import { DatePicker } from "@material-ui/pickers";
 import { withAuthenticator } from '../components/authenticator-hoc'
-import { isCallExpression } from "@babel/types";
 
 const useStyles = makeStyles({
   profileBg: {
