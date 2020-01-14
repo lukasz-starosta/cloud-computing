@@ -222,6 +222,7 @@ function Profile(props) {
   };
 
   if (!user || !posts) return <></>;
+
   return (
     <div className={classes.profile}>
       <ProfilePicture
@@ -398,20 +399,27 @@ function Profile(props) {
       </Typography>
 
       <div>
-        {posts.map(item => (
-          <Post
-            key={item.post.id}
-            text={item.post.content}
-            date={new Date(item.post.content.seconds).toString()}
-            image={
-              item.post.image && (
-                <div style={{ textAlign: 'center' }}>
-                  <img src={item.post.image} alt="post pick" width={300} />
-                </div>
-              )
-            }
-          />
-        ))}
+        {posts
+          .filter(item => item.userUid === userId)
+          .map(item => (
+            <Post
+              key={item.post.id}
+              text={item.post.content}
+              date={new Date(
+                item.post.created_at.seconds * 1000
+              ).toDateString()}
+              time={new Date(
+                item.post.created_at.seconds * 1000
+              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              image={
+                item.post.image && (
+                  <div style={{ textAlign: 'center' }}>
+                    <img src={item.post.image} alt="post pick" width={300} />
+                  </div>
+                )
+              }
+            />
+          ))}
       </div>
     </div>
   );
@@ -460,7 +468,7 @@ function Info(props) {
 }
 
 function Post(props) {
-  const { text, date, image } = props;
+  const { text, date, image, time } = props;
   const classes = useStyles();
 
   return (
@@ -469,6 +477,9 @@ function Post(props) {
         <Paper className={classes.post}>
           <Typography variant="caption" component="p" align="right">
             {date}
+          </Typography>
+          <Typography variant="caption" component="p" align="right">
+            {time}
           </Typography>
           {image}
           <Typography component="p">{text}</Typography>
