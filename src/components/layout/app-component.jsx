@@ -27,6 +27,7 @@ function AppComponent(props) {
     const getUser = async uid => {
       return await database.getUser(uid);
     };
+
     firebase.auth().onAuthStateChanged(currentUser => {
       setIsLoggedIn(currentUser ? true : false);
 

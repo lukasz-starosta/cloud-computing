@@ -17,6 +17,7 @@ function Dashboard({ currentUser }) {
 
   // TODO: return loader
   if (!postWrappers) return <></>;
+
   return (
     <>
       <NewPost currentUser={currentUser} fetchPosts={fetch} />
@@ -29,7 +30,6 @@ function Dashboard({ currentUser }) {
               username: postWrapper.username
             }}
             post={postWrapper.post}
-            currentUser={currentUser}
           />
         ))}
       </div>

@@ -52,76 +52,12 @@ const database = {
       .then(function(querySnapshot) {
         posts.push(
           ...querySnapshot.docs.map(doc =>
-            createPost(
-              doc.data().userUid,
-              doc.data().username,
-              doc.id,
-              doc.data()
-            )
+            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
           )
         );
       });
+
     return posts;
-  },
-
-  async getLikes(postId, userId) {
-    const createLikes = (likeId, userId, postId) => ({
-      likeId,
-      userId,
-      postId
-    });
-
-    const likes = [];
-
-    await this.db
-      .collection('likes')
-      .where('postId', '==', postId)
-      .get()
-      .then(function(querySnapshot) {
-        likes.push(
-          ...querySnapshot.docs.map(doc =>
-            createLikes(doc.id, doc.data().userId, doc.data().postId)
-          )
-        );
-      });
-    return likes;
-  },
-
-  async getComments(postId) {
-    const createComments = (
-      commentId,
-      userId,
-      postId,
-      content,
-      created_at
-    ) => ({
-      commentId,
-      userId,
-      postId,
-      content,
-      created_at
-    });
-
-    const comments = [];
-
-    await this.db
-      .collection('comments')
-      .where('postId', '==', postId)
-      .get()
-      .then(function(querySnapshot) {
-        comments.push(
-          ...querySnapshot.docs.map(doc =>
-            createComments(
-              doc.id,
-              doc.data().userId,
-              doc.data().postId,
-              doc.data().content,
-              doc.data().created_at
-            )
-          )
-        );
-      });
-    return comments;
   },
 
   async setUser(user) {
@@ -151,50 +87,6 @@ const database = {
       ...post,
       userUid,
       username,
-      created_at: firebase.firestore.FieldValue.serverTimestamp()
-    });
-  },
-
-  async setLike(userId, postId) {
-    const likes = this.collection('likes');
-
-    await likes.add({
-      postId,
-      userId,
-      created_at: firebase.firestore.FieldValue.serverTimestamp()
-    });
-  },
-
-  async getLikeId(userId, postId) {
-    const likeId = await this.db
-      .collection('likes')
-      .where('postId', '==', postId)
-      .where('userId', '==', userId);
-
-    return likeId.doc.id;
-  },
-
-  async deleteLike(userId, postId) {
-    const likeId = await this.db
-      .collection('likes')
-      .where('postId', '==', postId)
-      .where('userId', '==', userId)
-      .get();
-    if (!(typeof likeId.docs === 'undefined')) {
-      await this.db
-        .collection('likes')
-        .doc(likeId.docs[0].id)
-        .delete();
-    }
-  },
-
-  async setComment(postId, userId, content) {
-    const comments = this.collection('comments');
-
-    await comments.add({
-      postId,
-      userId,
-      content,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     });
   }
