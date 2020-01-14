@@ -50,10 +50,16 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(1),
       width: 600
     }
+  },
+  username: {
+    marginTop: 8,
+    color: '#565656',
+    '&:hover': {
+      color: '#9a9a9a'
+    }
   }
 }));
 
-// TODO: Refactor styles
 function Post(props) {
   const { user, post, currentUser } = props;
   const { content, created_at } = post;
@@ -129,15 +135,11 @@ function Post(props) {
         {/* epoch * 1000 to properly convert to date */}
         <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>
       </div>
-      <div className={classes.imageStyle}>
-        <img src={image1.src} alt={image1.alt} width={image1.width} />
-        <img
-          src={image2.src}
-          alt={image2.alt}
-          width={image2.width}
-          hspace="30"
-        />
-      </div>
+      {post.image && (
+        <div style={imageStyle}>
+          <img src={post.image} alt="post pick" width={300} />
+        </div>
+      )}
       <p>{content}</p>
       {comments &&
         comments.map(currentComment => (
@@ -145,10 +147,11 @@ function Post(props) {
             key={currentComment.commentId}
             username={`${currentUser.name}  ${currentUser.surname}`}
             content={currentComment.content}
-            time={new Date(currentComment.created_at.seconds * 1000).toUTCString()}
+            time={new Date(
+              currentComment.created_at.seconds * 1000
+            ).toUTCString()}
           />
         ))}
-      {/*<Comment username="Wuja" content={post.id} />*/}
       <div>
         <form className={classes.comment} noValidate autoComplete="off">
           <TextField
@@ -174,7 +177,6 @@ function Post(props) {
             isDisabled={likeButtonIsDisabled}
             isLikeIcon
             color={buttonColor}
-            //addLike={handleAddDeleteLike}
             click={handleLikeClick}
           />
           <FloatingActionButton
