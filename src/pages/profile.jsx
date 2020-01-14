@@ -17,6 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import storage from "../api/storage";
 import { DatePicker } from "@material-ui/pickers";
 import { withAuthenticator } from '../components/authenticator-hoc'
+import { isCallExpression } from "@babel/types";
 
 const useStyles = makeStyles({
   profileBg: {
@@ -90,6 +91,7 @@ function Profile(props) {
   };
 
   const handleClickOpenProfilePicture = () => {
+    if(!isCurrentUsersProfile) return;
     setIsEditProfilePictureWindowOpen(true);
   };
 
@@ -99,6 +101,7 @@ function Profile(props) {
   };
 
   const handleClickOpenBackgroundPicture = () => {
+    if(!isCurrentUsersProfile) return;
     setIsEditBackgroundPictureWindowOpen(true);
   };
 
@@ -148,6 +151,7 @@ function Profile(props) {
   };
 
   const userId = match.params.id;
+  const isCurrentUsersProfile = currentUser.uid === userId;
 
   if (!userId) {
     if (currentUser) {
@@ -261,7 +265,8 @@ function Profile(props) {
       <NameAndSurname
         name={user.name}
         surname={user.surname}
-        icon={
+        isCurrentUsersProfile={isCurrentUsersProfile}
+        editIcon={
           <EditIcon
             style={{ verticalAlign: "bottom", cursor: "pointer" }}
             onClick={handleClickOpenName}
@@ -321,9 +326,10 @@ function Profile(props) {
         </DialogActions>
       </Dialog>
       <Info
-        icon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
+        cakeIcon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
         text={new Date(user.birthDate.seconds * 1000).toDateString()}
-        icon2={
+        isCurrentUsersProfile={isCurrentUsersProfile}
+        editIcon={
           <EditIcon
             style={{ verticalAlign: "bottom" }}
             onClick={handleClickOpenDate}
@@ -393,41 +399,41 @@ function Profile(props) {
 
 function ProfilePicture(props) {
   const classes = useStyles();
-  const { onClick1, onClick2, profilePicture, backgroundPicture } = props;
+  const { onClickProfilePicture, onClickBackgroundPicture, profilePicture, backgroundPicture } = props;
   return (
     <>
       <Box
         className={classes.profileBg}
         style={{ backgroundImage: `url(${backgroundPicture})` }}
-        onClick={onClick2}
+        onClick={onClickBackgroundPicture}
       />
       <Avatar
         className={classes.bigAvatar}
         src={profilePicture}
-        onClick={onClick1}
+        onClick={onClickProfilePicture}
       />
     </>
   );
 }
 
 function NameAndSurname(props) {
-  const { name, surname, icon } = props;
+  const { name, surname, editIcon, isCurrentUsersProfile } = props;
 
   return (
     <h3>
       {name} {surname}
-      {icon}
+      {isCurrentUsersProfile ? editIcon: <></>}
     </h3>
   );
 }
 
 function Info(props) {
-  const { icon2, icon, text } = props;
+  const { editIcon, cakeIcon, text, isCurrentUsersProfile } = props;
   return (
     <div>
-      {icon}
+      {cakeIcon}
       {text}
-      {icon2}
+      {isCurrentUsersProfile ? editIcon: <></>}
     </div>
   );
 }
