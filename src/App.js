@@ -5,7 +5,6 @@ import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import Profile from './pages/profile';
 import AppComponent from './components/layout/app-component';
-import About from './pages/about';
 import Landing from './pages/landing';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -71,9 +70,6 @@ function App() {
                     <Profile {...props} currentUser={currentUser} />
                   )}
                 />
-                <Route path='/about'>
-                  <About />
-                </Route>
                 <Route path='/login'>
                   <Login />
                 </Route>
