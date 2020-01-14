@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { Avatar, makeStyles } from "@material-ui/core";
-import CakeIcon from "@material-ui/icons/Cake";
-import EditIcon from "@material-ui/icons/Edit";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import database from "../api/database";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import storage from "../api/storage";
-import { DatePicker } from "@material-ui/pickers";
-import { withAuthenticator } from '../components/authenticator-hoc'
+import React, { useEffect, useState } from 'react';
+import { Avatar, makeStyles } from '@material-ui/core';
+import CakeIcon from '@material-ui/icons/Cake';
+import EditIcon from '@material-ui/icons/Edit';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import database from '../api/database';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import storage from '../api/storage';
+import { DatePicker } from '@material-ui/pickers';
+import { withAuthenticator } from '../components/authenticator-hoc';
 
 const useStyles = makeStyles({
   profileBg: {
-    backgroundColor: "#4d1d2c",
-    backgroundSize: "cover",
+    backgroundColor: '#4d1d2c',
+    backgroundSize: 'cover',
     height: 250,
     marginLeft: -32,
     marginRight: -32
@@ -36,9 +36,34 @@ const useStyles = makeStyles({
     margin: 10,
     marginLeft: 40,
     marginTop: -100,
-    border: "solid",
+    border: 'solid',
     borderWidth: 5,
-    borderColor: "#FFF"
+    borderColor: '#FFF'
+  },
+  followButton: {
+    padding: '8px 30px',
+    borderRadius: 12,
+    outline: 'none',
+    border: '2px solid #4d1d2c',
+    background: 'transparent',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+
+    '&:hover': {
+      background: '#4d1d2c',
+      color: 'white'
+    },
+    '&:active': {
+      background: '#4d1d2c',
+      color: 'white',
+      transform: 'scale(0.96)'
+    },
+    '&:disabled': {
+      opacity: 0.5,
+      pointerEvents: 'none'
+    },
+
+    transition: 'all 0.3s ease-out'
   },
   post: {
     marginTop: 10,
@@ -58,20 +83,16 @@ function Profile(props) {
   const classes = useStyles();
   const [isEditNameWindowOpen, setIsEditNameWindowOpen] = useState(false);
   const [isEditDateWindowOpen, setIsEditDateWindowOpen] = useState(false);
-  const [
-    isEditProfilePictureWindowOpen,
-    setIsEditProfilePictureWindowOpen
-  ] = useState(false);
-  const [
-    isEditBackgroundPictureWindowOpen,
-    setIsEditBackgroundPictureWindowOpen
-  ] = useState(false);
+  const [isEditProfilePictureWindowOpen, setIsEditProfilePictureWindowOpen] = useState(false);
+  const [isEditBackgroundPictureWindowOpen, setIsEditBackgroundPictureWindowOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState(null);
   const [data, setData] = useState({});
   const [profilePicture, setProfilePicture] = useState();
   const [backgroundPicture, setBackgroundPicture] = useState();
+  const [isFollowedByCurrentUser, setIsFollowedByCurrentUser] = useState(false);
+  const [isFollowSubmitting, setIsFollowSubmitting] = useState(false);
 
   const handleClickOpenName = () => {
     setIsEditNameWindowOpen(true);
@@ -90,7 +111,7 @@ function Profile(props) {
   };
 
   const handleClickOpenProfilePicture = () => {
-    if(!isCurrentUsersProfile) return;
+    if (!isCurrentUsersProfile) return;
     setIsEditProfilePictureWindowOpen(true);
   };
 
@@ -100,7 +121,7 @@ function Profile(props) {
   };
 
   const handleClickOpenBackgroundPicture = () => {
-    if(!isCurrentUsersProfile) return;
+    if (!isCurrentUsersProfile) return;
     setIsEditBackgroundPictureWindowOpen(true);
   };
 
@@ -156,7 +177,7 @@ function Profile(props) {
     if (currentUser) {
       history.push(`/profile/${currentUser.uid}`);
     } else {
-      history.push("/login");
+      history.push('/login');
     }
   }
 
@@ -172,15 +193,33 @@ function Profile(props) {
 
   useEffect(() => {
     async function fetchPosts() {
-      const postQuery = await database.getPosts(userId);
+      const postQuery = await database.getPosts();
       setPosts(postQuery);
+    }
+
+    async function fetchFollowedByCurrentUser() {
+      setIsFollowedByCurrentUser(
+        await database.getIsFollowedByCurrentUser(currentUser.uid, userId)
+      );
     }
 
     if (userId) {
       fetchUser();
+      fetchFollowedByCurrentUser();
       fetchPosts();
     }
   }, [userId]);
+
+  const handleFollowButtonClick = async () => {
+    setIsFollowSubmitting(true);
+    if (isFollowedByCurrentUser) {
+      await database.unfollowUser(currentUser.uid, userId);
+    } else {
+      await database.followUser(currentUser.uid, userId);
+    }
+    setIsFollowedByCurrentUser(await database.getIsFollowedByCurrentUser(currentUser.uid, userId));
+    setIsFollowSubmitting(false);
+  };
 
   if (!user || !posts) return <></>;
   return (
@@ -198,9 +237,7 @@ function Profile(props) {
       >
         <DialogTitle id="form-dialog-title">Change profile picture</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please upload new profile picture:
-          </DialogContentText>
+          <DialogContentText>Please upload new profile picture:</DialogContentText>
           <input
             autoFocus
             margin="dense"
@@ -212,9 +249,7 @@ function Profile(props) {
               setProfilePicture(event.target.files);
             }}
           />
-          {loading && (
-            <p>Wait a second, the window will close automatically...</p>
-          )}
+          {loading && <p>Wait a second, the window will close automatically...</p>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseProfilePicture} color="primary">
@@ -230,13 +265,9 @@ function Profile(props) {
         onClose={handleCloseBackgroundPicture}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">
-          Change background picture
-        </DialogTitle>
+        <DialogTitle id="form-dialog-title">Change background picture</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please upload new background picture:
-          </DialogContentText>
+          <DialogContentText>Please upload new background picture:</DialogContentText>
           <input
             autoFocus
             margin="dense"
@@ -248,9 +279,7 @@ function Profile(props) {
               setBackgroundPicture(event.target.files);
             }}
           />
-          {loading && (
-            <p>Wait a second, the window will close automatically...</p>
-          )}
+          {loading && <p>Wait a second, the window will close automatically...</p>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseBackgroundPicture} color="primary">
@@ -261,13 +290,20 @@ function Profile(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      <button
+        onClick={handleFollowButtonClick}
+        className={classes.followButton}
+        disabled={currentUser.uid === userId || isFollowSubmitting}
+      >
+        {isFollowedByCurrentUser ? 'Unfollow' : 'Follow'}
+      </button>
       <NameAndSurname
         name={user.name}
         surname={user.surname}
         isCurrentUsersProfile={isCurrentUsersProfile}
         editIcon={
           <EditIcon
-            style={{ verticalAlign: "bottom", cursor: "pointer" }}
+            style={{ verticalAlign: 'bottom', cursor: 'pointer' }}
             onClick={handleClickOpenName}
           />
         }
@@ -277,13 +313,9 @@ function Profile(props) {
         onClose={handleCloseName}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">
-          Change name and surname
-        </DialogTitle>
+        <DialogTitle id="form-dialog-title">Change name and surname</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please insert new name and surname:
-          </DialogContentText>
+          <DialogContentText>Please insert new name and surname:</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -325,15 +357,10 @@ function Profile(props) {
         </DialogActions>
       </Dialog>
       <Info
-        cakeIcon={<CakeIcon style={{ verticalAlign: "bottom" }} />}
+        cakeIcon={<CakeIcon style={{ verticalAlign: 'bottom' }} />}
         text={new Date(user.birthDate.seconds * 1000).toDateString()}
         isCurrentUsersProfile={isCurrentUsersProfile}
-        editIcon={
-          <EditIcon
-            style={{ verticalAlign: "bottom" }}
-            onClick={handleClickOpenDate}
-          />
-        }
+        editIcon={<EditIcon style={{ verticalAlign: 'bottom' }} onClick={handleClickOpenDate} />}
       ></Info>
       <Dialog
         open={isEditDateWindowOpen}
@@ -366,13 +393,7 @@ function Profile(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <Typography
-        variant="h4"
-        component="h3"
-        color="textSecondary"
-        align="center"
-        justify="center"
-      >
+      <Typography variant="h4" component="h3" color="textSecondary" align="center" justify="center">
         My posts
       </Typography>
 
@@ -384,7 +405,7 @@ function Profile(props) {
             date={new Date(item.post.content.seconds).toString()}
             image={
               item.post.image && (
-                <div style={{ textAlign: "center" }}>
+                <div style={{ textAlign: 'center' }}>
                   <img src={item.post.image} alt="post pick" width={300} />
                 </div>
               )
@@ -398,7 +419,12 @@ function Profile(props) {
 
 function ProfilePicture(props) {
   const classes = useStyles();
-  const { onClickProfilePicture, onClickBackgroundPicture, profilePicture, backgroundPicture } = props;
+  const {
+    onClickProfilePicture,
+    onClickBackgroundPicture,
+    profilePicture,
+    backgroundPicture
+  } = props;
   return (
     <>
       <Box
@@ -406,11 +432,7 @@ function ProfilePicture(props) {
         style={{ backgroundImage: `url(${backgroundPicture})` }}
         onClick={onClickBackgroundPicture}
       />
-      <Avatar
-        className={classes.bigAvatar}
-        src={profilePicture}
-        onClick={onClickProfilePicture}
-      />
+      <Avatar className={classes.bigAvatar} src={profilePicture} onClick={onClickProfilePicture} />
     </>
   );
 }
@@ -421,7 +443,7 @@ function NameAndSurname(props) {
   return (
     <h3>
       {name} {surname}
-      {isCurrentUsersProfile ? editIcon: <></>}
+      {isCurrentUsersProfile ? editIcon : <></>}
     </h3>
   );
 }
@@ -432,7 +454,7 @@ function Info(props) {
     <div>
       {cakeIcon}
       {text}
-      {isCurrentUsersProfile ? editIcon: <></>}
+      {isCurrentUsersProfile ? editIcon : <></>}
     </div>
   );
 }

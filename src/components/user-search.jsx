@@ -98,12 +98,9 @@ function UserSearch() {
   const showPredictionsDropdown = value.length > 0;
 
   const displayUsernames = user => (
-    <UserLink
-      userUid={user.id}
-      username={user.data().name}
-      additionalClasses={classes.user}
-      key={user.id}
-    />
+    <div key={user.id} onClick={() => setValue('')}>
+      <UserLink userUid={user.id} username={user.data().name} additionalClasses={classes.user} />
+    </div>
   );
 
   const predictionsDropdown = (

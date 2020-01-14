@@ -52,15 +52,47 @@ const database = {
       .then(function(querySnapshot) {
         posts.push(
           ...querySnapshot.docs.map(doc =>
-            createPost(
-              doc.data().userUid,
-              doc.data().username,
-              doc.id,
-              doc.data()
-            )
+            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
           )
         );
       });
+    return posts;
+  },
+
+  async getPostsOfFollowedUsers(userUid) {
+    const createPost = (userUid, username, postId, post) => ({
+      userUid,
+      username,
+      post: {
+        id: postId,
+        ...post
+      }
+    });
+
+    const posts = [];
+
+    const users = this.collection('users');
+
+    const followedUsersIdsQueryResult = await users
+      .doc(userUid)
+      .collection('followedUsersIds')
+      .get();
+
+    const followedUsersIds = followedUsersIdsQueryResult.docs.map(doc => doc.id);
+
+    await this.db
+      .collectionGroup('posts')
+      .where('userUid', 'in', followedUsersIds)
+      .orderBy('created_at', 'desc')
+      .get()
+      .then(function(querySnapshot) {
+        posts.push(
+          ...querySnapshot.docs.map(doc =>
+            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
+          )
+        );
+      });
+
     return posts;
   },
 
@@ -88,13 +120,7 @@ const database = {
   },
 
   async getComments(postId) {
-    const createComments = (
-      commentId,
-      userId,
-      postId,
-      content,
-      created_at
-    ) => ({
+    const createComments = (commentId, userId, postId, content, created_at) => ({
       commentId,
       userId,
       postId,
@@ -153,6 +179,29 @@ const database = {
       username,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     });
+  },
+
+  async getIsFollowedByCurrentUser(currentUserUid, userUid) {
+    const users = this.collection('users');
+    const followedUsers = users.doc(currentUserUid).collection('followedUsersIds');
+
+    return await followedUsers
+      .doc(userUid)
+      .get()
+      .then(docSnapshot => docSnapshot.exists);
+  },
+
+  async followUser(currentUserUid, userUid) {
+    if (currentUserUid === userUid) return;
+    const users = this.collection('users');
+    const followedUsers = users.doc(currentUserUid).collection('followedUsersIds');
+    await followedUsers.doc(userUid).set({});
+  },
+
+  async unfollowUser(currentUserUid, userUid) {
+    const users = this.collection('users');
+    const followedUsers = users.doc(currentUserUid).collection('followedUsersIds');
+    await followedUsers.doc(userUid).delete();
   },
 
   async setLike(userId, postId) {
