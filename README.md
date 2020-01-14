@@ -1,6 +1,6 @@
-# Cloud computing project readme
+# Cumulus project readme
 
-This is a Twitter-like app where users can share posts. We do not have a logo or a name yet.
+This is a Twitter-like app where users can share posts.
 The app url is:
 https://cloud-computing-systems.web.app
 

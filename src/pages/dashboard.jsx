@@ -8,7 +8,7 @@ function Dashboard({ currentUser }) {
   const [postWrappers, setPostWrappers] = useState(null);
 
   async function fetch() {
-    setPostWrappers(await database.getPosts());
+    setPostWrappers(await database.getPostsOfFollowedUsers(currentUser.uid));
   }
 
   useEffect(() => {
@@ -17,7 +17,6 @@ function Dashboard({ currentUser }) {
 
   // TODO: return loader
   if (!postWrappers) return <></>;
-
   return (
     <>
       <NewPost currentUser={currentUser} fetchPosts={fetch} />
@@ -30,6 +29,7 @@ function Dashboard({ currentUser }) {
               username: postWrapper.username
             }}
             post={postWrapper.post}
+            currentUser={currentUser}
           />
         ))}
       </div>

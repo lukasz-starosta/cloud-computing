@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddCommentIcon from '@material-ui/icons/AddComment';
+import database from '../api/database';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -18,14 +19,23 @@ export default function FloatingActionButton(props) {
   const isLikeIcon = props.isLikeIcon;
   const color = props.color;
   const icon = isLikeIcon ? (
-    <FavoriteIcon onClick={() => alert('You liked the post')} />
+    <FavoriteIcon
+      onClick={() => {
+        props.click();
+      }}
+    />
   ) : (
-    <AddCommentIcon onClick={() => alert('You commented on the post')} />
+    <AddCommentIcon onClick={() => props.addComment()} />
   );
 
   return (
     <div>
-      <Fab color={color} aria-label="add" className={classes.fab}>
+      <Fab
+        disabled={props.isDisabled}
+        color={color}
+        aria-label="add"
+        className={classes.fab}
+      >
         {icon}
       </Fab>
     </div>
