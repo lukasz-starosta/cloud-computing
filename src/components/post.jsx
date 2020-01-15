@@ -9,20 +9,6 @@ import database from '../api/database';
 import Comment from '../components/comment';
 import grey from '@material-ui/core/colors/grey';
 
-const image1 = {
-  src:
-    'https://i1.wp.com/koomeministries.com/wp-content/uploads/2019/06/profile-placeholder-female.png?fit=250%2C350&ssl=1',
-  alt: 'female',
-  width: '162px'
-};
-
-const image2 = {
-  src:
-    'https://149354401.v2.pressablecdn.com/wp-content/uploads/2018/01/placeholder-male-150x150.jpg',
-  alt: 'male',
-  width: '162px'
-};
-
 const imageStyle = {
   textAlign: 'center'
 };
@@ -66,7 +52,6 @@ function Post(props) {
   const { content, created_at } = post;
   const classes = useStyles();
 
-  const [likes, setLike] = useState(null);
   const [comment, setComment] = useState({ commentContent: '' });
   const [comments, setComments] = useState(null);
   const [isLikedByCurrentUser, setIsLikedByCurrentUser] = useState(false);
@@ -78,7 +63,7 @@ function Post(props) {
   async function fetchLikes() {
     const likes = await database.getLikes(post.id);
     setCountLikes(likes.length);
-    setLike(likes);
+
     const isLiked = !!likes.find(like => currentUser.uid === like.userId);
     setIsLikedByCurrentUser(isLiked);
     if (isLiked) setButtonColor('secondary');
@@ -93,6 +78,7 @@ function Post(props) {
   useEffect(() => {
     fetchComments();
     fetchLikes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleLikeClick() {
@@ -111,7 +97,7 @@ function Post(props) {
   }
 
   async function handleAddComment() {
-    if (comment.commentContent != '') {
+    if (comment.commentContent !== '') {
       setCommentButtonIsDisabled(true);
       const addComment = async (postId, userId, comment) => {
         await database.setComment(postId, userId, comment.commentContent);
@@ -148,9 +134,7 @@ function Post(props) {
             key={currentComment.commentId}
             username={`${currentUser.name}  ${currentUser.surname}`}
             content={currentComment.content}
-            time={new Date(
-              currentComment.created_at.seconds * 1000
-            ).toUTCString()}
+            time={new Date(currentComment.created_at.seconds * 1000).toUTCString()}
           />
         ))}
       <div>

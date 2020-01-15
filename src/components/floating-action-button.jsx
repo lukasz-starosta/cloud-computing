@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AddCommentIcon from '@material-ui/icons/AddComment';
-import database from '../api/database';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -30,12 +29,7 @@ export default function FloatingActionButton(props) {
 
   return (
     <div>
-      <Fab
-        disabled={props.isDisabled}
-        color={color}
-        aria-label="add"
-        className={classes.fab}
-      >
+      <Fab disabled={props.isDisabled} color={color} aria-label="add" className={classes.fab}>
         {icon}
       </Fab>
     </div>

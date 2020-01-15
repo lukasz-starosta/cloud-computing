@@ -7,15 +7,14 @@ import { withAuthenticator } from '../components/authenticator-hoc';
 function Dashboard({ currentUser }) {
   const [postWrappers, setPostWrappers] = useState(null);
 
-  async function fetch() {
-    setPostWrappers(await database.getPostsOfFollowedUsers(currentUser.uid));
-  }
-
   useEffect(() => {
-    fetch();
-  }, []);
+    async function fetch() {
+      setPostWrappers(await database.getPostsOfFollowedUsers(currentUser.uid));
+    }
 
-  // TODO: return loader
+    fetch();
+  }, [currentUser.uid]);
+
   if (!postWrappers) return <></>;
   return (
     <>

@@ -208,7 +208,9 @@ function Profile(props) {
       fetchFollowedByCurrentUser();
       fetchPosts();
     }
-  }, [userId]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser.uid, userId]);
 
   const handleFollowButtonClick = async () => {
     setIsFollowSubmitting(true);
@@ -405,12 +407,11 @@ function Profile(props) {
             <Post
               key={item.post.id}
               text={item.post.content}
-              date={new Date(
-                item.post.created_at.seconds * 1000
-              ).toDateString()}
-              time={new Date(
-                item.post.created_at.seconds * 1000
-              ).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              date={new Date(item.post.created_at.seconds * 1000).toDateString()}
+              time={new Date(item.post.created_at.seconds * 1000).toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
               image={
                 item.post.image && (
                   <div style={{ textAlign: 'center' }}>
