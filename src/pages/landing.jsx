@@ -11,7 +11,10 @@ const logo = {
   height: '70%'
 };
 
-function Landing() {
+function Landing({ currentUser }) {
+  const isLoggedIn = currentUser !== null;
+  const loginSignupDestination = isLoggedIn ? '/dashboard' : '/login';
+
   return (
     <section>
       <Grid container spacing={1}>
@@ -21,8 +24,8 @@ function Landing() {
               <img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} />
             </Grid>
             <Grid item xs={12}>
-              <LinkButton color="primary" destination="/login" text="Log in" />
-              <LinkButton color="default" destination="/login" text="Sign up" />
+              <LinkButton color="primary" destination={loginSignupDestination} text="Log in" />
+              <LinkButton color="default" destination={loginSignupDestination} text="Sign up" />
             </Grid>
           </div>
         </Grid>
