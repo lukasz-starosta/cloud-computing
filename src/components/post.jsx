@@ -9,10 +9,6 @@ import database from '../api/database';
 import Comment from '../components/comment';
 import grey from '@material-ui/core/colors/grey';
 
-const imageStyle = {
-  textAlign: 'center'
-};
-
 const useStyles = makeStyles(theme => ({
   postStyle: {
     backgroundColor: colors.AWS_whiteish,
@@ -44,6 +40,9 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       color: '#9a9a9a'
     }
+  },
+  image: {
+    textAlign: 'center'
   }
 }));
 
@@ -123,7 +122,7 @@ function Post(props) {
         <p>{new Date(created_at.seconds * 1000).toUTCString()}</p>
       </div>
       {post.image && (
-        <div style={imageStyle}>
+        <div className={classes.image}>
           <img src={post.image} alt="post pick" width={300} />
         </div>
       )}
