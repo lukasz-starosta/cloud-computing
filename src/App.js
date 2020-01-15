@@ -48,29 +48,25 @@ function App() {
               {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
               <Switch>
-                <Route exact path='/'>
-                  <Landing />
-                </Route>
                 <Route
-                  path='/dashboard'
-                  render={props => (
-                    <Dashboard {...props} currentUser={currentUser} />
-                  )}
+                  exact
+                  path="/"
+                  render={props => <Landing {...props} currentUser={currentUser} />}
+                ></Route>
+                <Route
+                  path="/dashboard"
+                  render={props => <Dashboard {...props} currentUser={currentUser} />}
                 ></Route>
                 <Route
                   exact
-                  path='/profile'
-                  render={props => (
-                    <Profile {...props} currentUser={currentUser} />
-                  )}
+                  path="/profile"
+                  render={props => <Profile {...props} currentUser={currentUser} />}
                 />
                 <Route
-                  path='/profile/:id'
-                  render={props => (
-                    <Profile {...props} currentUser={currentUser} />
-                  )}
+                  path="/profile/:id"
+                  render={props => <Profile {...props} currentUser={currentUser} />}
                 />
-                <Route path='/login'>
+                <Route path="/login">
                   <Login />
                 </Route>
               </Switch>

@@ -1,6 +1,4 @@
 import React from 'react';
-import { colors } from '../assets/colors';
-import TextField from '@material-ui/core/TextField';
 import { Typography, makeStyles } from '@material-ui/core';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 
