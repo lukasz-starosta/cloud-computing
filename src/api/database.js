@@ -52,12 +52,7 @@ const database = {
       .then(function(querySnapshot) {
         posts.push(
           ...querySnapshot.docs.map(doc =>
-            createPost(
-              doc.data().userUid,
-              doc.data().username,
-              doc.id,
-              doc.data()
-            )
+            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
           )
         );
       });
@@ -85,18 +80,22 @@ const database = {
 
     const followedUsersIds = followedUsersIdsQueryResult.docs.map(doc => doc.id);
 
-    await this.db
-      .collectionGroup('posts')
-      .where('userUid', 'in', followedUsersIds)
-      .orderBy('created_at', 'desc')
-      .get()
-      .then(function(querySnapshot) {
-        posts.push(
-          ...querySnapshot.docs.map(doc =>
-            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
-          )
-        );
-      });
+    if (followedUsersIds.length > 0) {
+      await this.db
+        .collectionGroup('posts')
+        .where('userUid', 'in', followedUsersIds)
+        .orderBy('created_at', 'desc')
+        .get()
+        .then(function(querySnapshot) {
+          posts.push(
+            ...querySnapshot.docs.map(doc =>
+              createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
+            )
+          );
+        });
+    } else {
+      return [];
+    }
 
     return posts;
   },
