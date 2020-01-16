@@ -1,28 +1,6 @@
 # Cumulus project readme
 
-This is a Twitter-like app where users can share posts.
-The app url is:
-https://cloud-computing-systems.web.app
-
-## To do:
-
-- [x] Setup assets - **Łukasz** (colors, components)
-- [x] Navigation - **Łukasz**
-- [x] Basic layout - **Łukasz**
-
-#### Views:
-
-- [ ] Landing page - **Krzysiek**
-- [ ] Logging in and sign up - **Piotrek**
-- [x] Profile view - **Iga**
-- [x] Dashboard view - **Agnieszka**
-- [ ] About view - about the app, what technologies are we using, what is it for in general - **Vulkan**
-
-#### Integration with the cloud (To be specified and assigned):
-
-- [ ] Adding, editing, deleting posts
-- [ ] Fetching posts
-- [ ] Liking, commening (?) posts
+This is a Twitter-like app where users can share, like and comment posts.
 
 ## Style guide
 
@@ -34,7 +12,7 @@ Please conform to the style guide and always look for material-ui alternatives, 
 
 Install Yarn
 (yarnpkg.com/en/docs/install#windows-stable) along with Node.js
-
+To install dependencies: `yarn install`
 to run locally: `yarn start`
 
 # Create React App readme
