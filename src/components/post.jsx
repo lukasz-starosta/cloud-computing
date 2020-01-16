@@ -7,7 +7,6 @@ import { Typography, makeStyles } from '@material-ui/core';
 import UserLink from './user-link';
 import database from '../api/database';
 import Comment from '../components/comment';
-import grey from '@material-ui/core/colors/grey';
 
 const useStyles = makeStyles(theme => ({
   postStyle: {
@@ -66,7 +65,7 @@ function Post(props) {
     const isLiked = !!likes.find(like => currentUser.uid === like.userId);
     setIsLikedByCurrentUser(isLiked);
     if (isLiked) setButtonColor('secondary');
-    else setButtonColor(grey[50]);
+    else setButtonColor('default');
   }
 
   async function fetchComments() {
@@ -98,14 +97,16 @@ function Post(props) {
   async function handleAddComment() {
     if (comment.commentContent !== '') {
       setCommentButtonIsDisabled(true);
-      const addComment = async (postId, userId, comment) => {
-        await database.setComment(postId, userId, comment.commentContent);
+      const addComment = async (postId, userId, name, surname, comment) => {
+        await database.setComment(postId, userId, name, surname, comment.commentContent);
       };
 
-      addComment(post.id, currentUser.uid, comment).then(() => {
-        fetchComments();
-        setComment({ commentContent: '' });
-      });
+      addComment(post.id, currentUser.uid, currentUser.name, currentUser.surname, comment).then(
+        () => {
+          fetchComments();
+          setComment({ commentContent: '' });
+        }
+      );
       setCommentButtonIsDisabled(false);
     }
   }
@@ -131,7 +132,7 @@ function Post(props) {
         comments.map(currentComment => (
           <Comment
             key={currentComment.commentId}
-            username={`${currentUser.name}  ${currentUser.surname}`}
+            username={`${currentComment.name}  ${currentComment.surname}`}
             content={currentComment.content}
             time={new Date(currentComment.created_at.seconds * 1000).toUTCString()}
           />

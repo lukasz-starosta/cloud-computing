@@ -121,9 +121,11 @@ const database = {
   },
 
   async getComments(postId) {
-    const createComments = (commentId, userId, postId, content, created_at) => ({
+    const createComments = (commentId, userId, name, surname, postId, content, created_at) => ({
       commentId,
       userId,
+      name,
+      surname,
       postId,
       content,
       created_at
@@ -141,6 +143,8 @@ const database = {
             createComments(
               doc.id,
               doc.data().userId,
+              doc.data().name,
+              doc.data().surname,
               doc.data().postId,
               doc.data().content,
               doc.data().created_at
@@ -238,12 +242,14 @@ const database = {
     }
   },
 
-  async setComment(postId, userId, content) {
+  async setComment(postId, userId, name, surname, content) {
     const comments = this.collection('comments');
 
     await comments.add({
       postId,
       userId,
+      name,
+      surname,
       content,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     });
