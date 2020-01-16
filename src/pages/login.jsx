@@ -73,9 +73,7 @@ const Login = ({ history }) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(data.email, data.password)
-      .then(() => {
-        history.push('/dashboard');
-      })
+      .then(() => {})
       .catch(error => {
         console.log(error.message);
       });
