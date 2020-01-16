@@ -21,11 +21,10 @@ function Dashboard({ currentUser }) {
   const [postWrappers, setPostWrappers] = useState(null);
   const classes = useStyles();
 
+  async function fetch() {
+    setPostWrappers(await database.getPostsOfFollowedUsers(currentUser.uid));
+  }
   useEffect(() => {
-    async function fetch() {
-      setPostWrappers(await database.getPostsOfFollowedUsers(currentUser.uid));
-    }
-
     fetch();
   }, [currentUser.uid]);
 

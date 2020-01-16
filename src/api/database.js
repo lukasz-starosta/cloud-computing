@@ -78,24 +78,21 @@ const database = {
       .collection('followedUsersIds')
       .get();
 
-    const followedUsersIds = followedUsersIdsQueryResult.docs.map(doc => doc.id);
+    const followedUsersIds = [userUid];
+    followedUsersIds.push(...followedUsersIdsQueryResult.docs.map(doc => doc.id));
 
-    if (followedUsersIds.length > 0) {
-      await this.db
-        .collectionGroup('posts')
-        .where('userUid', 'in', followedUsersIds)
-        .orderBy('created_at', 'desc')
-        .get()
-        .then(function(querySnapshot) {
-          posts.push(
-            ...querySnapshot.docs.map(doc =>
-              createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
-            )
-          );
-        });
-    } else {
-      return [];
-    }
+    await this.db
+      .collectionGroup('posts')
+      .where('userUid', 'in', followedUsersIds)
+      .orderBy('created_at', 'desc')
+      .get()
+      .then(function(querySnapshot) {
+        posts.push(
+          ...querySnapshot.docs.map(doc =>
+            createPost(doc.data().userUid, doc.data().username, doc.id, doc.data())
+          )
+        );
+      });
 
     return posts;
   },

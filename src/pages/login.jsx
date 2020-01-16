@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import firebase from "firebase";
-import { DatePicker } from "@material-ui/pickers";
-import database from "../api/database";
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import firebase from 'firebase';
+import { DatePicker } from '@material-ui/pickers';
+import database from '../api/database';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: 20
   },
   form: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
     padding: 10,
-    width: "60%",
-    textAlign: "center"
+    width: '60%',
+    textAlign: 'center'
   },
   field: {
     marginBottom: theme.spacing(2)
@@ -29,17 +29,19 @@ const useStyles = makeStyles(theme => ({
 
 const Login = ({ history }) => {
   const [data, setData] = useState({
-    email: "",
-    password: "",
-    passwordConfirm: "",
+    email: '',
+    password: '',
+    passwordConfirm: '',
     birthDate: new Date(),
-    name: "",
-    surname: ""
+    name: '',
+    surname: ''
   });
 
   const classes = useStyles();
-  const profilePicture = "https://elysator.com/wp-content/uploads/blank-profile-picture-973460_1280-e1523978675847.png";
-  const backgroundPicture= "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
+  const profilePicture =
+    'https://elysator.com/wp-content/uploads/blank-profile-picture-973460_1280-e1523978675847.png';
+  const backgroundPicture =
+    'https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
 
   const handleRegistration = () => {
     const createUser = async user => {
@@ -50,7 +52,7 @@ const Login = ({ history }) => {
         surname: data.surname,
         birthDate: data.birthDate,
         profilePicture: profilePicture,
-        backgroundPicture: backgroundPicture,
+        backgroundPicture: backgroundPicture
       });
     };
 
@@ -60,7 +62,6 @@ const Login = ({ history }) => {
         .createUserWithEmailAndPassword(data.email, data.password)
         .then(result => {
           createUser(result.user);
-          history.push("/dashboard");
         })
         .catch(error => {
           console.log(error.message);
@@ -73,7 +74,7 @@ const Login = ({ history }) => {
       .auth()
       .signInWithEmailAndPassword(data.email, data.password)
       .then(() => {
-        history.push("/dashboard");
+        history.push('/dashboard');
       })
       .catch(error => {
         console.log(error.message);
@@ -110,12 +111,7 @@ const Login = ({ history }) => {
             });
           }}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          onClick={handleLogIn}
-        >
+        <Button variant="contained" color="primary" size="large" onClick={handleLogIn}>
           Log in
         </Button>
       </div>
@@ -197,12 +193,7 @@ const Login = ({ history }) => {
           }}
           format="MM/dd/yyyy"
         />
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          onClick={handleRegistration}
-        >
+        <Button variant="contained" color="secondary" size="large" onClick={handleRegistration}>
           Register
         </Button>
       </div>
